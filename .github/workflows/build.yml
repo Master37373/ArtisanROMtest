@@ -119,6 +119,3 @@ jobs:
 
           echo "SHA256:"
           sha256sum "$ZIP_FILE"
-
-          
-          done
