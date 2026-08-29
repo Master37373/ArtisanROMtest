@@ -94,7 +94,7 @@ jobs:
           ./scripts/extract_fw.sh
 
       - name: Add swapspace
-        uses: pierotofy/set-swap-space@v2.0
+        uses: pierotofy/set-swap-space@v1.0
         with:
           swap-size-gb: 12
       
