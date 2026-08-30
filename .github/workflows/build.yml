@@ -93,10 +93,14 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/extract_fw.sh
 
-      - name: Add swapspace
-        uses: pierotofy/set-swap-space@v1.0
-        with:
-          swap-size-gb: 12
+- name: Add swapspace
+  run: |
+    sudo swapoff -a || true
+    sudo fallocate -l 12G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    free -h
       
       - name: Build ROM
         run: |
