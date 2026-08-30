@@ -95,12 +95,12 @@ jobs:
 
       - name: Add swapspace
         run: |
-        sudo swapoff -a || true
-        sudo fallocate -l 12G /swapfile
-        sudo chmod 600 /swapfile
-        sudo mkswap /swapfile
-        sudo swapon /swapfile
-        free -h
+       sudo swapoff -a || true
+       sudo fallocate -l 12G /swapfile
+       sudo chmod 600 /swapfile
+       sudo mkswap /swapfile
+       sudo swapon /swapfile
+       free -h
       
       - name: Build ROM
         run: |
