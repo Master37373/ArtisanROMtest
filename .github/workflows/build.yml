@@ -21,15 +21,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
-     matrix:
-      target: [y2s]
-        
-      steps:
+      matrix:
+        target: [y2s]
+
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v7
         with:
@@ -105,7 +105,7 @@ jobs:
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/make_rom.sh 
+          ./scripts/make_rom.sh
 
       - name: Upload to GoFile
         run: |
