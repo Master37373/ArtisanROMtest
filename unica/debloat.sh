@@ -60,29 +60,6 @@ system/priv-app/EuiccService
 system/priv-app/IntelligentDynamicFpsService
 "
 
-# Application recommendations
-SYSTEM_DEBLOAT+="
-system/app/MAPSAgent
-"
-
-# HwModuleTest
-SYSTEM_DEBLOAT+="
-system/app/Cameralyzer
-system/app/FactoryAirCommandManager
-system/app/FactoryCameraFB
-system/app/WlanTest
-system/etc/default-permissions/default-permissions-com.sec.factory.cameralyzer.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.providers.factory.xml
-system/etc/permissions/privapp-permissions-com.sec.facatfunction.xml
-system/priv-app/FacAtFunction
-system/priv-app/FactoryTestProvider
-"
-
-# AppUpdateCenter
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.samsung.android.app.updatecenter.xml
-system/priv-app/AppUpdateCenter
-"
 
 # BCService
 SYSTEM_DEBLOAT+="
@@ -100,39 +77,9 @@ ADD_TO_WORK_DIR "pa2qxxx" "system" \
     "system/etc/permissions/signature-permissions-com.samsung.android.game.gamehome.xml" \
     0 0 644 "u:object_r:system_file:s0"
 
-# Gemini shortcut
-PRODUCT_DEBLOAT+="
-app/BardShell
-"
-
-# Gmail
-PRODUCT_DEBLOAT+="
-app/Gmail2
-"
-
 # Google Assistant shortcut
 PRODUCT_DEBLOAT+="
 app/AssistantShell
-"
-
-# Google Chrome
-PRODUCT_DEBLOAT+="
-app/Chrome
-"
-
-# Google Duo
-PRODUCT_DEBLOAT+="
-app/DuoStub
-"
-
-# Google Maps
-PRODUCT_DEBLOAT+="
-app/Maps
-"
-
-# Google PAI (Play Autoinstall)
-SYSTEM_DEBLOAT+="
-system/app/PlayAutoInstallConfig
 "
 
 # Language packs
@@ -144,21 +91,18 @@ SYSTEM_DEBLOAT+="$(find "$WORK_DIR/system" -type d -name "*TTSVoice*" | sed "s|$
 # system/app/SamsungTTS
 # "
 
+# Samsung Messages
+SYSTEM_DEBLOAT+="
+system/etc/default-permissions/default-permissions-com.samsung.android.messaging.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml
+system/priv-app/SamsungMessages
+"
+
 # Samsung Kids
 SYSTEM_DEBLOAT+="
 system/app/KidsHome_Installer
 "
 
-# Samsung Notes
-SYSTEM_DEBLOAT+="
-system/app/Notes40
-"
-
-# Bixby
-SYSTEM_DEBLOAT+="
-system/priv-app/Bixby
-system/app/BixbyWakeup
-"
 
 # LED Cover Service
 [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_NFC_LED_COVER_LEVEL")" -lt "30" ] && SYSTEM_DEBLOAT+="
@@ -218,19 +162,6 @@ system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
 system/priv-app/MyGalaxyService
 "
 
-# Samsung Analytics
-SYSTEM_DEBLOAT+="
-system/app/DsmsAPK
-system/etc/permissions/privapp-permissions-com.samsung.android.dqagent.xml
-system/etc/permissions/privapp-permissions-com.sec.android.diagmonagent.xml
-system/etc/permissions/privapp-permissions-com.sec.android.soagent.xml
-system/priv-app/DeviceQualityAgent36
-system/priv-app/DiagMonAgent95
-system/priv-app/SOAgent76
-"
-
-SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CONTEXTSERVICE_ENABLE_SURVEY_MODE" --delete
-
 # Samsung AR Emoji
 SYSTEM_DEBLOAT+="
 system/etc/default-permissions/default-permissions-com.sec.android.mimage.avatarstickers.xml
@@ -242,30 +173,10 @@ system/priv-app/AvatarEmojiSticker
 system/priv-app/StickerFaceARAvatar
 "
 
-# Samsung Calendar
-SYSTEM_DEBLOAT+="
-system/app/SamsungCalendar
-"
-
-# Samsung Clock
-SYSTEM_DEBLOAT+="
-system/app/ClockPackage
-"
-
-# Samsung Free
-SYSTEM_DEBLOAT+="
-system/app/MinusOnePage
-"
-
 # Samsung Language Core
 SYSTEM_DEBLOAT+="
 system/etc/permissions/signature-permissions-com.samsung.android.offline.languagemodel.xml
 system/priv-app/OfflineLanguageModel_stub
-"
-
-# Google Messages
-PRODUCT_DEBLOAT+="
-priv-app/Messages
 "
 
 # Samsung Pass
@@ -281,11 +192,6 @@ system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/priv-app/AuthFramework
 system/priv-app/SamsungPass
-"
-
-# Samsung Reminder
-SYSTEM_DEBLOAT+="
-system/app/SmartReminder
 "
 
 # Samsung Visit In
@@ -314,19 +220,6 @@ system/priv-app/SamsungCarKeyFw
 SYSTEM_EXT_DEBLOAT+="
 framework/org.carconnectivity.android.digitalkey.rangingintent.jar
 framework/org.carconnectivity.android.digitalkey.secureelement.jar
-"
-
-# Search engine selector
-PRODUCT_DEBLOAT+="
-overlay/GmsConfigOverlaySearchSelector.apk
-priv-app/SearchSelector
-"
-
-# SettingsHelper
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.samsung.android.settingshelper.xml
-system/etc/sysconfig/settingshelper.xml
-system/priv-app/SHClient
 "
 
 # Smart Touch Call
@@ -364,9 +257,4 @@ system/priv-app/SVoiceIME
 SYSTEM_DEBLOAT+="
 system/app/VoiceAccess
 system/etc/sysconfig/feature-a11y-preload-voacc.xml
-"
-
-# YouTube
-PRODUCT_DEBLOAT+="
-app/YouTube
 "
