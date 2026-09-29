@@ -242,12 +242,6 @@ system/etc/permissions/privapp-permissions-com.wssyncmldm.xml
 system/priv-app/FotaAgent
 "
 
-# SVC Agent
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.samsung.android.svcagent.xml
-system/priv-app/SVCAgent
-"
-
 # SVoiceIME
 SYSTEM_DEBLOAT+="
 system/priv-app/SVoiceIME
