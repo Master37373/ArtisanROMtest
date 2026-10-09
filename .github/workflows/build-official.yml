@@ -1,0 +1,247 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type (debug = nur SourceForge, test = + GitHub release, release = + Updater-XML im Repo)'
+        type: choice
+        options:
+          - debug
+          - test
+          - release
+        default: debug
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [y2s]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: 'recursive'
+
+      - name: Free disk space (1/3)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          sudo docker builder prune -a
+
+      - name: Free disk space (2/3)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+
+      - name: Free disk space (3/3)
+        uses: rokibhasansagar/slimhub_actions@main
+        with:
+          retain: 'compiler_cmake'
+
+      - name: Set up build environment
+        run: |
+          sudo apt update
+          DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
+            attr ccache clang ffmpeg libbrotli-dev libbz2-dev \
+            libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
+            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp \
+            build-essential g++-aarch64-linux-gnu gcc-aarch64-linux-gnu \
+            python-is-python3 python3 wget curl
+
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source "$HOME/.cargo/env"
+
+          rustc --version
+          cargo --version
+
+          wget https://raw.githubusercontent.com/kdrag0n/kramflash/refs/heads/master/mkbootimg.py && sudo ln -sf $(pwd)/mkbootimg.py /usr/bin/mkbootimg && chmod +x /usr/bin/mkbootimg
+
+          sudo modprobe erofs f2fs
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/artisanrom_platform.pk8
+          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/artisanrom_platform.x509.pem
+          echo -n "${{ secrets.OTA_KEY_PK8 }}" | base64 --decode > security/artisanrom_ota.pk8
+          echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > security/artisanrom_ota.x509.pem
+
+          # Samsungs Versions-Abfrage hat im Skript nur 3 Sekunden Zeit, das scheitert von GitHub-Runnern oft
+          sed -i 's/curl -s --retry 3 -m 3 /curl -s --retry 5 -m 20 /' scripts/utils/firmware_utils.sh
+          grep -n "version.xml" scripts/utils/firmware_utils.sh
+
+          # Eigene Schluessel als "offiziell" erkennen (nur wenn Platform- und OTA-Key vorhanden sind)
+          if [ -s security/artisanrom_platform.pk8 ] && [ -s security/artisanrom_ota.pk8 ]; then
+            PLAT_SHA1=$(sha1sum security/artisanrom_platform.pk8 | cut -d " " -f 1)
+            OTA_SHA1=$(sha1sum security/artisanrom_ota.pk8 | cut -d " " -f 1)
+            sed -i "s/PLATFORM_KEY_SHA1=\"[0-9a-f]*\"/PLATFORM_KEY_SHA1=\"$PLAT_SHA1\"/; s/OTA_KEY_SHA1=\"[0-9a-f]*\"/OTA_KEY_SHA1=\"$OTA_SHA1\"/" scripts/internal/gen_config_file.sh
+            grep -n "_KEY_SHA1=" scripts/internal/gen_config_file.sh
+          else
+            echo "WARNUNG: Schluessel fehlen, Build bleibt UNOFFICIAL"
+          fi
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Build dependencies
+        run: |
+          source ./buildenv.sh ${{ matrix.target }}
+          ./scripts/build_dependencies.sh
+
+      - name: Download stock firmwares
+        uses: nick-fields/retry@v4
+        with:
+          timeout_minutes: 60
+          max_attempts: 3
+          retry_on: error
+          command: source ./buildenv.sh ${{ matrix.target }} && ./scripts/download_fw.sh
+
+      - name: Extract stock firmwares
+        run: |
+          source ./buildenv.sh ${{ matrix.target }}
+          ./scripts/extract_fw.sh
+
+      - name: Add swap space
+        run: |
+          SWAP_FILE=$(swapon --show=NAME | tail -n 1)
+
+          if [ -n "$SWAP_FILE" ]; then
+            echo "Existing swap found: $SWAP_FILE"
+            sudo swapoff "$SWAP_FILE"
+            sudo rm -f "$SWAP_FILE"
+          else
+            SWAP_FILE="/swapfile"
+            echo "No existing swap found. Creating $SWAP_FILE"
+          fi
+
+          sudo fallocate -l 12G "$SWAP_FILE"
+          sudo chmod 600 "$SWAP_FILE"
+          sudo mkswap "$SWAP_FILE"
+          sudo swapon "$SWAP_FILE"
+
+          echo "Swap configured:"
+          free -h
+          swapon --show
+
+      - name: Build ROM
+        run: |
+          source ./buildenv.sh ${{ matrix.target }}
+          ./scripts/make_rom.sh
+
+      - name: Upload to SourceForge (+ GitHub Release)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          SF_USER: ${{ secrets.SF_USER }}
+          SF_PROJECT: ${{ secrets.SF_PROJECT }}
+          SF_SSH_KEY: ${{ secrets.SF_SSH_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          BUILD_TYPE: ${{ github.event.inputs.build_type }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SF_SSH_KEY" > ~/.ssh/sf_deploy
+          chmod 600 ~/.ssh/sf_deploy
+
+          for file in out/*.zip; do
+            if [ ! -f "$file" ]; then
+              echo "No ZIP files found to upload."
+              continue
+            fi
+
+            FILE_NAME=$(basename "$file")
+            VERSION=$(echo "$FILE_NAME" | grep -oP '\d+\.\d+\.\d+' | head -n 1)
+            if [ -z "$VERSION" ]; then
+              VERSION="0.0.${{ github.run_number }}"
+              echo "WARNING: Keine Version im Dateinamen gefunden, nutze $VERSION"
+            fi
+            BUILD_DATE=$(date +%Y-%m-%d)
+
+            echo "MD5: $(md5sum "$file" | awk '{print $1}')"
+            echo "SHA256: $(sha256sum "$file" | awk '{print $1}')"
+
+            echo "Uploading $FILE_NAME to SourceForge..."
+            rsync -avP -e "ssh -i ~/.ssh/sf_deploy -o StrictHostKeyChecking=accept-new" \
+              "$file" "$SF_USER@frs.sourceforge.net:/home/frs/project/$SF_PROJECT/${{ matrix.target }}/"
+
+            DOWNLOAD_URL="https://sourceforge.net/projects/$SF_PROJECT/files/${{ matrix.target }}/$FILE_NAME/download"
+            echo "$DOWNLOAD_URL" > "$GITHUB_WORKSPACE/download_url.txt"
+            echo "Download-Link: $DOWNLOAD_URL"
+            sleep 60
+            echo "Link-Pruefung (HTTP-Status, 206 oder 200 ist gut): $(curl -sL -r 0-99 -o /dev/null -w '%{http_code}' "$DOWNLOAD_URL" || true)"
+
+            # OTA-XML fuer die Updater-App (nur bei release)
+            if [ "$BUILD_TYPE" = "release" ]; then
+              FILE_MD5=$(md5sum "$file" | awk '{print $1}')
+              FILE_SIZE=$(stat -c%s "$file")
+              DEVICE_NAME=$(unzip -p "$file" build_info.txt | grep '^device=' | cut -d '=' -f 2 | tr -d '\r\n' || true)
+              if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME="${{ matrix.target }}"; fi
+              echo "Geraetename fuer die XML: $DEVICE_NAME"
+              XML_NAME="$DEVICE_NAME.xml"
+              {
+                echo '<?xml version="1.0" encoding="UTF-8"?>'
+                echo '<roms>'
+                echo '  <rom channel="stable">'
+                echo "    <version>$VERSION</version>"
+                echo "    <date>$BUILD_DATE</date>"
+                echo "    <filename>$FILE_NAME</filename>"
+                echo "    <part1>$DOWNLOAD_URL</part1>"
+                echo "    <md5>$FILE_MD5</md5>"
+                echo "    <size>$FILE_SIZE</size>"
+                echo '  </rom>'
+                echo '</roms>'
+              } > "$GITHUB_WORKSPACE/$XML_NAME"
+              cat "$GITHUB_WORKSPACE/$XML_NAME"
+
+              rm -rf updater_repo
+              git clone --single-branch --branch sixteen "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
+              mkdir -p updater_repo/updater/v2
+              cp "$GITHUB_WORKSPACE/$XML_NAME" "updater_repo/updater/v2/$XML_NAME"
+              (
+                cd updater_repo
+                git add "updater/v2/$XML_NAME"
+                git commit -m "updater: v2: $XML_NAME: Update to $VERSION" || true
+                for i in 1 2 3; do
+                  git pull --rebase origin sixteen && git push origin sixteen && break
+                  sleep 5
+                done
+              )
+            fi
+
+            # GitHub Release (nur Link in den Notizen, keine grosse Datei)
+            if [ "$BUILD_TYPE" = "release" ] || [ "$BUILD_TYPE" = "test" ]; then
+              TAG_NAME="v$VERSION-${{ matrix.target }}-${{ github.run_number }}"
+              RELEASE_DATA=$(jq -n \
+                --arg tag "$TAG_NAME" \
+                --arg name "$VERSION-${{ matrix.target }}-$BUILD_DATE" \
+                --arg sha "${{ github.sha }}" \
+                --arg body "Download: $DOWNLOAD_URL" \
+                '{ tag_name: $tag, target_commitish: $sha, name: $name, body: $body, draft: false, prerelease: false }')
+              RELEASE_RESPONSE=$(curl -s -X POST \
+                -H "Authorization: token $GH_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d "$RELEASE_DATA" \
+                "https://api.github.com/repos/${{ github.repository }}/releases")
+              if [ "$(echo "$RELEASE_RESPONSE" | jq -r '.id')" = "null" ]; then
+                echo "WARNUNG: GitHub-Release nicht erstellt. Antwort:"
+                echo "$RELEASE_RESPONSE" | head -c 400
+              else
+                echo "GitHub-Release erstellt: $TAG_NAME"
+              fi
+            fi
+          done
+
+          rm -f ~/.ssh/sf_deploy
