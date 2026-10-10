@@ -38,12 +38,6 @@ bin/install-recovery.sh
 etc/init/vendor_flash_recovery.rc
 "
 
-# PDP apps
-SYSTEM_DEBLOAT+="
-system/preload
-"
-
-truncate -s 0 "$WORK_DIR/system/system/etc/vpl_apks_count_list.txt"
 
 # eSIM
 [[ "$TARGET_COMMON_SUPPORT_EMBEDDED_SIM" == "false" ]] && SYSTEM_DEBLOAT+="
@@ -60,17 +54,6 @@ system/priv-app/EuiccService
 system/priv-app/IntelligentDynamicFpsService
 "
 
-# Application recommendations
-SYSTEM_DEBLOAT+="
-system/app/MAPSAgent
-"
-
-# BCService
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.sec.bcservice.xml
-system/priv-app/BCService
-"
-
 # Gaming Hub
 SYSTEM_DEBLOAT+="
 system/etc/permissions/privapp-permissions-com.samsung.android.game.gamehome.xml
@@ -81,48 +64,9 @@ ADD_TO_WORK_DIR "pa2qxxx" "system" \
     "system/etc/permissions/signature-permissions-com.samsung.android.game.gamehome.xml" \
     0 0 644 "u:object_r:system_file:s0"
 
-# Gemini shortcut
-PRODUCT_DEBLOAT+="
-app/BardShell
-"
-
-# Gmail
-PRODUCT_DEBLOAT+="
-app/Gmail2
-"
-
 # Google Assistant shortcut
 PRODUCT_DEBLOAT+="
 app/AssistantShell
-"
-
-# Google Duo
-PRODUCT_DEBLOAT+="
-app/DuoStub
-"
-
-# Google Maps
-PRODUCT_DEBLOAT+="
-app/Maps
-"
-
-# Google PAI (Play Autoinstall)
-SYSTEM_DEBLOAT+="
-system/app/PlayAutoInstallConfig
-"
-
-# HwModuleTest
-SYSTEM_DEBLOAT+="
-system/app/Cameralyzer
-system/app/FactoryAirCommandManager
-system/app/FactoryCameraFB
-system/app/HMT
-system/app/WlanTest
-system/etc/default-permissions/default-permissions-com.sec.factory.cameralyzer.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.providers.factory.xml
-system/etc/permissions/privapp-permissions-com.sec.facatfunction.xml
-system/priv-app/FacAtFunction
-system/priv-app/FactoryTestProvider
 "
 
 # Language packs
@@ -132,16 +76,6 @@ SYSTEM_DEBLOAT+="$(find "$WORK_DIR/system" -type d -name "*TTSVoice*" | sed "s|$
 SYSTEM_DEBLOAT+="
 system/etc/permissions/signature-permissions-com.sec.android.app.kidshome.xml
 system/app/KidsHome_Installer
-"
-
-# Bixby
-SYSTEM_DEBLOAT+="
-system/priv-app/Bixby
-system/app/BixbyWakeup
-system/etc/preferred-apps/com.samsung.android.bixby.agent.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.bixby.agent.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.bixby.wakeup.xml
-system/etc/permissions/signature-permissions-com.samsung.android.bixby.agent.xml
 "
 
 # LED Cover Service
@@ -181,18 +115,6 @@ system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
 system/priv-app/MyGalaxyService
 "
 
-# Samsung Analytics
-SYSTEM_DEBLOAT+="
-system/app/DsmsAPK
-system/etc/permissions/privapp-permissions-com.samsung.android.dqagent.xml
-system/etc/permissions/privapp-permissions-com.sec.android.diagmonagent.xml
-system/etc/permissions/privapp-permissions-com.sec.android.soagent.xml
-system/priv-app/DeviceQualityAgent36
-system/priv-app/DiagMonAgent95
-system/priv-app/SOAgent76
-"
-
-SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CONTEXTSERVICE_ENABLE_SURVEY_MODE" --delete
 
 # Samsung AR Emoji
 SYSTEM_DEBLOAT+="
@@ -204,20 +126,17 @@ system/priv-app/AREmojiEditor
 system/priv-app/AvatarEmojiSticker
 "
 
-# Samsung Free
-SYSTEM_DEBLOAT+="
-system/app/MinusOnePage
-"
-
 # Samsung Language Core
 SYSTEM_DEBLOAT+="
 system/etc/permissions/signature-permissions-com.samsung.android.offline.languagemodel.xml
 system/priv-app/OfflineLanguageModel_stub
 "
 
-# Google Messages
-PRODUCT_DEBLOAT+="
-priv-app/Messages
+# Samsung Messages
+SYSTEM_DEBLOAT+="
+system/etc/default-permissions/default-permissions-com.samsung.android.messaging.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml
+system/priv-app/SamsungMessages
 "
 
 # App recomendations
@@ -238,11 +157,6 @@ system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/priv-app/AuthFramework
 system/priv-app/SamsungPass
-"
-
-# Samsung Reminder
-SYSTEM_DEBLOAT+="
-system/app/SmartReminder
 "
 
 # Samsung Visit In
@@ -274,19 +188,6 @@ framework/org.carconnectivity.android.digitalkey.rangingintent.jar
 framework/org.carconnectivity.android.digitalkey.secureelement.jar
 "
 
-# Search engine selector
-PRODUCT_DEBLOAT+="
-overlay/GmsConfigOverlaySearchSelector.apk
-priv-app/SearchSelector
-"
-
-# SettingsHelper
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.samsung.android.settingshelper.xml
-system/etc/sysconfig/settingshelper.xml
-system/priv-app/SHClient
-"
-
 # Smart Touch Call
 SYSTEM_DEBLOAT+="
 system/etc/default-permissions/default-permissions-com.samsung.android.visualars.xml
@@ -307,12 +208,6 @@ system/etc/permissions/privapp-permissions-com.wssyncmldm.xml
 system/priv-app/FotaAgent
 "
 
-# SVC Agent
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.samsung.android.svcagent.xml
-system/priv-app/SVCAgent
-"
-
 # SVoiceIME
 SYSTEM_DEBLOAT+="
 system/priv-app/SVoiceIME
@@ -322,11 +217,6 @@ system/priv-app/SVoiceIME
 SYSTEM_DEBLOAT+="
 system/app/VoiceAccess
 system/etc/sysconfig/feature-a11y-preload-voacc.xml
-"
-
-# YouTube
-PRODUCT_DEBLOAT+="
-app/YouTube
 "
 
 # Google Chrome
