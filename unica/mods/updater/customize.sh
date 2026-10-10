@@ -25,6 +25,35 @@ if [ -f "$WORK_DIR/system/system/etc/sysconfig/allowed-system-preload-apps.xml" 
     EVAL "sed -i 's#</config>#\\t<allowed-system-preload package=\"com.artisan.updater\"/>\\n</config>#' \"$WORK_DIR/system/system/etc/sysconfig/allowed-system-preload-apps.xml\""
 fi
 
+# Point the Updater app to this fork's update server (instead of ArtisanROM's)
+# - URLs are patched at build time, so a newer upstream ArtisanUpdater.apk keeps working
+# - The OTA XMLs (updater/v2/<device>.xml) are read from the "main" branch of UPDATER_REPO
+UPDATER_REPO="Master37373/ArtisanROMtest"
+UPDATER_APK="system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
+UPDATER_DIR="$APKTOOL_DIR/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
+
+DECODE_APK "system" "$UPDATER_APK"
+
+UPDATER_SMALI_COUNT="$(grep -rl --include="*.smali" "raw.githubusercontent.com/ArtisanROM/ArtisanROM/" "$UPDATER_DIR" | wc -l)"
+if [ "$UPDATER_SMALI_COUNT" -lt 1 ]; then
+    LOGE "ArtisanUpdater: update server URL not found. Upstream changed the app, please check unica/mods/updater/customize.sh"
+    return 1
+fi
+
+LOG "- Pointing ArtisanUpdater to github.com/$UPDATER_REPO"
+while IFS= read -r f; do
+    sed -i \
+        -e "s|raw.githubusercontent.com/ArtisanROM/ArtisanROM/|raw.githubusercontent.com/$UPDATER_REPO/|g" \
+        -e "s|/refs/heads/sixteen/CHANGELOG.md|/refs/heads/sixteen-qpr2/CHANGELOG.md|g" \
+        "$f"
+done < <(grep -rl --include="*.smali" "raw.githubusercontent.com/ArtisanROM/ArtisanROM/" "$UPDATER_DIR")
+
+# Own OTA certificate for the app
+if [ -f "$UPDATER_DIR/assets/otacert.pem" ]; then
+    LOG "- Replacing ArtisanUpdater otacert.pem"
+    cp -f "$SRC_DIR/security/artisanrom_ota.x509.pem" "$UPDATER_DIR/assets/otacert.pem"
+fi
+
 # Dynamically patch SecSettings
 # - Add missing/non-xml files in place
 # - Patch existing files

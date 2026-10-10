@@ -207,7 +207,7 @@ jobs:
               cat "$GITHUB_WORKSPACE/$XML_NAME"
 
               rm -rf updater_repo
-              git clone --single-branch --branch sixteen "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
+              git clone --single-branch --branch main "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
               mkdir -p updater_repo/updater/v2
               cp "$GITHUB_WORKSPACE/$XML_NAME" "updater_repo/updater/v2/$XML_NAME"
               (
@@ -215,7 +215,7 @@ jobs:
                 git add "updater/v2/$XML_NAME"
                 git commit -m "updater: v2: $XML_NAME: Update to $VERSION" || true
                 for i in 1 2 3; do
-                  git pull --rebase origin sixteen && git push origin sixteen && break
+                  git pull --rebase origin main && git push origin main && break
                   sleep 5
                 done
               )
