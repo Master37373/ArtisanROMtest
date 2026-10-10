@@ -38,7 +38,6 @@ bin/install-recovery.sh
 etc/init/vendor_flash_recovery.rc
 "
 
-
 # eSIM
 [[ "$TARGET_COMMON_SUPPORT_EMBEDDED_SIM" == "false" ]] && SYSTEM_DEBLOAT+="
 system/etc/permissions/privapp-permissions-com.samsung.android.app.esimkeystring.xml
@@ -115,7 +114,6 @@ system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
 system/priv-app/MyGalaxyService
 "
 
-
 # Samsung AR Emoji
 SYSTEM_DEBLOAT+="
 system/etc/default-permissions/default-permissions-com.sec.android.mimage.avatarstickers.xml
@@ -139,11 +137,6 @@ system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml
 system/priv-app/SamsungMessages
 "
 
-# App recomendations
-SYSTEM_DEBLOAT+="
-system/priv-app/OMCAgent5
-"
-
 # Samsung Pass
 SYSTEM_DEBLOAT+="
 system/app/SamsungPassAutofill_v1
@@ -157,13 +150,6 @@ system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/priv-app/AuthFramework
 system/priv-app/SamsungPass
-"
-
-# Samsung Visit In
-SYSTEM_DEBLOAT+="
-system/etc/permissions/com.samsung.feature.ipsgeofence.xml
-system/etc/permissions/privapp-permissions-com.samsung.android.ipsgeofence.xml
-system/priv-app/IpsGeofence
 "
 
 # Samsung Wallet
@@ -217,9 +203,4 @@ system/priv-app/SVoiceIME
 SYSTEM_DEBLOAT+="
 system/app/VoiceAccess
 system/etc/sysconfig/feature-a11y-preload-voacc.xml
-"
-
-# Google Chrome
-PRODUCT_DEBLOAT+="
-app/Chrome64
 "
