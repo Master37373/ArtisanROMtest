@@ -48,6 +48,21 @@ while IFS= read -r f; do
         "$f"
 done < <(grep -rl --include="*.smali" "raw.githubusercontent.com/ArtisanROM/ArtisanROM/" "$UPDATER_DIR")
 
+# The app sends a fake desktop Chrome User-Agent for its downloads. SourceForge (behind
+# Cloudflare) answers that with 403 because the TLS handshake is not Chrome's.
+# Use a plain, honest User-Agent instead.
+UPDATER_UA_OLD="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+UPDATER_UA_NEW="ArtisanUpdater/1.0"
+UPDATER_UA_COUNT="$(grep -rlF --include="*.smali" "$UPDATER_UA_OLD" "$UPDATER_DIR" | wc -l)"
+if [ "$UPDATER_UA_COUNT" -lt 1 ]; then
+    LOG "\033[0;33m! ArtisanUpdater: download User-Agent not found, leaving it unchanged\033[0m"
+else
+    LOG "- Replacing ArtisanUpdater download User-Agent"
+    while IFS= read -r f; do
+        sed -i "s|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36|$UPDATER_UA_NEW|g" "$f"
+    done < <(grep -rlF --include="*.smali" "$UPDATER_UA_OLD" "$UPDATER_DIR")
+fi
+
 # Own OTA certificate for the app
 if [ -f "$UPDATER_DIR/assets/otacert.pem" ]; then
     LOG "- Replacing ArtisanUpdater otacert.pem"
