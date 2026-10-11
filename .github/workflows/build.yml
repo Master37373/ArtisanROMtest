@@ -143,6 +143,25 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh
 
+      - name: Export updater APK
+        run: |
+          APK="out/target/${{ matrix.target }}/work_dir/system/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
+          mkdir -p out_apk
+          if [ -f "$APK" ]; then
+            cp "$APK" out_apk/ArtisanUpdater.apk
+            ls -l out_apk/ArtisanUpdater.apk
+            md5sum out_apk/ArtisanUpdater.apk
+          else
+            echo "ArtisanUpdater.apk not found at $APK"
+          fi
+
+      - name: Upload updater APK (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArtisanUpdater
+          path: out_apk/ArtisanUpdater.apk
+          if-no-files-found: warn
+
       - name: Upload to SourceForge (+ GitHub Release)
         if: github.event_name == 'workflow_dispatch'
         env:
