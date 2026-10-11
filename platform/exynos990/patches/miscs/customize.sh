@@ -86,12 +86,12 @@ else
     LOG_STEP_OUT
 fi
 
-LOG "- Disabling encryption"
-LINE=$(sed -n "/^\/dev\/block\/by-name\/userdata/=" "$WORK_DIR/vendor/etc/fstab.exynos990")
-sed -i "${LINE}s/,fileencryption=ice//g" "$WORK_DIR/vendor/etc/fstab.exynos990"
-
-# ODE
-sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
+# FBE TEST (branch fbe-test): keep the stock encryption setup.
+# The stock vendor fstab already has "fileencryption=ice" on the userdata line and the
+# ODE/keydata/keyrefuge entries, so nothing is removed here.
+LOG "- Keeping file-based encryption (fbe-test)"
+grep '^/dev/block/by-name/userdata' "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=' || \
+    LOG "\033[0;33m! userdata line has no fileencryption in the stock fstab\033[0m"
 
 # For some reason we are missing 2 permissions here: android.hardware.security.model.compatible and android.software.controls
 # First one is related to encryption and second one to SmartThings Device Control
