@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<roms>
+  <rom channel="stable">
+    <version>4.0.3</version>
+    <date>2026-10-11</date>
+    <filename>ArtisanROM_OFFICIAL_4.0.3_20261011_y2s-sign.zip</filename>
+    <part1>https://sourceforge.net/projects/masterrom/files/y2s/ArtisanROM_OFFICIAL_4.0.3_20261011_y2s-sign.zip/download</part1>
+    <md5>c73f16ee54dbd25392dc9a53724c8ead</md5>
+    <size>7087878899</size>
+  </rom>
+</roms>
