@@ -101,6 +101,13 @@ fi
 # ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
 
+# Adoptable storage: mark the microSD slot as adoptable ("Format as internal", encrypted with FBE)
+if ! grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990"; then
+    sed -i "s/voldmanaged=sdcard:auto$/voldmanaged=sdcard:auto,encryptable=userdata/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990" || \
+        ABORT "Failed to mark the sdcard entry as adoptable"
+fi
+
 # FBE TEST: LockSettingsService.unlockCeStorage() passes a Gatekeeper auth token to vold when
 # ro.product.first_api_level <= 30 (y2s = 29). The Android 16 vold from the source firmware
 # rejects any token ("Vold doesn't use auth tokens" -> EINVAL), so CE storage never unlocks
