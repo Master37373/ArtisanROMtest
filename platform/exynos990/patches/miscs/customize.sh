@@ -101,6 +101,17 @@ fi
 # ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
 
+# FBE TEST: LockSettingsService.unlockCeStorage() passes a Gatekeeper auth token to vold when
+# ro.product.first_api_level <= 30 (y2s = 29). The Android 16 vold from the source firmware
+# rejects any token ("Vold doesn't use auth tokens" -> EINVAL), so CE storage never unlocks
+# once a PIN is set. Lower the threshold to 0 so the token-less path is always used.
+# shellcheck disable=SC2016
+SMALI_PATCH "system" "system/framework/services.jar" \
+    "smali/com/android/server/locksettings/LockSettingsService.smali" "replace" \
+    'unlockCeStorage(ILcom/android/server/locksettings/SyntheticPasswordManager$SyntheticPassword;)V' \
+    'const/16 v6, 0x1e' \
+    'const/16 v6, 0x0'
+
 # For some reason we are missing 2 permissions here: android.hardware.security.model.compatible and android.software.controls
 # First one is related to encryption and second one to SmartThings Device Control
 LOG "- Patching vendor permissions"
