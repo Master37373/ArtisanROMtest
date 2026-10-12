@@ -86,14 +86,17 @@ else
     LOG_STEP_OUT
 fi
 
-# FBE TEST (branch fbe-test): enable file-based encryption with standard (non-Samsung) algorithms.
+# FBE TEST (branch fbe-test): hardware file-based encryption via FMP (inline crypto).
 # Stock uses "fileencryption=ice", which makes init request Samsung's private FMP mode 127.
-# The kernel rejects that mode (EINVAL -> "set_policy_failed" -> boot into recovery), so we use
-# plain AES-256-XTS/CTS (policy v1, no inline-crypt flag) which every fscrypt kernel supports.
-LOG "- Enabling file-based encryption with standard algorithms (fbe-test)"
+# The kernel rejects that mode (EINVAL -> "set_policy_failed" -> boot into recovery), so we keep
+# the standard AES-256-XTS/CTS policy v1 (modes 1/4, which the kernel accepts) and add the
+# "inlinecrypt" fs_mgr flag. That flag is a data-path switch, not a new mode: f2fs attaches a
+# bio crypt context and the FMP keyslot-manager encrypts inline in hardware instead of the CPU.
+# No Samsung "ice"/mode-127 request, so it must not hit the earlier set_policy EINVAL.
+LOG "- Enabling hardware file-based encryption via FMP inline crypto (fbe-test)"
 LINE=$(sed -n "/^\/dev\/block\/by-name\/userdata/=" "$WORK_DIR/vendor/etc/fstab.exynos990")
 if sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=ice'; then
-    sed -i "${LINE}s/fileencryption=ice/fileencryption=aes-256-xts:aes-256-cts:v1/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    sed -i "${LINE}s/fileencryption=ice/fileencryption=aes-256-xts:aes-256-cts:v1,inlinecrypt/" "$WORK_DIR/vendor/etc/fstab.exynos990"
 else
     LOG "\033[0;33m! userdata line has no fileencryption=ice in the stock fstab\033[0m"
 fi
