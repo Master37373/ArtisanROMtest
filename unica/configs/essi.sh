@@ -7,6 +7,8 @@
 # Keep the tested S926B release pinned so framework/display behaviour is
 # reproducible instead of silently moving with monthly FUS updates.
 SOURCE_FIRMWARE="SM-S926B/EUX/350330051234562"
+# Android 16 release; S926BXXUHEZIF (2026-10) is already Android 17 (meta_OS17).
+SOURCE_FIRMWARE_VERSION="S926BXXSHDZI1/S926BOXMHDZI1/S926BXXSHDZI1/S926BXXSHDZI1"
 
 SOURCE_EXTRA_FIRMWARES=()
 SOURCE_PLATFORM_SDK_VERSION=36
