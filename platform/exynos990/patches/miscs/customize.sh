@@ -86,12 +86,20 @@ else
     LOG_STEP_OUT
 fi
 
-# FBE TEST (branch fbe-test): keep the stock encryption setup.
-# The stock vendor fstab already has "fileencryption=ice" on the userdata line and the
-# ODE/keydata/keyrefuge entries, so nothing is removed here.
-LOG "- Keeping file-based encryption (fbe-test)"
-grep '^/dev/block/by-name/userdata' "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=' || \
-    LOG "\033[0;33m! userdata line has no fileencryption in the stock fstab\033[0m"
+# FBE TEST (branch fbe-test): enable file-based encryption with standard (non-Samsung) algorithms.
+# Stock uses "fileencryption=ice", which makes init request Samsung's private FMP mode 127.
+# The kernel rejects that mode (EINVAL -> "set_policy_failed" -> boot into recovery), so we use
+# plain AES-256-XTS/CTS (policy v1, no inline-crypt flag) which every fscrypt kernel supports.
+LOG "- Enabling file-based encryption with standard algorithms (fbe-test)"
+LINE=$(sed -n "/^\/dev\/block\/by-name\/userdata/=" "$WORK_DIR/vendor/etc/fstab.exynos990")
+if sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=ice'; then
+    sed -i "${LINE}s/fileencryption=ice/fileencryption=aes-256-xts:aes-256-cts:v1/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+else
+    LOG "\033[0;33m! userdata line has no fileencryption=ice in the stock fstab\033[0m"
+fi
+
+# ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
+sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
 
 # For some reason we are missing 2 permissions here: android.hardware.security.model.compatible and android.software.controls
 # First one is related to encryption and second one to SmartThings Device Control
