@@ -86,12 +86,45 @@ else
     LOG_STEP_OUT
 fi
 
-LOG "- Disabling encryption"
+# FBE (branch fbe-test): HARDWARE file-based encryption via the Exynos FMP inline crypto engine.
+# - Stock "fileencryption=ice" requests Samsung FMP mode 127, which this kernel's fscrypt rejects.
+# - fscrypt only routes to FMP for hardware-wrapped keys; plain keys hit the blk-crypto software
+#   fallback (CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK=y). Hence wrappedkey_v0.
+# - inlinecrypt_optimized (IV_INO_LBLK_64) implies policy v2, which is also required because
+#   /data has casefolded dirs (v1 on casefold -> EINVAL -> init_user0_failed -> recovery).
+# - Wrapped keys need "-o inlinecrypt". This libfstab rejects inlinecrypt as an fs_mgr flag
+#   ("unknown flag"), so it is added as a real f2fs mount option in column 4.
+LOG "- Enabling hardware FBE via FMP (v2, inlinecrypt_optimized, wrapped keys) (fbe-test)"
 LINE=$(sed -n "/^\/dev\/block\/by-name\/userdata/=" "$WORK_DIR/vendor/etc/fstab.exynos990")
-sed -i "${LINE}s/,fileencryption=ice//g" "$WORK_DIR/vendor/etc/fstab.exynos990"
+if sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=ice'; then
+    sed -i "${LINE}s/fileencryption=ice/fileencryption=aes-256-xts:aes-256-cts:inlinecrypt_optimized+wrappedkey_v0/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    sed -i "${LINE}s/resgid=5678/resgid=5678,inlinecrypt/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'resgid=5678,inlinecrypt' || \
+        ABORT "Failed to add the inlinecrypt mount option to the userdata entry"
+else
+    LOG "\033[0;33m! userdata line has no fileencryption=ice in the stock fstab\033[0m"
+fi
 
-# ODE
+# ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
+
+# Adoptable storage: mark the microSD slot as adoptable ("Format as internal", encrypted with FBE)
+if ! grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990"; then
+    sed -i "s/voldmanaged=sdcard:auto$/voldmanaged=sdcard:auto,encryptable=userdata/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990" || \
+        ABORT "Failed to mark the sdcard entry as adoptable"
+fi
+
+# FBE TEST: LockSettingsService.unlockCeStorage() passes a Gatekeeper auth token to vold when
+# ro.product.first_api_level <= 30 (y2s = 29). The Android 16 vold from the source firmware
+# rejects any token ("Vold doesn't use auth tokens" -> EINVAL), so CE storage never unlocks
+# once a PIN is set. Lower the threshold to 0 so the token-less path is always used.
+# shellcheck disable=SC2016
+SMALI_PATCH "system" "system/framework/services.jar" \
+    "smali/com/android/server/locksettings/LockSettingsService.smali" "replace" \
+    'unlockCeStorage(ILcom/android/server/locksettings/SyntheticPasswordManager$SyntheticPassword;)V' \
+    'const/16 v6, 0x1e' \
+    'const/16 v6, 0x0'
 
 # For some reason we are missing 2 permissions here: android.hardware.security.model.compatible and android.software.controls
 # First one is related to encryption and second one to SmartThings Device Control
