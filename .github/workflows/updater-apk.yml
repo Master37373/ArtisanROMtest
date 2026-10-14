@@ -1,0 +1,79 @@
+name: Build Updater APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Decode ArtisanUpdater.apk
+        run: |
+          curl -sSL -o apktool.jar https://github.com/iBotPeaches/Apktool/releases/download/v2.9.3/apktool_2.9.3.jar
+          java -jar apktool.jar d -r -f -o dec unica/mods/updater/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk
+
+      - name: Apply the same patches as unica/mods/updater/customize.sh
+        run: |
+          set -e
+          CUST=unica/mods/updater/customize.sh
+          UPDATER_DIR=dec
+          UPDATER_REPO="$(grep -m1 '^UPDATER_REPO=' "$CUST" | cut -d '"' -f 2)"
+          echo "UPDATER_REPO=$UPDATER_REPO"
+
+          # Update server URL + changelog branch
+          grep -rl --include="*.smali" "raw.githubusercontent.com/ArtisanROM/ArtisanROM/" "$UPDATER_DIR" | while read -r f; do
+            sed -i \
+              -e "s|raw.githubusercontent.com/ArtisanROM/ArtisanROM/|raw.githubusercontent.com/$UPDATER_REPO/|g" \
+              -e "s|/refs/heads/sixteen/CHANGELOG.md|/refs/heads/sixteen-qpr2/CHANGELOG.md|g" \
+              "$f"
+          done
+
+          # Honest User-Agent (SourceForge 403 otherwise)
+          grep -rlF --include="*.smali" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "$UPDATER_DIR" | while read -r f; do
+            sed -i "s|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36|ArtisanUpdater/1.0|g" "$f"
+          done
+
+          # Own OTA certificate
+          echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > ota.pem
+          if [ -f "$UPDATER_DIR/assets/otacert.pem" ]; then cp -f ota.pem "$UPDATER_DIR/assets/otacert.pem"; fi
+
+          # FBE patch: extract the block from customize.sh and run it
+          sed -n '/^# FBE: TWRP cannot read/,/^unset UPDATER_ORS_SMALI/p' "$CUST" > fbe_patch.sh
+          test -s fbe_patch.sh || { echo "FBE patch block not found in $CUST"; exit 1; }
+          LOG(){ echo "$*"; }; LOGE(){ echo "ERROR: $*"; }
+          run_patch(){ . ./fbe_patch.sh; }
+          run_patch
+          grep -rq "/data/media/TWRP/ota_update.zip" "$UPDATER_DIR"/smali* || { echo "FBE patch not applied"; exit 1; }
+
+      - name: Build and sign with the platform key
+        run: |
+          set -e
+          java -jar apktool.jar b -o unsigned.apk dec
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
+          echo "build-tools: $BT"
+          "$BT/zipalign" -f -p 4 unsigned.apk aligned.apk
+          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > platform.pk8
+          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > platform.x509.pem
+          mkdir -p out
+          "$BT/apksigner" sign --key platform.pk8 --cert platform.x509.pem --out out/ArtisanUpdater-fbe.apk aligned.apk
+          "$BT/apksigner" verify --print-certs out/ArtisanUpdater-fbe.apk | head -n 3
+          rm -f platform.pk8 platform.x509.pem ota.pem
+          md5sum out/ArtisanUpdater-fbe.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArtisanUpdater-fbe
+          path: out/ArtisanUpdater-fbe.apk
