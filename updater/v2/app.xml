@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <apps>
-  <app channel="stable">
-    <version>4.0.1</version>
-    <date>2026-10-01</date>
+  <app>
+    <version>4.0.2</version>
+    <date>2026-10-14</date>
     <filename>ArtisanUpdater.apk</filename>
-    <link>https://github.com/ArtisanROM/rom_resources/releases/download/v4.0.1-updater/ArtisanUpdater.apk</link>
-    <size>4236713</size>
+    <link>https://github.com/Master37373/ArtisanROMtest/releases/download/updater-v4.0.2-1/ArtisanUpdater.apk</link>
+    <size>5115683</size>
   </app>
 </apps>
