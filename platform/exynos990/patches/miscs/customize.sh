@@ -107,6 +107,9 @@ else
     LOG "\033[0;33m! userdata line has no fileencryption=ice in the stock fstab\033[0m"
 fi
 
+# Adoptable volumes: policy v2 (v1 fails on casefolded dirs like media/0 with EINVAL)
+SET_PROP "vendor" "ro.crypto.volume.options" "aes-256-xts:aes-256-cts:v2"
+
 # ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
 
