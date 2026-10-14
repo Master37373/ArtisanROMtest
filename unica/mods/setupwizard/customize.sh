@@ -26,8 +26,7 @@ SMALI_PATCH "system" "system/priv-app/SecSetupWizard_Global/SecSetupWizard_Globa
     > /dev/null
 unset NAV_STEP_FILE NAV_STEP_METHOD SETUPWIZARD_ACTIVITY SETUPWIZARD_ACTIVITY_METHOD
 
-LOG "- Disabling Recommended apps step"
-EVAL "sed -i \"/omcagent/d\" \"$APKTOOL_DIR/system/priv-app/SecSetupWizard_Global/SecSetupWizard_Global.apk/res/values/arrays.xml\""
+# Keep the "Recommended apps" (omcagent) step in the setup wizard
 
 # Dynamically patch SecSetupWizard_Global
 # - Add missing/non-xml files in place
