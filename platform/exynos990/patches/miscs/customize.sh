@@ -200,3 +200,18 @@ else
     ADD_TO_WORK_DIR "b0sxxx" "system" "system/apex/com.android.bt.apex" 0 0 644 "u:object_r:system_file:s0"
 fi
 LOG_STEP_OUT
+
+# SD card encryption (Samsung DirEncrypt) is dead in this source firmware: the S24 framework stubs out
+# StorageManagerService.encryptExternalStorage() (returns OK, does nothing) and DirEncryptService no longer
+# has an encryption engine, so the screen hangs forever on "checking SD card". Hide the menu entry.
+DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
+SDENC_CTRL="$(find "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk" -type f \
+    -path '*/com/samsung/android/settings/encryption/SDCardEncryptStatusPreferenceController.smali' -printf '%P\n' -quit)"
+if [ "$SDENC_CTRL" ]; then
+    LOG "- Hiding the non-functional \"Encrypt SD card\" entry"
+    SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+        "$SDENC_CTRL" "return" 'getAvailabilityStatus()I' '3'
+else
+    LOG "\033[0;33m! SDCardEncryptStatusPreferenceController not found, skipping\033[0m"
+fi
+unset SDENC_CTRL
