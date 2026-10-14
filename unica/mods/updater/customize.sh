@@ -69,6 +69,83 @@ if [ -f "$UPDATER_DIR/assets/otacert.pem" ]; then
     cp -f "$SRC_DIR/security/artisanrom_ota.x509.pem" "$UPDATER_DIR/assets/otacert.pem"
 fi
 
+# FBE: TWRP cannot read /sdcard (= /data/media/0, CE-encrypted) or /data/ota_package (DE-encrypted).
+# /data/media itself is unencrypted, so copy the OTA ZIP to /data/media/TWRP right before the
+# OpenRecoveryScript is written and let TWRP install it from there.
+LOG "- Making ArtisanUpdater install OTA ZIPs from /data/media/TWRP (FBE)"
+UPDATER_ORS_SMALI="$(grep -rlF --include="*.smali" '"Installing ZIP via ORS: "' "$UPDATER_DIR" | head -n 1)"
+if [ -z "$UPDATER_ORS_SMALI" ]; then
+    LOGE "ArtisanUpdater: ORS install method not found. Upstream changed the app, please check unica/mods/updater/customize.sh"
+    return 1
+fi
+if ! python3 - "$UPDATER_ORS_SMALI" <<'PYEOF'
+import re, sys
+path = sys.argv[1]
+lines = open(path, encoding="utf-8").read().split("\n")
+TARGET = "/data/media/TWRP/ota_update.zip"
+
+anchor = next(i for i, l in enumerate(lines) if '"Installing ZIP via ORS: "' in l)
+start = max(i for i in range(anchor) if lines[i].startswith(".method"))
+end = next(i for i in range(anchor, len(lines)) if lines[i].startswith(".end method"))
+method = lines[start:end]
+if any(TARGET in l for l in method):
+    print("already patched"); sys.exit(0)
+
+locals_n = int(next(l for l in method if ".locals" in l).split()[1])
+if locals_n < 3:
+    sys.exit("unexpected .locals %d" % locals_n)
+
+ins = next(i for i in range(anchor, end) if lines[i].strip() == 'const-string v0, "install "')
+mk = next(i for i in range(ins, end) if 'mkdir -p /cache/recovery' in lines[i])
+exe = None
+for i in range(mk, end):
+    m = re.match(r'\s*invoke-static \{p1\}, (L[^;]+;->[\w$]+)\(Ljava/lang/String;\)Z', lines[i])
+    if m:
+        exe = m.group(1); exe_line = i; break
+if exe is None:
+    sys.exit("root exec call not found")
+label = None
+for i in range(exe_line, end):
+    m = re.match(r'\s*if-eqz p1, (:\w+)', lines[i])
+    if m:
+        label = m.group(1); break
+if label is None:
+    sys.exit("failure label not found")
+
+cmd_head = 'F=\\"'
+cmd_tail = ('\\"; [ -f \\"$F\\" ] || F=\\"/data/media/0/${F#*/0/}\\"; '
+            'mkdir -p /data/media/TWRP && cp -f \\"$F\\" ' + TARGET +
+            ' && chmod 644 ' + TARGET + ' && sync')
+block = [
+    "    new-instance v0, Ljava/lang/StringBuilder;",
+    '    const-string v2, "%s"' % cmd_head,
+    "    invoke-direct {v0, v2}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V",
+    "    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+    '    const-string v2, "%s"' % cmd_tail,
+    "    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+    "    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;",
+    "    move-result-object p1",
+    "    invoke-static {p1}, %s(Ljava/lang/String;)Z" % exe,
+    "    move-result p1",
+    "    if-eqz p1, %s" % label,
+    '    const-string p1, "%s"' % TARGET,
+    "",
+]
+lines[ins:ins] = block
+open(path, "w", encoding="utf-8").write("\n".join(lines))
+print("patched", path, "exec", exe, "label", label)
+PYEOF
+then
+    LOGE "ArtisanUpdater: failed to patch the ORS install method"
+    return 1
+fi
+
+# Also remove the TWRP copy when the app cleans up after an install
+while IFS= read -r f; do
+    sed -i 's|rm -f /sdcard/openrecoveryscript /cache/recovery/openrecoveryscript /cache/recovery/command"|rm -f /sdcard/openrecoveryscript /cache/recovery/openrecoveryscript /cache/recovery/command /data/media/TWRP/ota_update.zip"|' "$f"
+done < <(grep -rlF --include="*.smali" "rm -f /sdcard/openrecoveryscript /cache/recovery/openrecoveryscript /cache/recovery/command\"" "$UPDATER_DIR")
+unset UPDATER_ORS_SMALI
+
 # Dynamically patch SecSettings
 # - Add missing/non-xml files in place
 # - Patch existing files
