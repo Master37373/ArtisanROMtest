@@ -117,6 +117,25 @@ if ! grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/et
         ABORT "Failed to mark the sdcard entry as adoptable"
 fi
 
+# Adoptable storage: vold sec_backup EEXIST ignorieren
+LOG "- Patching vold for adoptable storage (sec_backup)"
+VOLD="$WORK_DIR/system/system/bin/vold"
+V_DE_FROM="43c48252d1120094001c0036"
+V_DE_TO="43c48252d11200941f2003d5"
+V_CE_FROM="43c4825262100094c8021a321f000072d612881a"
+V_CE_TO="43c4825262100094c8021a321f0000721f2003d5"
+for P in "sec_backup_de:$V_DE_FROM:$V_DE_TO" "sec_backup_ce:$V_CE_FROM:$V_CE_TO"; do
+    NAME="${P%%:*}"; REST="${P#*:}"; FROM="${REST%%:*}"; TO="${REST##*:}"
+    if xxd -p -c0 "$VOLD" | grep -q "$TO"; then
+        LOG "  - vold $NAME patch already applied"
+    elif xxd -p -c0 "$VOLD" | grep -q "$FROM"; then
+        HEX_PATCH "$VOLD" "$FROM" "$TO" || ABORT "vold $NAME patch failed"
+    else
+        ABORT "vold $NAME pattern not found"
+    fi
+done
+unset VOLD V_DE_FROM V_DE_TO V_CE_FROM V_CE_TO P NAME REST FROM TO
+
 # FBE TEST: LockSettingsService.unlockCeStorage() passes a Gatekeeper auth token to vold when
 # ro.product.first_api_level <= 30 (y2s = 29). The Android 16 vold from the source firmware
 # rejects any token ("Vold doesn't use auth tokens" -> EINVAL), so CE storage never unlocks
