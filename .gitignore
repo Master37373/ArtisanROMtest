@@ -12,3 +12,5 @@ security/artisanrom_platform.pk8
 !.gitattributes
 !.gitignore
 !.gitmodules
+security/artisanrom_updater.x509.pem
+security/artisanrom_updater.pk8

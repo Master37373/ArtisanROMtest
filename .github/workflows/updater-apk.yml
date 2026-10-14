@@ -94,8 +94,8 @@ jobs:
           java -jar apktool.jar b -o unsigned.apk dec
           BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
           "$BT/zipalign" -f -p 4 unsigned.apk aligned.apk
-          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > platform.pk8
-          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > platform.x509.pem
+          echo -n "${{ secrets.UPDATER_KEY_PK8 }}" | base64 --decode > platform.pk8
+          echo -n "${{ secrets.UPDATER_KEY_PEM }}" | base64 --decode > platform.x509.pem
           mkdir -p out
           "$BT/apksigner" sign --key platform.pk8 --cert platform.x509.pem --out out/ArtisanUpdater.apk aligned.apk
           rm -f platform.pk8 platform.x509.pem

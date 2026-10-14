@@ -76,6 +76,10 @@ jobs:
           echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/artisanrom_platform.x509.pem
           echo -n "${{ secrets.OTA_KEY_PK8 }}" | base64 --decode > security/artisanrom_ota.pk8
           echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > security/artisanrom_ota.x509.pem
+          if [ -n "${{ secrets.UPDATER_KEY_PK8 }}" ]; then
+            echo -n "${{ secrets.UPDATER_KEY_PK8 }}" | base64 --decode > security/artisanrom_updater.pk8
+            echo -n "${{ secrets.UPDATER_KEY_PEM }}" | base64 --decode > security/artisanrom_updater.x509.pem
+          fi
 
           # Samsungs Versions-Abfrage hat im Skript nur 3 Sekunden Zeit, das scheitert von GitHub-Runnern oft
           sed -i 's/curl -s --retry 3 -m 3 /curl -s --retry 5 -m 20 /' scripts/utils/firmware_utils.sh
