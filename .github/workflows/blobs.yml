@@ -75,6 +75,15 @@ jobs:
             attr ccache clang ffmpeg libbrotli-dev libbz2-dev \
             libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
             libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp
+
+          # The "Free disk space" steps above wipe the preinstalled Rust toolchain,
+          # so reinstall it; build_dependencies.sh needs cargo to build samloader-rs.
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source "$HOME/.cargo/env"
+
+          rustc --version
+          cargo --version
+
           sudo modprobe erofs f2fs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
