@@ -70,6 +70,10 @@ APPLY_SEPOLICY_FIX()
     # KernelSU-Next.
     APPLY_PATCH_ONCE "$KERNEL_TMP_DIR"               "$PATCH_DIR/selinux-atomic-alloc.patch"  "selinux-atomic-alloc.patch"
     APPLY_PATCH_ONCE "$KERNEL_TMP_DIR/KernelSU-Next" "$PATCH_DIR/kernelsu-sepolicy-fix.patch" "kernelsu-sepolicy-fix.patch"
+    # FBE (software crypto): f2fs_submit_page_write dereferenced bio_page->mapping, which is NULL for fscrypt bounce pages
+    APPLY_PATCH_ONCE "$KERNEL_TMP_DIR"               "$PATCH_DIR/f2fs-bounce-page-inode.patch" "f2fs-bounce-page-inode.patch"
+    # Adoptable storage: Android vold always passes "allow_encrypt_override" to dm-crypt
+    APPLY_PATCH_ONCE "$KERNEL_TMP_DIR"               "$PATCH_DIR/dm-crypt-allow-encrypt-override.patch" "dm-crypt-allow-encrypt-override.patch"
 }
 
 REPLACE_KERNEL_BINARIES()

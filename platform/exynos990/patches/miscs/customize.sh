@@ -86,12 +86,69 @@ else
     LOG_STEP_OUT
 fi
 
-LOG "- Disabling encryption"
+# FBE (branch fbe-test): hardware file-based encryption via the Exynos FMP inline crypto engine.
+# - Stock "fileencryption=ice" requests Samsung FMP mode 127, which this kernel's fscrypt rejects.
+# - Policy v2 is required: /data has casefolded dirs and v1 on casefold fails with EINVAL
+#   (init_user0_failed -> recovery). y2s has first_api_level 29, so v2 must be stated explicitly.
+# - Standard (non-wrapped) keys: the TEE keymaster cannot create hardware-wrapped storage keys
+#   (generateKey -100 -> enablefilecrypto_failed), and the FMP keyslot manager only advertises
+#   BLK_CRYPTO_FEATURE_STANDARD_KEYS with AES-256-XTS / 4096-byte data units anyway.
+# - "inlinecrypt" is added as an f2fs mount option in column 4 (this libfstab ignores it as an
+#   fs_mgr flag). With it, file contents go through blk-crypto, which hands the bio to FMP because
+#   FMP supports the mode; the crypto-API fallback is only used if the hardware refuses.
+LOG "- Enabling hardware FBE via FMP inline crypto (AES-256-XTS/CTS, policy v2) (fbe-test)"
 LINE=$(sed -n "/^\/dev\/block\/by-name\/userdata/=" "$WORK_DIR/vendor/etc/fstab.exynos990")
-sed -i "${LINE}s/,fileencryption=ice//g" "$WORK_DIR/vendor/etc/fstab.exynos990"
+if sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'fileencryption=ice'; then
+    sed -i "${LINE}s/fileencryption=ice/fileencryption=aes-256-xts:aes-256-cts:v2/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    sed -i "${LINE}s/resgid=5678/resgid=5678,inlinecrypt/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    sed -n "${LINE}p" "$WORK_DIR/vendor/etc/fstab.exynos990" | grep -q 'resgid=5678,inlinecrypt' || \
+        ABORT "Failed to add the inlinecrypt mount option to the userdata entry"
+else
+    LOG "\033[0;33m! userdata line has no fileencryption=ice in the stock fstab\033[0m"
+fi
 
-# ODE
+# Adoptable volumes: policy v2 (v1 fails on casefolded dirs like media/0 with EINVAL)
+SET_PROP "vendor" "ro.crypto.volume.options" "aes-256-xts:aes-256-cts:v2"
+
+# ODE / keydata / keyrefuge (Samsung key storage, needs hermesd which this ROM removes)
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos990"
+
+# Adoptable storage: mark the microSD slot as adoptable ("Format as internal", encrypted with FBE)
+if ! grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990"; then
+    sed -i "s/voldmanaged=sdcard:auto$/voldmanaged=sdcard:auto,encryptable=userdata/" "$WORK_DIR/vendor/etc/fstab.exynos990"
+    grep -q "voldmanaged=sdcard:auto,encryptable=userdata" "$WORK_DIR/vendor/etc/fstab.exynos990" || \
+        ABORT "Failed to mark the sdcard entry as adoptable"
+fi
+
+# Adoptable storage: vold sec_backup EEXIST ignorieren
+LOG "- Patching vold for adoptable storage (sec_backup)"
+VOLD="$WORK_DIR/system/system/bin/vold"
+V_DE_FROM="43c48252d1120094001c0036"
+V_DE_TO="43c48252d11200941f2003d5"
+V_CE_FROM="43c4825262100094c8021a321f000072d612881a"
+V_CE_TO="43c4825262100094c8021a321f0000721f2003d5"
+for P in "sec_backup_de:$V_DE_FROM:$V_DE_TO" "sec_backup_ce:$V_CE_FROM:$V_CE_TO"; do
+    NAME="${P%%:*}"; REST="${P#*:}"; FROM="${REST%%:*}"; TO="${REST##*:}"
+    if xxd -p -c0 "$VOLD" | grep -q "$TO"; then
+        LOG "  - vold $NAME patch already applied"
+    elif xxd -p -c0 "$VOLD" | grep -q "$FROM"; then
+        HEX_PATCH "$VOLD" "$FROM" "$TO" || ABORT "vold $NAME patch failed"
+    else
+        ABORT "vold $NAME pattern not found"
+    fi
+done
+unset VOLD V_DE_FROM V_DE_TO V_CE_FROM V_CE_TO P NAME REST FROM TO
+
+# FBE TEST: LockSettingsService.unlockCeStorage() passes a Gatekeeper auth token to vold when
+# ro.product.first_api_level <= 30 (y2s = 29). The Android 16 vold from the source firmware
+# rejects any token ("Vold doesn't use auth tokens" -> EINVAL), so CE storage never unlocks
+# once a PIN is set. Lower the threshold to 0 so the token-less path is always used.
+# shellcheck disable=SC2016
+SMALI_PATCH "system" "system/framework/services.jar" \
+    "smali/com/android/server/locksettings/LockSettingsService.smali" "replace" \
+    'unlockCeStorage(ILcom/android/server/locksettings/SyntheticPasswordManager$SyntheticPassword;)V' \
+    'const/16 v6, 0x1e' \
+    'const/16 v6, 0x0'
 
 # For some reason we are missing 2 permissions here: android.hardware.security.model.compatible and android.software.controls
 # First one is related to encryption and second one to SmartThings Device Control

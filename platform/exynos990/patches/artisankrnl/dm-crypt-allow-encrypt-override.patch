@@ -1,0 +1,20 @@
+diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
+index b5a04b4..4a46be1 100644
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -2682,7 +2682,14 @@ static int crypt_ctr_optional(struct dm_target *ti, unsigned int argc, char **ar
+ 			cc->sector_shift = __ffs(cc->sector_size) - SECTOR_SHIFT;
+ 		} else if (!strcasecmp(opt_string, "iv_large_sectors"))
+ 			set_bit(CRYPT_IV_LARGE_SECTORS, &cc->cipher_flags);
+-		else {
++		else if (!strcasecmp(opt_string, "allow_encrypt_override")) {
++			/*
++			 * Android vold always passes this for adoptable storage.
++			 * It only allows skipping double encryption of blocks that
++			 * fscrypt already encrypted; encrypting everything anyway is
++			 * always correct, so accept it as a no-op.
++			 */
++		} else {
+ 			ti->error = "Invalid feature arguments";
+ 			return -EINVAL;
+ 		}
