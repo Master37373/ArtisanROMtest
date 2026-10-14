@@ -2,9 +2,18 @@ name: Build Updater APK
 
 on:
   workflow_dispatch:
+    inputs:
+      app_version:
+        description: 'Neue versionName (gleiche Laenge wie die alte, z.B. 4.0.1 -> 4.0.2)'
+        required: true
+        default: '4.0.2'
+      publish:
+        description: 'Als App-Update veroeffentlichen (GitHub-Release + updater/v2/app.xml auf main)'
+        type: boolean
+        default: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -48,6 +57,7 @@ jobs:
           # Own OTA certificate
           echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > ota.pem
           if [ -f "$UPDATER_DIR/assets/otacert.pem" ]; then cp -f ota.pem "$UPDATER_DIR/assets/otacert.pem"; fi
+          rm -f ota.pem
 
           # FBE patch: extract the block from customize.sh and run it
           sed -n '/^# FBE: TWRP cannot read/,/^unset UPDATER_ORS_SMALI/p' "$CUST" > fbe_patch.sh
@@ -57,23 +67,80 @@ jobs:
           run_patch
           grep -rq "/data/media/TWRP/ota_update.zip" "$UPDATER_DIR"/smali* || { echo "FBE patch not applied"; exit 1; }
 
+      - name: Bump versionName (in-app self-update compares it)
+        env:
+          NEW_VER: ${{ github.event.inputs.app_version }}
+        run: |
+          set -e
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
+          OLD_VER="$("$BT/aapt2" dump badging unica/mods/updater/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk | sed -n "s/.*versionName='\([^']*\)'.*/\1/p" | head -n 1)"
+          echo "old versionName: $OLD_VER  new: $NEW_VER"
+          python3 - dec/AndroidManifest.xml "$OLD_VER" "$NEW_VER" <<'PYEOF'
+          import sys
+          path, old, new = sys.argv[1:4]
+          if len(old) != len(new):
+              sys.exit("versionName length must stay the same (%s -> %s)" % (old, new))
+          d = open(path, "rb").read()
+          o, n = old.encode("utf-16-le"), new.encode("utf-16-le")
+          if d.count(o) != 1:
+              sys.exit("expected exactly one %s in the manifest, found %d" % (old, d.count(o)))
+          open(path, "wb").write(d.replace(o, n))
+          print("versionName", old, "->", new)
+          PYEOF
+
       - name: Build and sign with the platform key
         run: |
           set -e
           java -jar apktool.jar b -o unsigned.apk dec
           BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -n 1)"
-          echo "build-tools: $BT"
           "$BT/zipalign" -f -p 4 unsigned.apk aligned.apk
           echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > platform.pk8
           echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > platform.x509.pem
           mkdir -p out
-          "$BT/apksigner" sign --key platform.pk8 --cert platform.x509.pem --out out/ArtisanUpdater-fbe.apk aligned.apk
-          "$BT/apksigner" verify --print-certs out/ArtisanUpdater-fbe.apk | head -n 3
-          rm -f platform.pk8 platform.x509.pem ota.pem
-          md5sum out/ArtisanUpdater-fbe.apk
+          "$BT/apksigner" sign --key platform.pk8 --cert platform.x509.pem --out out/ArtisanUpdater.apk aligned.apk
+          rm -f platform.pk8 platform.x509.pem
+          "$BT/apksigner" verify --print-certs out/ArtisanUpdater.apk | head -n 3
+          "$BT/aapt2" dump badging out/ArtisanUpdater.apk | head -n 1
+          md5sum out/ArtisanUpdater.apk
 
-      - name: Upload APK
+      - name: Upload APK (artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: ArtisanUpdater-fbe
-          path: out/ArtisanUpdater-fbe.apk
+          name: ArtisanUpdater-${{ github.event.inputs.app_version }}
+          path: out/ArtisanUpdater.apk
+
+      - name: Publish as in-app update (release asset + app.xml on main)
+        if: github.event.inputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_VER: ${{ github.event.inputs.app_version }}
+        run: |
+          set -e
+          TAG="updater-v$NEW_VER-${{ github.run_number }}"
+          gh release create "$TAG" out/ArtisanUpdater.apk \
+            --repo "${{ github.repository }}" --target "${{ github.sha }}" \
+            --title "ArtisanUpdater $NEW_VER" --notes "In-app update for ArtisanUpdater"
+          LINK="https://github.com/${{ github.repository }}/releases/download/$TAG/ArtisanUpdater.apk"
+          SIZE="$(stat -c%s out/ArtisanUpdater.apk)"
+          rm -rf updater_repo
+          git clone --single-branch --branch main "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
+          mkdir -p updater_repo/updater/v2
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<apps>'
+            echo '  <app>'
+            echo "    <version>$NEW_VER</version>"
+            echo "    <date>$(date +%Y-%m-%d)</date>"
+            echo "    <filename>ArtisanUpdater.apk</filename>"
+            echo "    <link>$LINK</link>"
+            echo "    <size>$SIZE</size>"
+            echo '  </app>'
+            echo '</apps>'
+          } > updater_repo/updater/v2/app.xml
+          cat updater_repo/updater/v2/app.xml
+          cd updater_repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updater/v2/app.xml
+          git commit -m "updater: v2: app.xml: Update to $NEW_VER" || true
+          for i in 1 2 3; do git pull --rebase origin main && git push origin main && break; sleep 5; done
