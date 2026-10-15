@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 1009
+    .line 1012
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$23$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$23;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -40,7 +40,7 @@
     .locals 3
 
     .prologue
-    .line 1009
+    .line 1012
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$23$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$23;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$23;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -51,7 +51,7 @@
 
     const/4 v2, 0x1
 
-    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3000(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
+    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3200(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
 
     return-void
 .end method

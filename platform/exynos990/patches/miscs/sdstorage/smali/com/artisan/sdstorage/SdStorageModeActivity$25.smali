@@ -35,7 +35,7 @@
     .end annotation
 
     .prologue
-    .line 1034
+    .line 1037
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$25;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$25;->val$wantSd:Z
@@ -53,15 +53,15 @@
     .locals 2
 
     .prologue
-    .line 1035
+    .line 1038
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$25;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     new-instance v1, Lcom/artisan/sdstorage/SdStorageModeActivity$25$1;
 
     invoke-direct {v1, p0}, Lcom/artisan/sdstorage/SdStorageModeActivity$25$1;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity$25;)V
 
-    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3100(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/Runnable;)V
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3300(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/Runnable;)V
 
-    .line 1039
+    .line 1042
     return-void
 .end method

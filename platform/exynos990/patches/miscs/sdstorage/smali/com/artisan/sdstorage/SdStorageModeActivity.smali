@@ -351,7 +351,29 @@
     return-object v0
 .end method
 
-.method static synthetic access$2602(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)Landroid/os/storage/VolumeInfo;
+.method static synthetic access$2600(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;I)Landroid/os/storage/VolumeInfo;
+    .locals 1
+
+    .prologue
+    .line 68
+    invoke-direct {p0, p1, p2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->findVolume(Landroid/os/storage/DiskInfo;I)Landroid/os/storage/VolumeInfo;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method static synthetic access$2700(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)V
+    .locals 0
+
+    .prologue
+    .line 68
+    invoke-direct {p0, p1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->unmountQuietly(Landroid/os/storage/VolumeInfo;)V
+
+    return-void
+.end method
+
+.method static synthetic access$2802(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)Landroid/os/storage/VolumeInfo;
     .locals 0
 
     .prologue
@@ -361,7 +383,7 @@
     return-object p1
 .end method
 
-.method static synthetic access$2700(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)Landroid/os/storage/VolumeInfo;
+.method static synthetic access$2900(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)Landroid/os/storage/VolumeInfo;
     .locals 1
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -378,26 +400,6 @@
     return-object v0
 .end method
 
-.method static synthetic access$2800(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
-    .locals 0
-
-    .prologue
-    .line 68
-    invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->showInternalReady()V
-
-    return-void
-.end method
-
-.method static synthetic access$2900(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
-    .locals 0
-
-    .prologue
-    .line 68
-    invoke-direct {p0, p1, p2, p3, p4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->runWork(Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
-
-    return-void
-.end method
-
 .method static synthetic access$300(Lcom/artisan/sdstorage/SdStorageModeActivity;)Z
     .locals 1
 
@@ -410,7 +412,27 @@
     return v0
 .end method
 
-.method static synthetic access$3000(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
+.method static synthetic access$3000(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+    .locals 0
+
+    .prologue
+    .line 68
+    invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->showInternalReady()V
+
+    return-void
+.end method
+
+.method static synthetic access$3100(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+    .locals 0
+
+    .prologue
+    .line 68
+    invoke-direct {p0, p1, p2, p3, p4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->runWork(Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+
+    return-void
+.end method
+
+.method static synthetic access$3200(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
     .locals 0
 
     .prologue
@@ -420,7 +442,7 @@
     return-void
 .end method
 
-.method static synthetic access$3100(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/Runnable;)V
+.method static synthetic access$3300(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/Runnable;)V
     .locals 0
 
     .prologue
@@ -430,7 +452,7 @@
     return-void
 .end method
 
-.method static synthetic access$3200(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
+.method static synthetic access$3400(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
     .locals 1
 
     .prologue
@@ -440,7 +462,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$3300(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
+.method static synthetic access$3500(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
     .locals 1
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -457,7 +479,7 @@
     return-object v0
 .end method
 
-.method static synthetic access$3400(Lcom/artisan/sdstorage/SdStorageModeActivity;Z)V
+.method static synthetic access$3600(Lcom/artisan/sdstorage/SdStorageModeActivity;Z)V
     .locals 0
 
     .prologue
@@ -467,7 +489,7 @@
     return-void
 .end method
 
-.method static synthetic access$3500(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/lang/String;)V
+.method static synthetic access$3700(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/lang/String;)V
     .locals 0
 
     .prologue
@@ -477,7 +499,7 @@
     return-void
 .end method
 
-.method static synthetic access$3600(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+.method static synthetic access$3800(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
     .locals 1
 
     .prologue
@@ -2107,7 +2129,7 @@
     .locals 8
 
     .prologue
-    .line 1027
+    .line 1030
     if-eqz p2, :cond_0
 
     const-string v0, "Dateien auf die SD-Karte verschieben?"
@@ -2118,13 +2140,13 @@
 
     move-result-object v1
 
-    .line 1028
+    .line 1031
     :goto_0
     const-string v0, "Fotos, Videos, Downloads und andere Dateien werden verschoben und k\u00fcnftig dort gespeichert. Je nach Datenmenge dauert das einige Minuten."
 
     const-string v2, "Photos, videos, downloads and other files are moved and stored there from now on. Depending on the amount of data this takes a few minutes."
 
-    .line 1029
+    .line 1032
     invoke-direct {p0, v0, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -2135,7 +2157,7 @@
 
     const-string v4, "Cancel"
 
-    .line 1033
+    .line 1036
     invoke-direct {p0, v0, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -2156,20 +2178,20 @@
 
     move-object v0, p0
 
-    .line 1027
+    .line 1030
     invoke-direct/range {v0 .. v7}, Lcom/artisan/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
-    .line 1041
+    .line 1044
     new-instance v0, Lcom/artisan/sdstorage/SdStorageModeActivity$26;
 
     invoke-direct {v0, p0}, Lcom/artisan/sdstorage/SdStorageModeActivity$26;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
 
     iput-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mSheetCancel:Ljava/lang/Runnable;
 
-    .line 1042
+    .line 1045
     return-void
 
-    .line 1028
+    .line 1031
     :cond_0
     const-string v0, "Dateien in den internen Speicher verschieben?"
 
@@ -2239,7 +2261,7 @@
     .line 940
     invoke-direct/range {v0 .. v7}, Lcom/artisan/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
-    .line 955
+    .line 958
     return-void
 .end method
 
@@ -3075,10 +3097,10 @@
     .locals 3
 
     .prologue
-    .line 1145
+    .line 1170
     packed-switch p1, :pswitch_data_0
 
-    .line 1157
+    .line 1182
     :pswitch_0
     const-string v0, "Interner Fehler."
 
@@ -3088,7 +3110,7 @@
 
     move-result-object v0
 
-    .line 1159
+    .line 1184
     :goto_0
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -3126,7 +3148,7 @@
 
     return-object v0
 
-    .line 1146
+    .line 1171
     :pswitch_1
     const-string v0, "Nicht genug freier Speicher am Ziel."
 
@@ -3138,7 +3160,7 @@
 
     goto :goto_0
 
-    .line 1147
+    .line 1172
     :pswitch_2
     const-string v0, "Die App existiert nicht mehr."
 
@@ -3150,7 +3172,7 @@
 
     goto :goto_0
 
-    .line 1148
+    .line 1173
     :pswitch_3
     const-string v0, "System-Apps k\u00f6nnen nicht verschoben werden."
 
@@ -3162,7 +3184,7 @@
 
     goto :goto_0
 
-    .line 1149
+    .line 1174
     :pswitch_4
     const-string v0, "Dieser Speicherort ist nicht m\u00f6glich."
 
@@ -3174,7 +3196,7 @@
 
     goto :goto_0
 
-    .line 1150
+    .line 1175
     :pswitch_5
     const-string v0, "Es l\u00e4uft bereits ein anderer Verschiebevorgang. Bitte sp\u00e4ter erneut versuchen."
 
@@ -3186,7 +3208,7 @@
 
     goto :goto_0
 
-    .line 1152
+    .line 1177
     :pswitch_6
     const-string v0, "Diese App ist ein Ger\u00e4teadministrator und kann nicht verschoben werden."
 
@@ -3198,7 +3220,7 @@
 
     goto :goto_0
 
-    .line 1154
+    .line 1179
     :pswitch_7
     const-string v0, "Der Sichere Ordner oder ein anderer Benutzer ist gesperrt. Entsperre ihn und versuche es dann erneut."
 
@@ -3210,7 +3232,7 @@
 
     goto :goto_0
 
-    .line 1145
+    .line 1170
     :pswitch_data_0
     .packed-switch -0xa
         :pswitch_7
@@ -3230,7 +3252,7 @@
     .locals 4
 
     .prologue
-    .line 1045
+    .line 1048
     if-eqz p2, :cond_0
 
     const-string v0, "Dateien werden verschoben"
@@ -3246,7 +3268,7 @@
 
     invoke-direct {v2, p0, p1, p2}, Lcom/artisan/sdstorage/SdStorageModeActivity$27;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
 
-    .line 1056
+    .line 1059
     if-eqz p2, :cond_1
 
     const-string v1, "Fotos, Downloads und andere Dateien liegen jetzt auf der SD-Karte. Neue Dateien werden automatisch dort gespeichert."
@@ -3257,17 +3279,17 @@
 
     move-result-object v1
 
-    .line 1058
+    .line 1061
     :goto_1
     const/4 v3, 0x0
 
-    .line 1045
+    .line 1048
     invoke-direct {p0, v0, v2, v1, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->runWork(Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
 
-    .line 1061
+    .line 1064
     return-void
 
-    .line 1045
+    .line 1048
     :cond_0
     const-string v0, "Dateien werden zur\u00fcckgeholt"
 
@@ -3279,7 +3301,7 @@
 
     goto :goto_0
 
-    .line 1058
+    .line 1061
     :cond_1
     const-string v1, "Fotos, Downloads und andere Dateien liegen jetzt im internen Speicher."
 
@@ -4053,42 +4075,42 @@
     .prologue
     const/4 v4, 0x1
 
-    .line 1186
+    .line 1211
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastTitle:Ljava/lang/String;
 
-    .line 1187
+    .line 1212
     iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastWork:Lcom/artisan/sdstorage/SdStorageModeActivity$Work;
 
-    .line 1188
+    .line 1213
     iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastOk:Ljava/lang/String;
 
-    .line 1189
+    .line 1214
     iput-object p4, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastNext:Ljava/lang/Runnable;
 
-    .line 1190
+    .line 1215
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 1191
+    .line 1216
     invoke-direct {p0, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->setBusy(Z)V
 
-    .line 1192
+    .line 1217
     invoke-direct {p0, p1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 1193
+    .line 1218
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 1194
+    .line 1219
     const/4 v1, 0x3
 
     const/16 v2, 0xbe
 
     invoke-direct {p0, v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/artisan/sdstorage/SdAnimView;
 
-    .line 1195
+    .line 1220
     const-string v1, "Bitte warten \u2026"
 
     const-string v2, "Please wait \u2026"
@@ -4103,7 +4125,7 @@
 
     iput-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mWorkText:Landroid/widget/TextView;
 
-    .line 1196
+    .line 1221
     new-instance v1, Landroid/widget/ProgressBar;
 
     const/4 v2, 0x0
@@ -4112,10 +4134,10 @@
 
     invoke-direct {v1, p0, v2, v3}, Landroid/widget/ProgressBar;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
-    .line 1197
+    .line 1222
     invoke-virtual {v1, v4}, Landroid/widget/ProgressBar;->setIndeterminate(Z)V
 
-    .line 1198
+    .line 1223
     iget v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mAccent:I
 
     invoke-static {v2}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
@@ -4124,12 +4146,12 @@
 
     invoke-virtual {v1, v2}, Landroid/widget/ProgressBar;->setIndeterminateTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 1199
+    .line 1224
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v2
 
-    .line 1200
+    .line 1225
     const/high16 v3, 0x40c00000    # 6.0f
 
     invoke-direct {p0, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->dp(F)I
@@ -4138,7 +4160,7 @@
 
     iput v3, v2, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
-    .line 1201
+    .line 1226
     const/high16 v3, 0x41400000    # 12.0f
 
     invoke-direct {p0, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->dp(F)I
@@ -4147,10 +4169,10 @@
 
     iput v3, v2, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
-    .line 1202
+    .line 1227
     invoke-virtual {v0, v1, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 1203
+    .line 1228
     const-string v1, "Entferne die SD-Karte nicht und schalte das Ger\u00e4t nicht aus. Das Display bleibt dabei an."
 
     const-string v2, "Do not remove the SD card or turn off the device. The screen stays on meanwhile."
@@ -4161,10 +4183,10 @@
 
     invoke-direct {p0, v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1205
+    .line 1230
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->animatePage()V
 
-    .line 1207
+    .line 1232
     new-instance v0, Ljava/lang/Thread;
 
     new-instance v1, Lcom/artisan/sdstorage/SdStorageModeActivity$30;
@@ -4175,10 +4197,10 @@
 
     invoke-direct {v0, v1, v2}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;Ljava/lang/String;)V
 
-    .line 1225
+    .line 1250
     invoke-virtual {v0}, Ljava/lang/Thread;->start()V
 
-    .line 1226
+    .line 1251
     return-void
 .end method
 
@@ -4263,10 +4285,10 @@
     .prologue
     const/16 v4, 0x80
 
-    .line 1170
+    .line 1195
     iput-boolean p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBusy:Z
 
-    .line 1171
+    .line 1196
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBack:Landroid/widget/ImageButton;
 
     invoke-virtual {v0}, Landroid/widget/ImageButton;->animate()Landroid/view/ViewPropertyAnimator;
@@ -4290,7 +4312,7 @@
 
     invoke-virtual {v0}, Landroid/view/ViewPropertyAnimator;->start()V
 
-    .line 1172
+    .line 1197
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBack:Landroid/widget/ImageButton;
 
     if-nez p1, :cond_1
@@ -4300,36 +4322,36 @@
     :goto_1
     invoke-virtual {v1, v0}, Landroid/widget/ImageButton;->setEnabled(Z)V
 
-    .line 1173
+    .line 1198
     if-eqz p1, :cond_2
 
-    .line 1174
+    .line 1199
     invoke-virtual {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
     move-result-object v0
 
     invoke-virtual {v0, v4}, Landroid/view/Window;->addFlags(I)V
 
-    .line 1178
+    .line 1203
     :goto_2
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->updateBackCallback()V
 
-    .line 1179
+    .line 1204
     return-void
 
-    .line 1171
+    .line 1196
     :cond_0
     const/high16 v0, 0x3f800000    # 1.0f
 
     goto :goto_0
 
-    .line 1172
+    .line 1197
     :cond_1
     const/4 v0, 0x0
 
     goto :goto_1
 
-    .line 1176
+    .line 1201
     :cond_2
     invoke-virtual {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
@@ -4344,7 +4366,7 @@
     .locals 2
 
     .prologue
-    .line 1262
+    .line 1287
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
 
     new-instance v1, Lcom/artisan/sdstorage/SdStorageModeActivity$35;
@@ -4353,7 +4375,7 @@
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
-    .line 1272
+    .line 1297
     return-void
 .end method
 
@@ -4367,18 +4389,18 @@
 
     const/4 v3, 0x0
 
-    .line 976
+    .line 979
     iput-boolean v3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 977
+    .line 980
     iget-object v8, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mNewPrivate:Landroid/os/storage/VolumeInfo;
 
-    .line 978
+    .line 981
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->findSdDisk()Landroid/os/storage/DiskInfo;
 
     move-result-object v0
 
-    .line 979
+    .line 982
     const-string v1, "SD-Karte ist bereit"
 
     const-string v2, "SD card is ready"
@@ -4389,19 +4411,19 @@
 
     invoke-direct {p0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 980
+    .line 983
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v1
 
-    .line 981
+    .line 984
     const/4 v2, 0x5
 
     const/16 v4, 0xaa
 
     invoke-direct {p0, v1, v2, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/artisan/sdstorage/SdAnimView;
 
-    .line 982
+    .line 985
     const-string v2, "Interner Speicher eingerichtet"
 
     const-string v4, "Internal storage set up"
@@ -4412,7 +4434,7 @@
 
     invoke-direct {p0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 983
+    .line 986
     const-string v2, "Die SD-Karte ist jetzt verschl\u00fcsselt und Teil des internen Speichers. Sie ist nur noch in diesem Ger\u00e4t lesbar."
 
     const-string v4, "The SD card is now encrypted and part of internal storage. It can only be read on this device."
@@ -4423,7 +4445,7 @@
 
     invoke-direct {p0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 985
+    .line 988
     const/4 v2, 0x3
 
     new-array v2, v2, [Ljava/lang/String;
@@ -4460,12 +4482,12 @@
 
     invoke-direct {p0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->chips(Landroid/widget/LinearLayout;[Ljava/lang/String;)V
 
-    .line 987
+    .line 990
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v1
 
-    .line 988
+    .line 991
     const-string v2, "Nutzung"
 
     const-string v4, "Usage"
@@ -4484,7 +4506,7 @@
 
     invoke-direct {p0, v1, v2, v4, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 989
+    .line 992
     const-string v2, "Verschl\u00fcsselung"
 
     const-string v4, "Encryption"
@@ -4503,7 +4525,7 @@
 
     invoke-direct {p0, v1, v2, v4, v7}, Lcom/artisan/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 990
+    .line 993
     if-eqz v0, :cond_0
 
     iget-wide v4, v0, Landroid/os/storage/DiskInfo;->size:J
@@ -4530,7 +4552,7 @@
 
     invoke-direct {p0, v1, v2, v0, v7}, Lcom/artisan/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 992
+    .line 995
     :cond_0
     if-eqz v8, :cond_2
 
@@ -4559,11 +4581,11 @@
     :cond_1
     move v0, v7
 
-    .line 993
+    .line 996
     :goto_0
     if-eqz v0, :cond_3
 
-    .line 994
+    .line 997
     const-string v0, "N\u00e4chster Schritt"
 
     const-string v1, "Next step"
@@ -4574,17 +4596,17 @@
 
     invoke-direct {p0, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->sectionLabel(Ljava/lang/String;)V
 
-    .line 995
+    .line 998
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 996
+    .line 999
     const/16 v1, 0x82
 
     invoke-direct {p0, v0, v6, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/artisan/sdstorage/SdAnimView;
 
-    .line 997
+    .line 1000
     const-string v1, "Dateien auf die SD-Karte verschieben?"
 
     const-string v2, "Move files to the SD card?"
@@ -4595,7 +4617,7 @@
 
     invoke-direct {p0, v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 998
+    .line 1001
     const-string v1, "Fotos, Videos, Downloads, Musik und andere Dateien kommen auf die Karte, neue Fotos und Downloads landen danach automatisch dort. System und Apps bleiben im internen Speicher. Je nach Datenmenge dauert das einige Minuten \u2013 du kannst es auch sp\u00e4ter auf dieser Seite \u00e4ndern."
 
     const-string v2, "Photos, videos, downloads, music and other files go to the card, and new photos and downloads are stored there automatically. System and apps stay on internal storage. Depending on the amount of data this takes a few minutes \u2013 you can also change it later on this page."
@@ -4606,7 +4628,7 @@
 
     invoke-direct {p0, v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1004
+    .line 1007
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Sp\u00e4ter"
@@ -4627,7 +4649,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/Button;
 
-    .line 1007
+    .line 1010
     iget-object v5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Dateien verschieben"
@@ -4648,24 +4670,24 @@
 
     invoke-direct/range {v4 .. v9}, Lcom/artisan/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/Button;
 
-    .line 1021
+    .line 1024
     :goto_1
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->animatePage()V
 
-    .line 1022
+    .line 1025
     return-void
 
     :cond_2
     move v0, v3
 
-    .line 992
+    .line 995
     goto :goto_0
 
-    .line 1013
+    .line 1016
     :cond_3
     if-nez v8, :cond_4
 
-    .line 1014
+    .line 1017
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -4694,7 +4716,7 @@
 
     invoke-direct {p0, v1, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1017
+    .line 1020
     :cond_4
     iget-object v5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -5336,12 +5358,12 @@
     .locals 10
 
     .prologue
-    .line 1229
+    .line 1254
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 1230
+    .line 1255
     if-eqz p1, :cond_1
 
     const-string v0, "Fertig"
@@ -5355,12 +5377,12 @@
     :goto_0
     invoke-direct {p0, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 1231
+    .line 1256
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v1
 
-    .line 1232
+    .line 1257
     if-eqz p1, :cond_2
 
     const/4 v0, 0x5
@@ -5370,7 +5392,7 @@
 
     invoke-direct {p0, v1, v0, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/artisan/sdstorage/SdAnimView;
 
-    .line 1233
+    .line 1258
     if-eqz p1, :cond_3
 
     const-string v0, "Alles erledigt"
@@ -5384,13 +5406,13 @@
     :goto_2
     invoke-direct {p0, v1, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1234
+    .line 1259
     invoke-direct {p0, v1, p2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1235
+    .line 1260
     if-eqz p1, :cond_4
 
-    .line 1236
+    .line 1261
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Zur\u00fcck zur \u00dcbersicht"
@@ -5413,7 +5435,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/Button;
 
-    .line 1239
+    .line 1264
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Fertig"
@@ -5436,15 +5458,15 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/Button;
 
-    .line 1258
+    .line 1283
     :cond_0
     :goto_3
     invoke-direct {p0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->animatePage()V
 
-    .line 1259
+    .line 1284
     return-void
 
-    .line 1230
+    .line 1255
     :cond_1
     const-string v0, "Das hat nicht geklappt"
 
@@ -5456,13 +5478,13 @@
 
     goto :goto_0
 
-    .line 1232
+    .line 1257
     :cond_2
     const/4 v0, 0x7
 
     goto :goto_1
 
-    .line 1233
+    .line 1258
     :cond_3
     const-string v0, "Fehler"
 
@@ -5474,7 +5496,7 @@
 
     goto :goto_2
 
-    .line 1243
+    .line 1268
     :cond_4
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -5498,24 +5520,24 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/Button;
 
-    .line 1246
+    .line 1271
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastWork:Lcom/artisan/sdstorage/SdStorageModeActivity$Work;
 
     if-eqz v0, :cond_0
 
-    .line 1247
+    .line 1272
     iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastTitle:Ljava/lang/String;
 
-    .line 1248
+    .line 1273
     iget-object v3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastWork:Lcom/artisan/sdstorage/SdStorageModeActivity$Work;
 
-    .line 1249
+    .line 1274
     iget-object v4, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastOk:Ljava/lang/String;
 
-    .line 1250
+    .line 1275
     iget-object v5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mLastNext:Ljava/lang/Runnable;
 
-    .line 1251
+    .line 1276
     iget-object v6, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Erneut versuchen"
@@ -6281,22 +6303,22 @@
 
     const/4 v8, 0x1
 
-    .line 1066
+    .line 1069
     invoke-virtual {p2}, Landroid/os/storage/VolumeInfo;->getFsUuid()Ljava/lang/String;
 
     move-result-object v6
 
-    .line 1067
+    .line 1070
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
-    .line 1068
+    .line 1071
     new-instance v4, Ljava/util/ArrayList;
 
     invoke-direct {v4}, Ljava/util/ArrayList;-><init>()V
 
-    .line 1069
+    .line 1072
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     const/high16 v2, 0x400000
@@ -6323,7 +6345,7 @@
 
     check-cast v0, Landroid/content/pm/ApplicationInfo;
 
-    .line 1070
+    .line 1073
     if-eqz v6, :cond_0
 
     iget-object v5, v0, Landroid/content/pm/ApplicationInfo;->volumeUuid:Ljava/lang/String;
@@ -6342,12 +6364,12 @@
 
     if-nez v5, :cond_0
 
-    .line 1071
+    .line 1074
     iget-object v5, v0, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
     invoke-interface {v3, v5}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 1072
+    .line 1075
     iget-object v5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     invoke-virtual {v0, v5}, Landroid/content/pm/ApplicationInfo;->loadLabel(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;
@@ -6362,7 +6384,7 @@
 
     goto :goto_0
 
-    .line 1075
+    .line 1078
     :cond_1
     if-eqz v6, :cond_3
 
@@ -6380,16 +6402,16 @@
 
     move v2, v8
 
-    .line 1077
+    .line 1080
     :goto_1
     new-instance v7, Ljava/lang/StringBuilder;
 
     invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 1078
+    .line 1081
     if-eqz v2, :cond_2
 
-    .line 1079
+    .line 1082
     const-string v0, "\u2022 Fotos, Downloads und andere Dateien werden zur\u00fcck in den internen Speicher verschoben.\n"
 
     const-string v5, "\u2022 Photos, downloads and other files are moved back to internal storage.\n"
@@ -6400,7 +6422,7 @@
 
     invoke-virtual {v7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1082
+    .line 1085
     :cond_2
     invoke-interface {v3}, Ljava/util/List;->isEmpty()Z
 
@@ -6408,7 +6430,7 @@
 
     if-nez v0, :cond_6
 
-    .line 1083
+    .line 1086
     const-string v0, "\u2022 Diese Apps werden zur\u00fcck in den internen Speicher verschoben: "
 
     const-string v5, "\u2022 These apps are moved back to internal storage: "
@@ -6419,7 +6441,7 @@
 
     invoke-virtual {v7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1085
+    .line 1088
     :goto_2
     invoke-interface {v4}, Ljava/util/List;->size()I
 
@@ -6451,20 +6473,20 @@
     :cond_3
     move v2, v1
 
-    .line 1075
+    .line 1078
     goto :goto_1
 
-    .line 1085
+    .line 1088
     :cond_4
     const-string v0, ""
 
     goto :goto_3
 
-    .line 1086
+    .line 1089
     :cond_5
     invoke-virtual {v7, v9}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 1088
+    .line 1091
     :cond_6
     invoke-virtual {v7}, Ljava/lang/StringBuilder;->length()I
 
@@ -6474,7 +6496,7 @@
 
     invoke-virtual {v7, v9}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 1089
+    .line 1092
     :cond_7
     const-string v0, "Danach wird die SD-Karte formatiert und alle restlichen Daten darauf gel\u00f6scht. Sie ist dann nicht mehr verschl\u00fcsselt und auch in anderen Ger\u00e4ten lesbar."
 
@@ -6486,7 +6508,7 @@
 
     invoke-virtual {v7, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1094
+    .line 1097
     new-instance v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     move-object v1, p0
@@ -6495,7 +6517,7 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/artisan/sdstorage/SdStorageModeActivity$28;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/util/List;Ljava/util/List;Landroid/os/storage/DiskInfo;Ljava/lang/String;)V
 
-    .line 1123
+    .line 1128
     const-string v1, "SD-Karte wieder tragbar machen?"
 
     const-string v3, "Make SD card portable again?"
@@ -6512,7 +6534,7 @@
 
     const-string v5, "Cancel"
 
-    .line 1124
+    .line 1129
     invoke-direct {p0, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -6537,10 +6559,10 @@
 
     move v6, v8
 
-    .line 1123
+    .line 1128
     invoke-direct/range {v0 .. v7}, Lcom/artisan/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
-    .line 1128
+    .line 1133
     return-void
 .end method
 
@@ -6736,6 +6758,113 @@
     goto :goto_1
 .end method
 
+.method private unmountQuietly(Landroid/os/storage/VolumeInfo;)V
+    .locals 5
+
+    .prologue
+    .line 1140
+    if-eqz p1, :cond_0
+
+    invoke-virtual {p1}, Landroid/os/storage/VolumeInfo;->getState()I
+
+    move-result v0
+
+    const/4 v1, 0x2
+
+    if-eq v0, v1, :cond_1
+
+    .line 1153
+    :cond_0
+    :goto_0
+    return-void
+
+    .line 1141
+    :cond_1
+    invoke-virtual {p1}, Landroid/os/storage/VolumeInfo;->getId()Ljava/lang/String;
+
+    move-result-object v1
+
+    .line 1143
+    :try_start_0
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
+
+    invoke-virtual {v0, v1}, Landroid/os/storage/StorageManager;->unmount(Ljava/lang/String;)V
+    :try_end_0
+    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 1148
+    const/4 v0, 0x0
+
+    :goto_1
+    const/16 v2, 0x28
+
+    if-ge v0, v2, :cond_0
+
+    .line 1149
+    iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
+
+    invoke-virtual {v2, v1}, Landroid/os/storage/StorageManager;->findVolumeById(Ljava/lang/String;)Landroid/os/storage/VolumeInfo;
+
+    move-result-object v2
+
+    .line 1150
+    if-eqz v2, :cond_0
+
+    invoke-virtual {v2}, Landroid/os/storage/VolumeInfo;->getState()I
+
+    move-result v2
+
+    if-eqz v2, :cond_0
+
+    .line 1151
+    const-wide/16 v2, 0xfa
+
+    :try_start_1
+    invoke-static {v2, v3}, Ljava/lang/Thread;->sleep(J)V
+    :try_end_1
+    .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_1
+
+    .line 1148
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_1
+
+    .line 1144
+    :catch_0
+    move-exception v0
+
+    .line 1145
+    const-string v2, "ArtisanSdStorage"
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v4, "unmount "
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v2, v1, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    goto :goto_0
+
+    .line 1151
+    :catch_1
+    move-exception v0
+
+    goto :goto_0
+.end method
+
 .method private updateBackCallback()V
     .locals 3
 
@@ -6925,7 +7054,7 @@
     .end annotation
 
     .prologue
-    .line 1132
+    .line 1157
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
@@ -6934,7 +7063,7 @@
 
     add-long/2addr v0, v2
 
-    .line 1133
+    .line 1158
     :goto_0
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
@@ -6944,25 +7073,25 @@
 
     if-gez v2, :cond_2
 
-    .line 1134
+    .line 1159
     iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     invoke-virtual {v2, p1}, Landroid/content/pm/PackageManager;->getMoveStatus(I)I
 
     move-result v2
 
-    .line 1135
+    .line 1160
     const/16 v3, -0x64
 
     if-ne v2, v3, :cond_0
 
     const/4 v0, 0x0
 
-    .line 1139
+    .line 1164
     :goto_1
     return-object v0
 
-    .line 1136
+    .line 1161
     :cond_0
     if-gez v2, :cond_1
 
@@ -6972,7 +7101,7 @@
 
     goto :goto_1
 
-    .line 1137
+    .line 1162
     :cond_1
     const-wide/16 v2, 0x1f4
 
@@ -6980,7 +7109,7 @@
 
     goto :goto_0
 
-    .line 1139
+    .line 1164
     :cond_2
     const-string v0, "Zeit\u00fcberschreitung beim Verschieben."
 
@@ -7002,7 +7131,7 @@
     .end annotation
 
     .prologue
-    .line 959
+    .line 962
     const/4 v0, 0x0
 
     move v1, v0
@@ -7012,17 +7141,17 @@
 
     if-ge v1, v0, :cond_2
 
-    .line 960
+    .line 963
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {v0}, Landroid/os/storage/StorageManager;->getVolumes()Ljava/util/List;
 
     move-result-object v0
 
-    .line 961
+    .line 964
     if-eqz v0, :cond_1
 
-    .line 962
+    .line 965
     invoke-interface {v0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v2
@@ -7040,7 +7169,7 @@
 
     check-cast v0, Landroid/os/storage/VolumeInfo;
 
-    .line 963
+    .line 966
     if-eqz v0, :cond_0
 
     invoke-virtual {v0}, Landroid/os/storage/VolumeInfo;->getType()I
@@ -7061,7 +7190,7 @@
 
     if-eqz v3, :cond_0
 
-    .line 964
+    .line 967
     invoke-virtual {v0}, Landroid/os/storage/VolumeInfo;->getState()I
 
     move-result v3
@@ -7070,24 +7199,24 @@
 
     if-ne v3, v4, :cond_0
 
-    .line 971
+    .line 974
     :goto_1
     return-object v0
 
-    .line 969
+    .line 972
     :cond_1
     const-wide/16 v2, 0x1f4
 
     invoke-static {v2, v3}, Ljava/lang/Thread;->sleep(J)V
 
-    .line 959
+    .line 962
     add-int/lit8 v0, v1, 0x1
 
     move v1, v0
 
     goto :goto_0
 
-    .line 971
+    .line 974
     :cond_2
     const/4 v0, 0x0
 

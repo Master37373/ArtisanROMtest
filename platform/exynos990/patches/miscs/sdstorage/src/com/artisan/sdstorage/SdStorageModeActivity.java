@@ -944,6 +944,9 @@ public class SdStorageModeActivity extends Activity {
                 new Runnable() { @Override public void run() {
                     runWork(t("SD-Karte wird eingerichtet", "Setting up SD card"), new Work() {
                         @Override public String run() throws Exception {
+                            setProgressText(t("Karte wird sicher ausgehängt …", "Safely unmounting the card …"));
+                            DiskInfo d = mSm.findDiskById(diskId);
+                            unmountQuietly(findVolume(d, VolumeInfo.TYPE_PUBLIC));
                             setProgressText(t("Karte wird formatiert und verschlüsselt …", "Formatting and encrypting the card …"));
                             mSm.partitionPrivate(diskId);
                             setProgressText(t("Karte wird eingebunden …", "Mounting the card …"));
@@ -1106,6 +1109,8 @@ public class SdStorageModeActivity extends Activity {
                     String err = waitMove(mPm.movePackage(pkgs.get(i), internal));
                     if (err != null) return labels.get(i) + ": " + err;
                 }
+                setProgressText(t("Karte wird sicher ausgehängt …", "Safely unmounting the card …"));
+                unmountQuietly(findVolume(disk, VolumeInfo.TYPE_PRIVATE));
                 setProgressText(t("SD-Karte wird formatiert …", "Formatting SD card …"));
                 mSm.partitionPublic(disk.getId());
                 if (fsUuid != null) {
@@ -1125,6 +1130,26 @@ public class SdStorageModeActivity extends Activity {
                 new Runnable() { @Override public void run() {
                     if (primaryOnSd) requireUnlocked(doIt); else doIt.run();
                 } });
+    }
+
+    /**
+     * Unmounts a volume the regular way before it is repartitioned, so the system does not
+     * report the card as "unexpectedly removed" (vold would otherwise tear the mounted volume down).
+     */
+    private void unmountQuietly(VolumeInfo v) {
+        if (v == null || v.getState() != VolumeInfo.STATE_MOUNTED) return;
+        final String id = v.getId();
+        try {
+            mSm.unmount(id);
+        } catch (Throwable e) {
+            Log.w(TAG, "unmount " + id, e);
+            return;
+        }
+        for (int i = 0; i < 40; i++) {
+            VolumeInfo cur = mSm.findVolumeById(id);
+            if (cur == null || cur.getState() == VolumeInfo.STATE_UNMOUNTED) return;
+            try { Thread.sleep(250); } catch (InterruptedException e) { return; }
+        }
     }
 
     /** Waits for a PackageManager move; returns null on success or an error text. */

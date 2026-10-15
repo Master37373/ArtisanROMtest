@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 1095
+    .line 1098
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -45,7 +45,7 @@
     .end annotation
 
     .prologue
-    .line 1096
+    .line 1099
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -60,7 +60,7 @@
 
     move-result-object v2
 
-    .line 1097
+    .line 1100
     if-nez v2, :cond_1
 
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
@@ -75,12 +75,12 @@
 
     move-result-object v0
 
-    .line 1118
+    .line 1123
     :cond_0
     :goto_0
     return-object v0
 
-    .line 1098
+    .line 1101
     :cond_1
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
@@ -88,7 +88,7 @@
 
     if-eqz v0, :cond_2
 
-    .line 1099
+    .line 1102
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -107,7 +107,7 @@
 
     invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1100
+    .line 1103
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -116,7 +116,7 @@
 
     iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3200(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
+    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3400(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
 
     move-result-object v1
 
@@ -124,14 +124,14 @@
 
     move-result v1
 
-    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3300(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3500(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 1101
+    .line 1104
     if-nez v0, :cond_0
 
-    .line 1103
+    .line 1106
     :cond_2
     const/4 v0, 0x0
 
@@ -148,7 +148,7 @@
 
     if-ge v1, v0, :cond_4
 
-    .line 1104
+    .line 1107
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v3, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -209,7 +209,7 @@
 
     iget-object v4, v4, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->val$pkgs:Ljava/util/List;
 
-    .line 1105
+    .line 1108
     invoke-interface {v4}, Ljava/util/List;->size()I
 
     move-result v4
@@ -228,10 +228,10 @@
 
     move-result-object v0
 
-    .line 1104
+    .line 1107
     invoke-static {v3, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1106
+    .line 1109
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v3, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -240,7 +240,7 @@
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3200(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3400(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;
 
     move-result-object v4
 
@@ -258,11 +258,11 @@
 
     move-result v0
 
-    invoke-static {v3, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3300(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
+    invoke-static {v3, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3500(Lcom/artisan/sdstorage/SdStorageModeActivity;I)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 1107
+    .line 1110
     if-eqz v3, :cond_3
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -299,7 +299,7 @@
 
     goto/16 :goto_0
 
-    .line 1103
+    .line 1106
     :cond_3
     add-int/lit8 v0, v1, 0x1
 
@@ -307,8 +307,48 @@
 
     goto/16 :goto_1
 
-    .line 1109
+    .line 1112
     :cond_4
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
+
+    iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
+
+    iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    const-string v2, "Karte wird sicher ausgeh\u00e4ngt \u2026"
+
+    const-string v3, "Safely unmounting the card \u2026"
+
+    invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
+
+    .line 1113
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
+
+    iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
+
+    iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
+
+    iget-object v2, v2, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->val$disk:Landroid/os/storage/DiskInfo;
+
+    const/4 v3, 0x1
+
+    invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2600(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;I)Landroid/os/storage/VolumeInfo;
+
+    move-result-object v1
+
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2700(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)V
+
+    .line 1114
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -327,7 +367,7 @@
 
     invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$2400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1110
+    .line 1115
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -346,14 +386,14 @@
 
     invoke-virtual {v0, v1}, Landroid/os/storage/StorageManager;->partitionPublic(Ljava/lang/String;)V
 
-    .line 1111
+    .line 1116
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$28;->val$fsUuid:Ljava/lang/String;
 
     if-eqz v0, :cond_5
 
-    .line 1113
+    .line 1118
     :try_start_0
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$28$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$28;
 
@@ -371,18 +411,18 @@
     :try_end_0
     .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1118
+    .line 1123
     :cond_5
     :goto_2
     const/4 v0, 0x0
 
     goto/16 :goto_0
 
-    .line 1114
+    .line 1119
     :catch_0
     move-exception v0
 
-    .line 1115
+    .line 1120
     const-string v1, "ArtisanSdStorage"
 
     const-string v2, "forgetVolume failed"

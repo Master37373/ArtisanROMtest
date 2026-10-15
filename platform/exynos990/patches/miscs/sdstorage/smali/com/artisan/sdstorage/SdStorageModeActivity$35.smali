@@ -33,7 +33,7 @@
     .end annotation
 
     .prologue
-    .line 1262
+    .line 1287
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$35;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$35;->val$text:Ljava/lang/String;
@@ -49,10 +49,10 @@
     .locals 4
 
     .prologue
-    .line 1263
+    .line 1288
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$35;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3600(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3800(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
 
     move-result-object v0
 
@@ -74,10 +74,10 @@
 
     if-nez v0, :cond_0
 
-    .line 1264
+    .line 1289
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$35;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3600(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3800(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
 
     move-result-object v0
 
@@ -105,10 +105,10 @@
 
     move-result-object v0
 
-    .line 1269
+    .line 1294
     invoke-virtual {v0}, Landroid/view/ViewPropertyAnimator;->start()V
 
-    .line 1271
+    .line 1296
     :cond_0
     return-void
 .end method

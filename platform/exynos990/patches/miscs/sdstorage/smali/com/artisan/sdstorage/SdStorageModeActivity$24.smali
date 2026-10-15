@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 1017
+    .line 1020
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$24;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -40,7 +40,7 @@
     .locals 1
 
     .prologue
-    .line 1018
+    .line 1021
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$24;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1300(Lcom/artisan/sdstorage/SdStorageModeActivity;)V

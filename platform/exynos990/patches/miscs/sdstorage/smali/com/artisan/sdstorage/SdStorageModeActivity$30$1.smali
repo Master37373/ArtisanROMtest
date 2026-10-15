@@ -33,7 +33,7 @@
     .end annotation
 
     .prologue
-    .line 1216
+    .line 1241
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$30;
 
     iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->val$result:Ljava/lang/String;
@@ -51,7 +51,7 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 1217
+    .line 1242
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$30;
 
     iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -72,20 +72,20 @@
 
     if-eqz v1, :cond_1
 
-    .line 1224
+    .line 1249
     :cond_0
     :goto_0
     return-void
 
-    .line 1218
+    .line 1243
     :cond_1
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$30;
 
     iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v1, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3400(Lcom/artisan/sdstorage/SdStorageModeActivity;Z)V
+    invoke-static {v1, v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3600(Lcom/artisan/sdstorage/SdStorageModeActivity;Z)V
 
-    .line 1219
+    .line 1244
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->val$result:Ljava/lang/String;
 
     if-nez v1, :cond_2
@@ -96,7 +96,7 @@
 
     if-eqz v1, :cond_2
 
-    .line 1220
+    .line 1245
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$30;
 
     iget-object v0, v0, Lcom/artisan/sdstorage/SdStorageModeActivity$30;->val$next:Ljava/lang/Runnable;
@@ -105,7 +105,7 @@
 
     goto :goto_0
 
-    .line 1223
+    .line 1248
     :cond_2
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$30$1;->this$1:Lcom/artisan/sdstorage/SdStorageModeActivity$30;
 
@@ -127,7 +127,7 @@
     iget-object v1, v1, Lcom/artisan/sdstorage/SdStorageModeActivity$30;->val$okMessage:Ljava/lang/String;
 
     :goto_1
-    invoke-static {v2, v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3500(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/lang/String;)V
+    invoke-static {v2, v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$3700(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/lang/String;)V
 
     goto :goto_0
 
