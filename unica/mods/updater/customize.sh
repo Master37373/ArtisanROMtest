@@ -146,6 +146,370 @@ while IFS= read -r f; do
 done < <(grep -rlF --include="*.smali" "rm -f /sdcard/openrecoveryscript /cache/recovery/openrecoveryscript /cache/recovery/command\"" "$UPDATER_DIR")
 unset UPDATER_ORS_SMALI
 
+# Self-update cache check: the app offered a cached self-update APK for install as soon as its
+# size matched app.xml, so an old or wrongly signed download of the same size ended in
+# "App not installed" forever. Only accept the cached file if it is this package, has the
+# expected versionName and the installed app's signing certificate; otherwise delete it and
+# download again (com.artisan.updater.ArtisanCacheCheck).
+LOG "- Making ArtisanUpdater verify cached self-update APKs"
+UPDATER_CACHE_SMALI="$(grep -rlF --include="*.smali" 'Lcom/artisan/updater/AppUpdate;->getSize()J' "$UPDATER_DIR" | xargs grep -lF 'UpdateUiState$AppReadyToInstall;' | head -n 1)"
+if [ -z "$UPDATER_CACHE_SMALI" ]; then
+    LOGE "ArtisanUpdater: cached APK check not found. Upstream changed the app, please check unica/mods/updater/customize.sh"
+    return 1
+fi
+mkdir -p "$UPDATER_DIR/smali/com/artisan/updater"
+cat > "$UPDATER_DIR/smali/com/artisan/updater/ArtisanCacheCheck.smali" <<'SMALIEOF'
+.class public final Lcom/artisan/updater/ArtisanCacheCheck;
+.super Ljava/lang/Object;
+.source "ArtisanCacheCheck.java"
+
+
+# static fields
+.field private static final TAG:Ljava/lang/String; = "ArtisanCacheCheck"
+
+
+# direct methods
+.method private constructor <init>()V
+    .locals 0
+
+    .prologue
+    .line 24
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method private static sameSigners(Landroid/content/pm/SigningInfo;Landroid/content/pm/SigningInfo;)Z
+    .locals 4
+
+    .prologue
+    const/4 v0, 0x0
+
+    .line 51
+    if-eqz p0, :cond_0
+
+    if-nez p1, :cond_1
+
+    .line 55
+    :cond_0
+    :goto_0
+    return v0
+
+    .line 52
+    :cond_1
+    invoke-virtual {p0}, Landroid/content/pm/SigningInfo;->getApkContentsSigners()[Landroid/content/pm/Signature;
+
+    move-result-object v1
+
+    .line 53
+    invoke-virtual {p1}, Landroid/content/pm/SigningInfo;->getApkContentsSigners()[Landroid/content/pm/Signature;
+
+    move-result-object v2
+
+    .line 54
+    if-eqz v1, :cond_0
+
+    if-eqz v2, :cond_0
+
+    array-length v3, v1
+
+    if-eqz v3, :cond_0
+
+    .line 55
+    new-instance v0, Ljava/util/HashSet;
+
+    invoke-static {v1}, Ljava/util/Arrays;->asList([Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v1
+
+    invoke-direct {v0, v1}, Ljava/util/HashSet;-><init>(Ljava/util/Collection;)V
+
+    new-instance v1, Ljava/util/HashSet;
+
+    invoke-static {v2}, Ljava/util/Arrays;->asList([Ljava/lang/Object;)Ljava/util/List;
+
+    move-result-object v2
+
+    invoke-direct {v1, v2}, Ljava/util/HashSet;-><init>(Ljava/util/Collection;)V
+
+    invoke-virtual {v0, v1}, Ljava/util/HashSet;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    goto :goto_0
+.end method
+
+.method public static valid(Landroid/content/Context;Ljava/io/File;Ljava/lang/String;)Z
+    .locals 4
+
+    .prologue
+    .line 29
+    :try_start_0
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v0
+
+    .line 30
+    invoke-virtual {p1}, Ljava/io/File;->getPath()Ljava/lang/String;
+
+    move-result-object v1
+
+    const/high16 v2, 0x8000000
+
+    invoke-virtual {v0, v1, v2}, Landroid/content/pm/PackageManager;->getPackageArchiveInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+
+    move-result-object v1
+
+    .line 31
+    if-nez v1, :cond_0
+
+    .line 32
+    const-string v0, "not a valid APK"
+    :try_end_0
+    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 45
+    :goto_0
+    const-string v1, "ArtisanCacheCheck"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Discarding cached update "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    const-string v3, ": "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-static {v1, v0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 46
+    :try_start_1
+    invoke-virtual {p1}, Ljava/io/File;->delete()Z
+    :try_end_1
+    .catch Ljava/lang/Throwable; {:try_start_1 .. :try_end_1} :catch_1
+
+    .line 47
+    :goto_1
+    const/4 v0, 0x0
+
+    :goto_2
+    return v0
+
+    .line 33
+    :cond_0
+    :try_start_2
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    iget-object v3, v1, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v2, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_1
+
+    .line 34
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "package "
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    iget-object v1, v1, Landroid/content/pm/PackageInfo;->packageName:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    goto :goto_0
+
+    .line 35
+    :cond_1
+    if-eqz p2, :cond_2
+
+    iget-object v2, v1, Landroid/content/pm/PackageInfo;->versionName:Ljava/lang/String;
+
+    invoke-virtual {p2, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-nez v2, :cond_3
+
+    .line 36
+    :cond_2
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "version "
+
+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    iget-object v1, v1, Landroid/content/pm/PackageInfo;->versionName:Ljava/lang/String;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    const-string v1, " != "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+
+    goto :goto_0
+
+    .line 38
+    :cond_3
+    invoke-virtual {p0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v2
+
+    const/high16 v3, 0x8000000
+
+    invoke-virtual {v0, v2, v3}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+
+    move-result-object v0
+
+    .line 39
+    iget-object v1, v1, Landroid/content/pm/PackageInfo;->signingInfo:Landroid/content/pm/SigningInfo;
+
+    iget-object v0, v0, Landroid/content/pm/PackageInfo;->signingInfo:Landroid/content/pm/SigningInfo;
+
+    invoke-static {v1, v0}, Lcom/artisan/updater/ArtisanCacheCheck;->sameSigners(Landroid/content/pm/SigningInfo;Landroid/content/pm/SigningInfo;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_4
+
+    const/4 v0, 0x1
+
+    goto :goto_2
+
+    .line 40
+    :cond_4
+    const-string v0, "signature mismatch"
+    :try_end_2
+    .catch Ljava/lang/Throwable; {:try_start_2 .. :try_end_2} :catch_0
+
+    goto/16 :goto_0
+
+    .line 42
+    :catch_0
+    move-exception v0
+
+    .line 43
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v0
+
+    goto/16 :goto_0
+
+    .line 46
+    :catch_1
+    move-exception v0
+
+    goto :goto_1
+.end method
+SMALIEOF
+if ! python3 - "$UPDATER_CACHE_SMALI" <<'PYEOF'
+import re, sys
+path = sys.argv[1]
+lines = open(path, encoding="utf-8").read().split("\n")
+if any("ArtisanCacheCheck;->valid" in l for l in lines):
+    print("already patched"); sys.exit(0)
+
+def reg_ok(r, locals_n):
+    n = int(r[1:])
+    return (n if r[0] == "v" else locals_n + n) <= 15
+
+for ni, l in enumerate(lines):
+    m = re.match(r"\s*new-instance (v\d+), Lcom/artisan/updater/UpdateUiState\$AppReadyToInstall;", l)
+    if not m:
+        continue
+    code = [i for i in range(max(0, ni - 60), ni) if lines[i].strip() and not lines[i].strip().startswith(".line")]
+    if not any("AppUpdate;->getSize()J" in lines[i] for i in code[-6:]):
+        continue
+    tmp = m.group(1)
+    jump = re.match(r"\s*if-nez [vp]\d+, (:\w+)", lines[code[-1]])
+    if not jump:
+        sys.exit("size check jump not found")
+    label = jump.group(1)
+    def find(pat):
+        for i in reversed(code):
+            mm = re.match(pat, lines[i])
+            if mm:
+                return mm.group(1)
+        sys.exit("pattern not found: " + pat)
+    ctx = find(r"\s*invoke-virtual \{([vp]\d+)\}, Landroid/content/Context;->getCacheDir\(\)")
+    upd = find(r"\s*invoke-virtual \{([vp]\d+)\}, Lcom/artisan/updater/AppUpdate;->getFilename\(\)")
+    fil = find(r"\s*invoke-virtual \{([vp]\d+)\}, Ljava/io/File;->exists\(\)Z")
+    start = max(i for i in range(ni) if lines[i].startswith(".method"))
+    locals_n = int(next(lines[i] for i in range(start, ni) if ".locals" in lines[i]).split()[1])
+    for r in (ctx, upd, fil, tmp):
+        if not reg_ok(r, locals_n):
+            sys.exit("register %s out of range" % r)
+    block = [
+        "    invoke-virtual {%s}, Lcom/artisan/updater/AppUpdate;->getVersion()Ljava/lang/String;" % upd,
+        "    move-result-object %s" % tmp,
+        "    invoke-static {%s, %s, %s}, Lcom/artisan/updater/ArtisanCacheCheck;->valid(Landroid/content/Context;Ljava/io/File;Ljava/lang/String;)Z" % (ctx, fil, tmp),
+        "    move-result %s" % tmp,
+        "    if-eqz %s, %s" % (tmp, label),
+        "",
+    ]
+    lines[ni:ni] = block
+    open(path, "w", encoding="utf-8").write("\n".join(lines))
+    print("patched %s (ctx=%s file=%s update=%s -> %s)" % (path, ctx, fil, upd, label))
+    sys.exit(0)
+sys.exit("cached APK size check not found")
+PYEOF
+then
+    LOGE "ArtisanUpdater: failed to patch the cached APK check"
+    return 1
+fi
+grep -rqF 'ArtisanCacheCheck;->valid' "$UPDATER_DIR"/smali* || { LOGE "ArtisanUpdater: cached APK check not applied"; return 1; }
+unset UPDATER_CACHE_SMALI
+
 # Dynamically patch SecSettings
 # - Add missing/non-xml files in place
 # - Patch existing files

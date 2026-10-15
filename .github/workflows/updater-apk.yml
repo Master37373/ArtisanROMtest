@@ -67,6 +67,13 @@ jobs:
           run_patch
           grep -rq "/data/media/TWRP/ota_update.zip" "$UPDATER_DIR"/smali* || { echo "FBE patch not applied"; exit 1; }
 
+          # Cached self-update APK check: extract the block from customize.sh and run it
+          sed -n '/^# Self-update cache check/,/^unset UPDATER_CACHE_SMALI/p' "$CUST" > cache_patch.sh
+          test -s cache_patch.sh || { echo "cache check block not found in $CUST"; exit 1; }
+          run_cache_patch(){ . ./cache_patch.sh; }
+          run_cache_patch
+          grep -rq "ArtisanCacheCheck;->valid" "$UPDATER_DIR"/smali* || { echo "cache check not applied"; exit 1; }
+
       - name: Bump versionName (in-app self-update compares it)
         env:
           NEW_VER: ${{ github.event.inputs.app_version }}
