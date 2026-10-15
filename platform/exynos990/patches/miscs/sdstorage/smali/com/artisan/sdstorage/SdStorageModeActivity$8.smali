@@ -35,7 +35,7 @@
     .end annotation
 
     .prologue
-    .line 230
+    .line 232
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$work:Lcom/artisan/sdstorage/SdStorageModeActivity$Work;
@@ -53,7 +53,7 @@
     .locals 3
 
     .prologue
-    .line 233
+    .line 235
     :try_start_0
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$work:Lcom/artisan/sdstorage/SdStorageModeActivity$Work;
 
@@ -63,7 +63,7 @@
 
     move-result-object v0
 
-    .line 239
+    .line 241
     :goto_0
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
@@ -77,21 +77,21 @@
 
     invoke-virtual {v1, v2}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
-    .line 246
+    .line 251
     return-void
 
-    .line 234
+    .line 236
     :catch_0
     move-exception v0
 
-    .line 235
+    .line 237
     const-string v1, "ArtisanSdStorage"
 
     const-string v2, "SD storage mode switch failed"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 236
+    .line 238
     invoke-virtual {v0}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
 
     move-result-object v1

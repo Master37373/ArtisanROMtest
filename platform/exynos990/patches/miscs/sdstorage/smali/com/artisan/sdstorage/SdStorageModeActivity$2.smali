@@ -37,7 +37,7 @@
     .end annotation
 
     .prologue
-    .line 120
+    .line 121
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$isInternal:Z
@@ -57,7 +57,7 @@
     .locals 3
 
     .prologue
-    .line 120
+    .line 121
     iget-boolean v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$isInternal:Z
 
     if-eqz v0, :cond_0

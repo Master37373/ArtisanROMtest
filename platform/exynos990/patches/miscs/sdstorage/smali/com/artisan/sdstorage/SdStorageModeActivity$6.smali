@@ -41,7 +41,7 @@
     .end annotation
 
     .prologue
-    .line 173
+    .line 174
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$primaryOnSd:Z
@@ -65,7 +65,7 @@
     .locals 6
 
     .prologue
-    .line 174
+    .line 175
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
@@ -88,14 +88,14 @@
 
     const-string v5, "The SD card is now used as portable storage."
 
-    .line 198
+    .line 199
     invoke-static {v3, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 174
+    .line 175
     invoke-static {v0, v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;)V
 
-    .line 200
+    .line 201
     return-void
 .end method

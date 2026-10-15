@@ -27,6 +27,7 @@ import java.util.Locale;
 public class SdStorageModeActivity extends Activity {
     private static final String TAG = "ArtisanSdStorage";
     private static final int MOVE_SUCCEEDED = -100;
+    private static final int MATCH_ANY_USER = 0x00400000; // PackageManager.MATCH_ANY_USER (hidden)
 
     private StorageManager mSm;
     private PackageManager mPm;
@@ -146,8 +147,8 @@ public class SdStorageModeActivity extends Activity {
         final String fsUuid = priv.getFsUuid();
         final List<String> pkgs = new ArrayList<>();
         final List<String> labels = new ArrayList<>();
-        for (ApplicationInfo ai : mPm.getInstalledApplications(0)) {
-            if (fsUuid != null && fsUuid.equals(ai.volumeUuid)) {
+        for (ApplicationInfo ai : mPm.getInstalledApplications(MATCH_ANY_USER)) {
+            if (fsUuid != null && fsUuid.equals(ai.volumeUuid) && !pkgs.contains(ai.packageName)) {
                 pkgs.add(ai.packageName);
                 labels.add(String.valueOf(ai.loadLabel(mPm)));
             }
@@ -227,6 +228,7 @@ public class SdStorageModeActivity extends Activity {
         mProgress.setCancelable(false);
         mProgress.setMessage(title);
         mProgress.show();
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         new Thread(new Runnable() { @Override public void run() {
             String err;
             try {
@@ -237,7 +239,10 @@ public class SdStorageModeActivity extends Activity {
             }
             final String result = err;
             mUi.post(new Runnable() { @Override public void run() {
-                if (mProgress != null) mProgress.dismiss();
+                if (mProgress != null && mProgress.isShowing()) {
+                    try { mProgress.dismiss(); } catch (Exception ignored) { }
+                }
+                if (isFinishing() || isDestroyed()) return;
                 builder().setTitle(result == null ? t("Fertig", "Done") : t("Fehler", "Error"))
                         .setMessage(result == null ? okMessage : result)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { finish(); } })
@@ -248,7 +253,7 @@ public class SdStorageModeActivity extends Activity {
 
     private void setProgressText(final String text) {
         mUi.post(new Runnable() { @Override public void run() {
-            if (mProgress != null) mProgress.setMessage(text);
+            if (mProgress != null && mProgress.isShowing() && !isDestroyed()) mProgress.setMessage(text);
         } });
     }
 }
