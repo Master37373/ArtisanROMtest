@@ -125,18 +125,70 @@ public class SdStorageModeActivity extends Activity {
     // ---- portable -> internal ----------------------------------------------
 
     private void confirmToInternal(final DiskInfo disk) {
+        final String diskId = disk.getId();
         builder().setTitle(t("Alle Daten löschen?", "Erase all data?"))
                 .setMessage(t("Alle Daten auf der SD-Karte werden unwiderruflich gelöscht.",
                         "All data on the SD card will be permanently erased."))
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { finish(); } })
-                .setPositiveButton(t("Löschen und einrichten", "Erase and set up"), new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { 
+                .setPositiveButton(t("Löschen und einrichten", "Erase and set up"), new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
                         runWork(t("SD-Karte wird formatiert und verschlüsselt…", "Formatting and encrypting SD card…"), new Work() {
                             @Override public String run() throws Exception {
-                                mSm.partitionPrivate(disk.getId());
+                                mSm.partitionPrivate(diskId);
+                                setProgressText(t("SD-Karte wird eingebunden…", "Mounting SD card…"));
+                                mNewPrivate = waitPrivateMounted(diskId);
                                 return null;
                             }
                         }, t("Die SD-Karte wird jetzt als interner, verschlüsselter Speicher genutzt.",
-                                "The SD card is now used as encrypted internal storage."));
+                                "The SD card is now used as encrypted internal storage."),
+                        new Runnable() { @Override public void run() { offerMigrate(); } });
+                    } })
+                .show();
+    }
+
+    private volatile VolumeInfo mNewPrivate;
+
+    /** Polls until the new private volume of the disk is mounted (max 60 s). */
+    private VolumeInfo waitPrivateMounted(String diskId) throws InterruptedException {
+        for (int i = 0; i < 120; i++) {
+            List<VolumeInfo> vols = mSm.getVolumes();
+            if (vols != null) {
+                for (VolumeInfo v : vols) {
+                    if (v != null && v.getType() == VolumeInfo.TYPE_PRIVATE && diskId.equals(v.getDiskId())
+                            && v.getState() == VolumeInfo.STATE_MOUNTED) {
+                        return v;
+                    }
+                }
+            }
+            Thread.sleep(500);
+        }
+        return null;
+    }
+
+    /** After adopting: offer to move photos, downloads etc. (primary shared storage) to the card. */
+    private void offerMigrate() {
+        final VolumeInfo target = mNewPrivate;
+        final String done = t("Die SD-Karte wird jetzt als interner, verschlüsselter Speicher genutzt.",
+                "The SD card is now used as encrypted internal storage.");
+        if (target == null || (target.getFsUuid() != null && target.getFsUuid().equals(mSm.getPrimaryStorageUuid()))) {
+            showDone(done + (target == null ? t("\n\nDateien kannst du später unter Einstellungen → Speicher verschieben.",
+                    "\n\nYou can move files later in Settings → Storage.") : ""));
+            return;
+        }
+        builder().setTitle(t("Dateien auf die SD-Karte verschieben?", "Move files to the SD card?"))
+                .setMessage(t(done + "\n\nFotos, Videos, Downloads, Musik und andere Dateien jetzt auf die SD-Karte verschieben? "
+                        + "Neue Fotos und Downloads landen danach automatisch auf der Karte. System und Apps bleiben im internen Speicher.\n\n"
+                        + "Das kann je nach Datenmenge einige Minuten dauern.",
+                        done + "\n\nMove photos, videos, downloads, music and other files to the SD card now? "
+                        + "New photos and downloads will then be stored on the card automatically. System and apps stay on internal storage.\n\n"
+                        + "This can take a few minutes depending on the amount of data."))
+                .setNegativeButton(t("Später", "Later"), new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { finish(); } })
+                .setPositiveButton(t("Verschieben", "Move"), new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {
+                        runWork(t("Dateien werden auf die SD-Karte verschoben…", "Moving files to the SD card…"), new Work() {
+                            @Override public String run() throws Exception {
+                                return waitMove(mPm.movePrimaryStorage(target));
+                            }
+                        }, t("Fotos, Downloads und andere Dateien liegen jetzt auf der SD-Karte.",
+                                "Photos, downloads and other files are now on the SD card."), null);
                     } })
                 .show();
     }
@@ -197,7 +249,7 @@ public class SdStorageModeActivity extends Activity {
                             }
                             return null;
                         } }, t("Die SD-Karte wird jetzt als tragbarer Speicher genutzt.",
-                                "The SD card is now used as portable storage."));
+                                "The SD card is now used as portable storage."), null);
                     } })
                 .show();
     }
@@ -222,7 +274,7 @@ public class SdStorageModeActivity extends Activity {
     }
 
     @SuppressWarnings("deprecation")
-    private void runWork(String title, final Work work, final String okMessage) {
+    private void runWork(String title, final Work work, final String okMessage, final Runnable next) {
         mProgress = new ProgressDialog(this, dialogTheme());
         mProgress.setIndeterminate(true);
         mProgress.setCancelable(false);
@@ -243,12 +295,23 @@ public class SdStorageModeActivity extends Activity {
                     try { mProgress.dismiss(); } catch (Exception ignored) { }
                 }
                 if (isFinishing() || isDestroyed()) return;
+                if (result == null && next != null) {
+                    next.run();
+                    return;
+                }
                 builder().setTitle(result == null ? t("Fertig", "Done") : t("Fehler", "Error"))
                         .setMessage(result == null ? okMessage : result)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { finish(); } })
                         .show();
             } });
         } }, "ArtisanSdStorage").start();
+    }
+
+    private void showDone(String message) {
+        builder().setTitle(t("Fertig", "Done"))
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) { finish(); } })
+                .show();
     }
 
     private void setProgressText(final String text) {

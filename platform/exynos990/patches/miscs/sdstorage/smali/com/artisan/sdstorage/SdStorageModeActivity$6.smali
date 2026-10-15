@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->toPortable(Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->offerMigrate()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,19 +20,11 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
-
-.field final synthetic val$fsUuid:Ljava/lang/String;
-
-.field final synthetic val$labels:Ljava/util/List;
-
-.field final synthetic val$pkgs:Ljava/util/List;
-
-.field final synthetic val$primaryOnSd:Z
+.field final synthetic val$target:Landroid/os/storage/VolumeInfo;
 
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/util/List;Ljava/util/List;Landroid/os/storage/DiskInfo;Ljava/lang/String;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -41,18 +33,10 @@
     .end annotation
 
     .prologue
-    .line 174
+    .line 185
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$primaryOnSd:Z
-
-    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$pkgs:Ljava/util/List;
-
-    iput-object p4, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$labels:Ljava/util/List;
-
-    iput-object p5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$disk:Landroid/os/storage/DiskInfo;
-
-    iput-object p6, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$fsUuid:Ljava/lang/String;
+    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$target:Landroid/os/storage/VolumeInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -65,14 +49,14 @@
     .locals 6
 
     .prologue
-    .line 175
+    .line 186
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    const-string v2, "Daten werden verschoben\u2026"
+    const-string v2, "Dateien werden auf die SD-Karte verschoben\u2026"
 
-    const-string v3, "Moving data\u2026"
+    const-string v3, "Moving files to the SD card\u2026"
 
     invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
@@ -84,18 +68,20 @@
 
     iget-object v3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    const-string v4, "Die SD-Karte wird jetzt als tragbarer Speicher genutzt."
+    const-string v4, "Fotos, Downloads und andere Dateien liegen jetzt auf der SD-Karte."
 
-    const-string v5, "The SD card is now used as portable storage."
+    const-string v5, "Photos, downloads and other files are now on the SD card."
 
-    .line 199
+    .line 190
     invoke-static {v3, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 175
-    invoke-static {v0, v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$400(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;)V
+    const/4 v4, 0x0
 
-    .line 201
+    .line 186
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$800(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+
+    .line 192
     return-void
 .end method

@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->toPortable(Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->offerMigrate()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 173
+    .line 184
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -40,7 +40,7 @@
     .locals 1
 
     .prologue
-    .line 173
+    .line 184
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->finish()V
