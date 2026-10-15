@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/content/DialogInterface$OnClickListener;
+.implements Landroid/view/View$OnApplyWindowInsetsListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->buildFrame()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,31 +20,14 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
-
-.field final synthetic val$isInternal:Z
-
-.field final synthetic val$priv:Landroid/os/storage/VolumeInfo;
-
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLandroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
     .locals 0
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()V"
-        }
-    .end annotation
 
     .prologue
-    .line 121
+    .line 172
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
-
-    iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$isInternal:Z
-
-    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$disk:Landroid/os/storage/DiskInfo;
-
-    iput-object p4, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$priv:Landroid/os/storage/VolumeInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -53,32 +36,38 @@
 
 
 # virtual methods
-.method public onClick(Landroid/content/DialogInterface;I)V
-    .locals 3
+.method public onApplyWindowInsets(Landroid/view/View;Landroid/view/WindowInsets;)Landroid/view/WindowInsets;
+    .locals 4
 
     .prologue
-    .line 121
-    iget-boolean v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$isInternal:Z
+    .line 174
+    invoke-static {}, Landroid/view/WindowInsets$Type;->systemBars()I
 
-    if-eqz v0, :cond_0
+    move-result v0
 
-    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+    invoke-static {}, Landroid/view/WindowInsets$Type;->displayCutout()I
 
-    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$disk:Landroid/os/storage/DiskInfo;
+    move-result v1
 
-    iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$priv:Landroid/os/storage/VolumeInfo;
+    or-int/2addr v0, v1
 
-    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$000(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    invoke-virtual {p2, v0}, Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets;
 
-    :goto_0
-    return-void
+    move-result-object v0
 
-    :cond_0
-    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+    .line 175
+    iget v1, v0, Landroid/graphics/Insets;->left:I
 
-    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->val$disk:Landroid/os/storage/DiskInfo;
+    iget v2, v0, Landroid/graphics/Insets;->top:I
 
-    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$100(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
+    iget v3, v0, Landroid/graphics/Insets;->right:I
 
-    goto :goto_0
+    iget v0, v0, Landroid/graphics/Insets;->bottom:I
+
+    invoke-virtual {p1, v1, v2, v3, v0}, Landroid/view/View;->setPadding(IIII)V
+
+    .line 176
+    sget-object v0, Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets;
+
+    return-object v0
 .end method

@@ -1,4 +1,6 @@
 SdStorageModeActivity (ArtisanROM): portable <-> adoptable SD card switch inside SecSettings.
+Full screen One UI style page (Theme.Settings), animations in SdAnimView, Settings entry via SdStoragePreferenceController.
 src/  : Java source
 smali/: compiled form that the build copies into SecSettings (new smali_classesN dir).
-Rebuild: javac --release 8 -cp <framework classes> ; d2j-jar2dex ; baksmali (no lambdas: dx has no invokedynamic).
+Rebuild: javac --release 8 -cp <framework + SecSettings classes> (stub for cube.Controllable, -implicit:none);
+         d2j-jar2dex ; baksmali (no lambdas: dx has no invokedynamic).

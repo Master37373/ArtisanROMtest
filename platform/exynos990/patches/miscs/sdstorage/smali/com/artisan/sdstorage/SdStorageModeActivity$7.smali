@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/content/DialogInterface$OnClickListener;
+.implements Landroid/view/View$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->offerMigrate()V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,14 +20,23 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
+.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
+
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
     .prologue
-    .line 184
+    .line 478
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->val$disk:Landroid/os/storage/DiskInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -36,14 +45,16 @@
 
 
 # virtual methods
-.method public onClick(Landroid/content/DialogInterface;I)V
-    .locals 1
+.method public onClick(Landroid/view/View;)V
+    .locals 2
 
     .prologue
-    .line 184
+    .line 479
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->finish()V
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$7;->val$disk:Landroid/os/storage/DiskInfo;
+
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$600(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
 
     return-void
 .end method

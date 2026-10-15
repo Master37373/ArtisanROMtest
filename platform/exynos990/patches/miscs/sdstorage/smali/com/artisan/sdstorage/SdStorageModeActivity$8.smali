@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->toPortable(Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->confirmToInternal(Landroid/os/storage/DiskInfo;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,19 +20,11 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
-
-.field final synthetic val$fsUuid:Ljava/lang/String;
-
-.field final synthetic val$labels:Ljava/util/List;
-
-.field final synthetic val$pkgs:Ljava/util/List;
-
-.field final synthetic val$primaryOnSd:Z
+.field final synthetic val$diskId:Ljava/lang/String;
 
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLjava/util/List;Ljava/util/List;Landroid/os/storage/DiskInfo;Ljava/lang/String;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -41,18 +33,10 @@
     .end annotation
 
     .prologue
-    .line 226
+    .line 505
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$primaryOnSd:Z
-
-    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$pkgs:Ljava/util/List;
-
-    iput-object p4, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$labels:Ljava/util/List;
-
-    iput-object p5, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$disk:Landroid/os/storage/DiskInfo;
-
-    iput-object p6, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$fsUuid:Ljava/lang/String;
+    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->val$diskId:Ljava/lang/String;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -65,16 +49,16 @@
     .locals 6
 
     .prologue
-    .line 227
+    .line 506
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    const-string v2, "Daten werden verschoben\u2026"
+    const-string v2, "SD-Karte wird formatiert und verschl\u00fcsselt\u2026"
 
-    const-string v3, "Moving data\u2026"
+    const-string v3, "Formatting and encrypting SD card\u2026"
 
-    invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$700(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
 
@@ -84,20 +68,22 @@
 
     iget-object v3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$8;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    const-string v4, "Die SD-Karte wird jetzt als tragbarer Speicher genutzt."
+    const-string v4, "Die SD-Karte wird jetzt als interner, verschl\u00fcsselter Speicher genutzt."
 
-    const-string v5, "The SD card is now used as portable storage."
+    const-string v5, "The SD card is now used as encrypted internal storage."
 
-    .line 251
-    invoke-static {v3, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+    .line 513
+    invoke-static {v3, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$700(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
 
-    const/4 v4, 0x0
+    new-instance v4, Lcom/artisan/sdstorage/SdStorageModeActivity$8$2;
 
-    .line 227
-    invoke-static {v0, v1, v2, v3, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$800(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+    invoke-direct {v4, p0}, Lcom/artisan/sdstorage/SdStorageModeActivity$8$2;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity$8;)V
 
-    .line 253
+    .line 506
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1300(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+
+    .line 516
     return-void
 .end method

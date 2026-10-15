@@ -1,14 +1,11 @@
 .class Lcom/artisan/sdstorage/SdStorageModeActivity$1;
-.super Ljava/lang/Object;
+.super Landroid/os/storage/StorageEventListener;
 .source "SdStorageModeActivity.java"
-
-# interfaces
-.implements Landroid/content/DialogInterface$OnClickListener;
 
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -26,24 +23,48 @@
     .locals 0
 
     .prologue
-    .line 92
+    .line 82
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Landroid/os/storage/StorageEventListener;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onClick(Landroid/content/DialogInterface;I)V
+.method public onDiskDestroyed(Landroid/os/storage/DiskInfo;)V
     .locals 1
 
     .prologue
-    .line 92
+    .line 85
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->finish()V
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$000(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+
+    return-void
+.end method
+
+.method public onDiskScanned(Landroid/os/storage/DiskInfo;I)V
+    .locals 1
+
+    .prologue
+    .line 84
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$000(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+
+    return-void
+.end method
+
+.method public onVolumeStateChanged(Landroid/os/storage/VolumeInfo;II)V
+    .locals 1
+
+    .prologue
+    .line 83
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$000(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
 
     return-void
 .end method

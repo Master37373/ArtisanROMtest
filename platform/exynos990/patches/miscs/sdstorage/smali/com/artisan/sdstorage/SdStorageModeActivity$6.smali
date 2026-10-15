@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/content/DialogInterface$OnClickListener;
+.implements Landroid/view/View$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->offerMigrate()V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,11 +20,13 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$target:Landroid/os/storage/VolumeInfo;
+.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
+
+.field final synthetic val$priv:Landroid/os/storage/VolumeInfo;
 
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -33,10 +35,12 @@
     .end annotation
 
     .prologue
-    .line 185
+    .line 457
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$target:Landroid/os/storage/VolumeInfo;
+    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$disk:Landroid/os/storage/DiskInfo;
+
+    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$priv:Landroid/os/storage/VolumeInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -45,43 +49,18 @@
 
 
 # virtual methods
-.method public onClick(Landroid/content/DialogInterface;I)V
-    .locals 6
+.method public onClick(Landroid/view/View;)V
+    .locals 3
 
     .prologue
-    .line 186
+    .line 458
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$disk:Landroid/os/storage/DiskInfo;
 
-    const-string v2, "Dateien werden auf die SD-Karte verschoben\u2026"
+    iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$priv:Landroid/os/storage/VolumeInfo;
 
-    const-string v3, "Moving files to the SD card\u2026"
+    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$500(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
 
-    invoke-static {v1, v2, v3}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v1
-
-    new-instance v2, Lcom/artisan/sdstorage/SdStorageModeActivity$6$1;
-
-    invoke-direct {v2, p0}, Lcom/artisan/sdstorage/SdStorageModeActivity$6$1;-><init>(Lcom/artisan/sdstorage/SdStorageModeActivity$6;)V
-
-    iget-object v3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
-
-    const-string v4, "Fotos, Downloads und andere Dateien liegen jetzt auf der SD-Karte."
-
-    const-string v5, "Photos, downloads and other files are now on the SD card."
-
-    .line 190
-    invoke-static {v3, v4, v5}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v3
-
-    const/4 v4, 0x0
-
-    .line 186
-    invoke-static {v0, v1, v2, v3, v4}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$800(Lcom/artisan/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/artisan/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
-
-    .line 192
     return-void
 .end method
