@@ -215,3 +215,45 @@ else
     LOG "\033[0;33m! SDCardEncryptStatusPreferenceController not found, skipping\033[0m"
 fi
 unset SDENC_CTRL
+
+# SD card storage mode switch (portable <-> adoptable/encrypted internal), replaces Samsung's dead
+# "Encrypt SD card" entry in Settings > Security and privacy > More security settings.
+# Source: sdstorage/src (compiled to sdstorage/smali, see sdstorage/README).
+LOG_STEP_IN "- Adding SD card storage mode switch to SecSettings"
+DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
+SECSET="$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk"
+
+if ! find "$SECSET" -path '*/com/artisan/sdstorage/SdStorageModeActivity.smali' | grep -q .; then
+    N=2
+    while [ -d "$SECSET/smali_classes$N" ]; do N=$((N + 1)); done
+    EVAL "mkdir -p \"$SECSET/smali_classes$N\""
+    EVAL "cp -a \"$MODPATH/sdstorage/smali/.\" \"$SECSET/smali_classes$N/\""
+    LOG "- Added SdStorageModeActivity to smali_classes$N"
+fi
+
+if ! grep -q 'com.artisan.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml"; then
+    sed -i 's#^\(\s*\)</application>#\1    <activity android:name="com.artisan.sdstorage.SdStorageModeActivity" android:exported="false" android:excludeFromRecents="true" android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|uiMode|density" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>\n\1</application>#' \
+        "$SECSET/AndroidManifest.xml"
+fi
+grep -q 'com.artisan.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml" || \
+    ABORT "Failed to register SdStorageModeActivity in the SecSettings manifest"
+
+SDXML="$SECSET/res/xml/sec_security_advanced_settings.xml"
+if grep -q 'android:key="sdcard_encrypt_status"' "$SDXML"; then
+    sed -i '/android:key="sdcard_encrypt_status"/c\    <SecPreference android:title="@string/artisan_sd_storage_title" android:key="artisan_sd_storage_mode" android:summary="@string/artisan_sd_storage_summary" android:order="400"><intent android:action="android.intent.action.MAIN" android:targetPackage="com.android.settings" android:targetClass="com.artisan.sdstorage.SdStorageModeActivity" /></SecPreference>' "$SDXML"
+fi
+grep -q 'artisan_sd_storage_mode' "$SDXML" || ABORT "Failed to add the SD card storage entry to $SDXML"
+
+for L in "values:Use SD card as internal storage:Switch between portable and encrypted internal storage" \
+         "values-de:SD-Karte als internen Speicher nutzen:Zwischen tragbarem und verschlüsseltem internem Speicher wechseln"; do
+    DIR="${L%%:*}"; REST="${L#*:}"; TITLE="${REST%%:*}"; SUMMARY="${REST#*:}"
+    F="$SECSET/res/$DIR/strings.xml"
+    [ -f "$F" ] || continue
+    if ! grep -q 'name="artisan_sd_storage_title"' "$F"; then
+        sed -i "s#</resources>#    <string name=\"artisan_sd_storage_title\">$TITLE</string>\n    <string name=\"artisan_sd_storage_summary\">$SUMMARY</string>\n</resources>#" "$F"
+    fi
+done
+grep -q 'name="artisan_sd_storage_title"' "$SECSET/res/values/strings.xml" || \
+    ABORT "Failed to add the SD card storage strings"
+unset SECSET SDXML N L DIR REST TITLE SUMMARY F
+LOG_STEP_OUT

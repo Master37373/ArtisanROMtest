@@ -1,0 +1,4 @@
+SdStorageModeActivity (ArtisanROM): portable <-> adoptable SD card switch inside SecSettings.
+src/  : Java source
+smali/: compiled form that the build copies into SecSettings (new smali_classesN dir).
+Rebuild: javac --release 8 -cp <framework classes> ; d2j-jar2dex ; baksmali (no lambdas: dx has no invokedynamic).
