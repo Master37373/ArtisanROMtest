@@ -28,7 +28,7 @@ fi
 # Point the Updater app to this fork's update server (instead of ArtisanROM's)
 # - URLs are patched at build time, so a newer upstream ArtisanUpdater.apk keeps working
 # - The OTA XMLs (updater/v2/<device>.xml) are read from the "main" branch of UPDATER_REPO
-UPDATER_REPO="Master37373/ArtisanROMtest"
+UPDATER_REPO="Master37373/MasterROM"
 UPDATER_APK="system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
 UPDATER_DIR="$APKTOOL_DIR/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
 
