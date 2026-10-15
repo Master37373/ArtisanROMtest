@@ -247,6 +247,22 @@ grep -q 'com.artisan.sdstorage.SdStoragePreferenceController' "$SDXML" || \
     sed -i 's#android:key="artisan_sd_storage_mode"#android:key="artisan_sd_storage_mode" settings:controller="com.artisan.sdstorage.SdStoragePreferenceController"#' "$SDXML"
 grep -q 'com.artisan.sdstorage.SdStoragePreferenceController' "$SDXML" || ABORT "Failed to attach the SD card storage controller"
 
+# Factory reset from Settings:
+#  1. Samsung's MainClearConfirm silently aborts when ro.frp.pst is empty, which
+#     unica/patches/frp_migration_compat does on purpose. Read a property that is always set
+#     instead; without a PersistentDataBlockService the reset goes straight to doSecMainClear().
+#  2. If the SD card is adopted (encrypted internal storage), ResetGuard warns that the card
+#     becomes unreadable and only continues with "erase card too" (WIPE_EXTERNAL_STORAGE ->
+#     StorageManager.wipeAdoptableDisks() formats it as portable before the reboot).
+F="$(find "$SECSET" -path '*/com/android/settings/MainClearConfirm.smali' | head -n 1)"
+[ -n "$F" ] || ABORT "MainClearConfirm.smali not found"
+sed -i 's#const-string \(v[0-9]*\), "ro.frp.pst"#const-string \1, "ro.product.device"#' "$F"
+grep -q '"ro.frp.pst"' "$F" && ABORT "Failed to patch the factory reset FRP check"
+if ! grep -q 'com/artisan/sdstorage/ResetGuard' "$F"; then
+    perl -0pi -e 's/(\.method public final onResetButtonClick\(\)V\n\s*\.locals [1-9]\d*\n)/$1\n    invoke-static {p0}, Lcom\/artisan\/sdstorage\/ResetGuard;->intercept(Lcom\/android\/settings\/MainClearConfirm;)Z\n\n    move-result v0\n\n    if-eqz v0, :artisan_reset_go\n\n    return-void\n\n    :artisan_reset_go\n/' "$F"
+fi
+grep -q 'com/artisan/sdstorage/ResetGuard;->intercept' "$F" || ABORT "Failed to hook the SD card check into the factory reset"
+
 for L in "values:Use SD card as internal storage:Switch between portable and encrypted internal storage" \
          "values-de:SD-Karte als internen Speicher nutzen:Zwischen tragbarem und verschlüsseltem internem Speicher wechseln"; do
     DIR="${L%%:*}"; REST="${L#*:}"; TITLE="${REST%%:*}"; SUMMARY="${REST#*:}"
