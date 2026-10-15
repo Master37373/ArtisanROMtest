@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showResult(ZLjava/lang/String;)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,14 +20,23 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
+.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
+
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
     .prologue
-    .line 784
+    .line 749
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$16;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$16;->val$disk:Landroid/os/storage/DiskInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -37,13 +46,15 @@
 
 # virtual methods
 .method public onClick(Landroid/view/View;)V
-    .locals 1
+    .locals 2
 
     .prologue
-    .line 785
+    .line 750
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$16;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->finish()V
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$16;->val$disk:Landroid/os/storage/DiskInfo;
+
+    invoke-static {v0, v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1600(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
 
     return-void
 .end method

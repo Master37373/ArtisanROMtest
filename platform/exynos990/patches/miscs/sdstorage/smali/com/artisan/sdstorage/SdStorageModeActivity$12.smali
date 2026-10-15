@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/content/DialogInterface$OnDismissListener;
+.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->confirmFileLocation(Landroid/os/storage/VolumeInfo;Z)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->refreshMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,23 +20,14 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$started:[Z
-
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;[Z)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
     .locals 0
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()V"
-        }
-    .end annotation
 
     .prologue
-    .line 609
+    .line 646
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
-
-    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->val$started:[Z
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -45,22 +36,22 @@
 
 
 # virtual methods
-.method public onDismiss(Landroid/content/DialogInterface;)V
-    .locals 2
+.method public run()V
+    .locals 1
 
     .prologue
-    .line 610
-    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->val$started:[Z
+    .line 647
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    const/4 v1, 0x0
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1000(Lcom/artisan/sdstorage/SdStorageModeActivity;)Z
 
-    aget-boolean v0, v0, v1
+    move-result v0
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_0
 
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$100(Lcom/artisan/sdstorage/SdStorageModeActivity;)Z
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1100(Lcom/artisan/sdstorage/SdStorageModeActivity;)Z
 
     move-result v0
 
@@ -68,9 +59,33 @@
 
     iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$300(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1200(Lcom/artisan/sdstorage/SdStorageModeActivity;)Z
 
-    .line 611
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->isFinishing()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-virtual {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->isDestroyed()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v0}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1300(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+
+    .line 648
     :cond_0
     return-void
 .end method

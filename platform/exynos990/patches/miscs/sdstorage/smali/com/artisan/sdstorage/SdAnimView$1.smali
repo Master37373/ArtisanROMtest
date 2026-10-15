@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 68
+    .line 134
     iput-object p1, p0, Lcom/artisan/sdstorage/SdAnimView$1;->this$0:Lcom/artisan/sdstorage/SdAnimView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -40,7 +40,7 @@
     .locals 2
 
     .prologue
-    .line 70
+    .line 136
     iget-object v1, p0, Lcom/artisan/sdstorage/SdAnimView$1;->this$0:Lcom/artisan/sdstorage/SdAnimView;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
@@ -55,11 +55,11 @@
 
     invoke-static {v1, v0}, Lcom/artisan/sdstorage/SdAnimView;->access$002(Lcom/artisan/sdstorage/SdAnimView;F)F
 
-    .line 71
+    .line 137
     iget-object v0, p0, Lcom/artisan/sdstorage/SdAnimView$1;->this$0:Lcom/artisan/sdstorage/SdAnimView;
 
     invoke-virtual {v0}, Lcom/artisan/sdstorage/SdAnimView;->invalidate()V
 
-    .line 72
+    .line 138
     return-void
 .end method

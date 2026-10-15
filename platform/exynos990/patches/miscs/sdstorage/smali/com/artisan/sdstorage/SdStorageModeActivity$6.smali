@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/view/View$OnClickListener;
+.implements Landroid/view/View$OnApplyWindowInsetsListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->buildFrame()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,27 +20,14 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
-
-.field final synthetic val$priv:Landroid/os/storage/VolumeInfo;
-
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
     .locals 0
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()V"
-        }
-    .end annotation
 
     .prologue
-    .line 457
+    .line 339
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
-
-    iput-object p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$disk:Landroid/os/storage/DiskInfo;
-
-    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$priv:Landroid/os/storage/VolumeInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -49,18 +36,61 @@
 
 
 # virtual methods
-.method public onClick(Landroid/view/View;)V
-    .locals 3
+.method public onApplyWindowInsets(Landroid/view/View;Landroid/view/WindowInsets;)Landroid/view/WindowInsets;
+    .locals 6
 
     .prologue
-    .line 458
-    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+    .line 341
+    invoke-static {}, Landroid/view/WindowInsets$Type;->systemBars()I
 
-    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$disk:Landroid/os/storage/DiskInfo;
+    move-result v0
 
-    iget-object v2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->val$priv:Landroid/os/storage/VolumeInfo;
+    invoke-static {}, Landroid/view/WindowInsets$Type;->displayCutout()I
 
-    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$500(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    move-result v1
 
-    return-void
+    or-int/2addr v0, v1
+
+    invoke-virtual {p2, v0}, Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets;
+
+    move-result-object v0
+
+    .line 342
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$600(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/LinearLayout;
+
+    move-result-object v1
+
+    iget v2, v0, Landroid/graphics/Insets;->left:I
+
+    iget v3, v0, Landroid/graphics/Insets;->top:I
+
+    iget v4, v0, Landroid/graphics/Insets;->right:I
+
+    iget v5, v0, Landroid/graphics/Insets;->bottom:I
+
+    invoke-virtual {v1, v2, v3, v4, v5}, Landroid/widget/LinearLayout;->setPadding(IIII)V
+
+    .line 343
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$700(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/widget/FrameLayout;
+
+    move-result-object v1
+
+    iget v2, v0, Landroid/graphics/Insets;->left:I
+
+    iget v3, v0, Landroid/graphics/Insets;->top:I
+
+    iget v4, v0, Landroid/graphics/Insets;->right:I
+
+    iget v0, v0, Landroid/graphics/Insets;->bottom:I
+
+    invoke-virtual {v1, v2, v3, v4, v0}, Landroid/widget/FrameLayout;->setPadding(IIII)V
+
+    .line 344
+    sget-object v0, Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets;
+
+    return-object v0
 .end method

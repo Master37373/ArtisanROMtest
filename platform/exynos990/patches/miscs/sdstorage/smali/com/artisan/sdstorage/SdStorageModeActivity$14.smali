@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/window/OnBackInvokedCallback;
+.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->setBusy(Z)V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->showMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,14 +20,27 @@
 # instance fields
 .field final synthetic this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
+.field final synthetic val$onSd:Z
+
+.field final synthetic val$priv:Landroid/os/storage/VolumeInfo;
+
 
 # direct methods
-.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;)V
+.method constructor <init>(Lcom/artisan/sdstorage/SdStorageModeActivity;ZLandroid/os/storage/VolumeInfo;)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
     .prologue
-    .line 729
+    .line 716
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iput-boolean p2, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->val$onSd:Z
+
+    iput-object p3, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->val$priv:Landroid/os/storage/VolumeInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -36,10 +49,23 @@
 
 
 # virtual methods
-.method public onBackInvoked()V
-    .locals 0
+.method public run()V
+    .locals 3
 
     .prologue
-    .line 729
+    .line 716
+    iget-boolean v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->val$onSd:Z
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$14;->val$priv:Landroid/os/storage/VolumeInfo;
+
+    const/4 v2, 0x1
+
+    invoke-static {v0, v1, v2}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$1400(Lcom/artisan/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
+
+    :cond_0
     return-void
 .end method

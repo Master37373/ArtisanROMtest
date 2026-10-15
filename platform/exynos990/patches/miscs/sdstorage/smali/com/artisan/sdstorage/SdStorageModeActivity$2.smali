@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/view/View$OnApplyWindowInsetsListener;
+.implements Landroid/view/View$OnTouchListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->buildFrame()V
+    value = Lcom/artisan/sdstorage/SdStorageModeActivity;->addPress(Landroid/view/View;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -26,7 +26,7 @@
     .locals 0
 
     .prologue
-    .line 172
+    .line 236
     iput-object p1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -36,38 +36,102 @@
 
 
 # virtual methods
-.method public onApplyWindowInsets(Landroid/view/View;Landroid/view/WindowInsets;)Landroid/view/WindowInsets;
+.method public onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
     .locals 4
 
     .prologue
-    .line 174
-    invoke-static {}, Landroid/view/WindowInsets$Type;->systemBars()I
+    const/high16 v2, 0x3f800000    # 1.0f
+
+    const v1, 0x3f75c28f    # 0.96f
+
+    .line 238
+    invoke-virtual {p2}, Landroid/view/MotionEvent;->getActionMasked()I
 
     move-result v0
 
-    invoke-static {}, Landroid/view/WindowInsets$Type;->displayCutout()I
+    packed-switch v0, :pswitch_data_0
 
-    move-result v1
+    .line 248
+    :goto_0
+    :pswitch_0
+    const/4 v0, 0x0
 
-    or-int/2addr v0, v1
+    return v0
 
-    invoke-virtual {p2, v0}, Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets;
+    .line 240
+    :pswitch_1
+    invoke-virtual {p1}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
 
     move-result-object v0
 
-    .line 175
-    iget v1, v0, Landroid/graphics/Insets;->left:I
+    invoke-virtual {v0, v1}, Landroid/view/ViewPropertyAnimator;->scaleX(F)Landroid/view/ViewPropertyAnimator;
 
-    iget v2, v0, Landroid/graphics/Insets;->top:I
+    move-result-object v0
 
-    iget v3, v0, Landroid/graphics/Insets;->right:I
+    invoke-virtual {v0, v1}, Landroid/view/ViewPropertyAnimator;->scaleY(F)Landroid/view/ViewPropertyAnimator;
 
-    iget v0, v0, Landroid/graphics/Insets;->bottom:I
+    move-result-object v0
 
-    invoke-virtual {p1, v1, v2, v3, v0}, Landroid/view/View;->setPadding(IIII)V
+    const-wide/16 v2, 0x78
 
-    .line 176
-    sget-object v0, Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets;
+    invoke-virtual {v0, v2, v3}, Landroid/view/ViewPropertyAnimator;->setDuration(J)Landroid/view/ViewPropertyAnimator;
 
-    return-object v0
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$100(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/view/animation/PathInterpolator;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Landroid/view/ViewPropertyAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/view/ViewPropertyAnimator;->start()V
+
+    goto :goto_0
+
+    .line 244
+    :pswitch_2
+    invoke-virtual {p1}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Landroid/view/ViewPropertyAnimator;->scaleX(F)Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Landroid/view/ViewPropertyAnimator;->scaleY(F)Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    const-wide/16 v2, 0x104
+
+    invoke-virtual {v0, v2, v3}, Landroid/view/ViewPropertyAnimator;->setDuration(J)Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/artisan/sdstorage/SdStorageModeActivity$2;->this$0:Lcom/artisan/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v1}, Lcom/artisan/sdstorage/SdStorageModeActivity;->access$200(Lcom/artisan/sdstorage/SdStorageModeActivity;)Landroid/view/animation/PathInterpolator;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Landroid/view/ViewPropertyAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)Landroid/view/ViewPropertyAnimator;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/view/ViewPropertyAnimator;->start()V
+
+    goto :goto_0
+
+    .line 238
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_1
+        :pswitch_2
+        :pswitch_0
+        :pswitch_2
+    .end packed-switch
 .end method
