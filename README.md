@@ -111,8 +111,8 @@ Everything below comes from ArtisanROM and UN1CA.
 |---|---|
 | Galaxy S20+ | y2s |
 
-The build system from ArtisanROM also supports the other Exynos 990 devices (S20, S20 Ultra, Note20, Note20 Ultra),
-but MasterROM is only tested on the Galaxy S20+.
+MasterROM is only built and tested for the Galaxy S20+. The other Exynos 990 devices are supported by
+[ArtisanROM](https://github.com/ArtisanROM/ArtisanROM).
 
 # Installation
 1. Unlocked bootloader and TWRP
