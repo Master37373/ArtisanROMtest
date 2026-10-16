@@ -21,6 +21,33 @@ ADD_TO_WORK_DIR "$MODPATH" "system" "."
 # Settings > Software update opens the updater (smali patch in this mod)
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 
+# Merge this mod's SecSettings.apk/ folder (same logic as unica/mods/settings/customize.sh):
+# new files and non-XML files are copied, existing XML files are patched with sed, where the
+# first line of the file is the sed instruction (res/values: inserted before </resources>).
+while IFS= read -r f; do
+    f="${f//$MODPATH\/SecSettings.apk\//}"
+
+    if [ ! -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ] || \
+            [[ "$f" != *".xml" ]]; then
+        LOG "- Adding \"$f\" to /system/system/priv-app/SecSettings.apk"
+        EVAL "mkdir -p \"$(dirname "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f")\""
+        EVAL "cp -a \"$MODPATH/SecSettings.apk/${f//\$/\\$}\" \"$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/${f//\$/\\$}\""
+    else
+        LOG "- Patching \"$f\" in /system/system/priv-app/SecSettings.apk"
+        if [[ "$f" == *"res/values"* ]]; then
+            PATCH_INST="/<\/resources>/i"
+            CONTENT="$(sed -e "/?xml/d" -e "/resources>/d" "$MODPATH/SecSettings.apk/$f")"
+        else
+            PATCH_INST="$(head -n 1 "$MODPATH/SecSettings.apk/$f")"
+            CONTENT="$(tail -n +2 "$MODPATH/SecSettings.apk/$f")"
+        fi
+        CONTENT="$(sed -e "s/\"/\\\\\"/g" -e "s/\\$/\\\\$/g" -e "s/ /\\\ /g" -e "s/\\\\n/\\\\\\\\\n/g" <<< "$CONTENT")"
+        CONTENT="$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' <<< "$CONTENT")"
+        EVAL "sed -i \"$PATCH_INST $CONTENT\" \"$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f\""
+    fi
+done < <(find "$MODPATH/SecSettings.apk" -type f)
+unset PATCH_INST CONTENT
+
 LOG "- Patching /system/system/etc/security/otacerts.zip"
 EVAL "rm \"$WORK_DIR/system/system/etc/security/otacerts.zip\""
 EVAL "cd \"$SRC_DIR\"; zip -q \"$WORK_DIR/system/system/etc/security/otacerts.zip\" \"./security/masterrom_ota.x509.pem\""
