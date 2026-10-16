@@ -5,7 +5,12 @@ name: Kernel
 # With "publish" the <kernel> section of updater/v2/y2s.xml is updated, so the
 # MasterROM Updater offers it. The <rom> section is left alone.
 
+# Runs by itself every night: it only builds and publishes when ArtisanKRNL has new commits
+# (or patch_rev was raised) since the kernel in y2s.xml.
+
 on:
+  schedule:
+    - cron: '17 3 * * *'
   workflow_dispatch:
     inputs:
       publish:
@@ -21,7 +26,33 @@ permissions:
   contents: write
 
 jobs:
+  check:
+    runs-on: ubuntu-24.04
+    outputs:
+      build: ${{ steps.c.outputs.build }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: platform/exynos990/patches/artisankrnl
+      - id: c
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then echo "build=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          REPO=$(grep -o 'https://github.com/[^"]*' platform/exynos990/patches/artisankrnl/customize.sh | head -n 1)
+          HEAD=$(git ls-remote "$REPO" refs/heads/bpf111 | cut -f1)
+          REV=$(tr -d '[:space:]' < platform/exynos990/patches/artisankrnl/patch_rev)
+          XML=$(curl -sfL "https://raw.githubusercontent.com/${{ github.repository }}/main/updater/v2/y2s.xml" || true)
+          PUB_COMMIT=$(echo "$XML" | sed -n '/<kernel/,/<\/kernel>/p' | grep -o '<commit>[^<]*' | sed 's/<commit>//')
+          PUB_REV=$(echo "$XML" | sed -n '/<kernel/,/<\/kernel>/p' | grep -o '<patch_rev>[^<]*' | sed 's/<patch_rev>//')
+          echo "kernel head $HEAD (published ${PUB_COMMIT:-none}), patch_rev $REV (published ${PUB_REV:-none})"
+          if [ -n "$HEAD" ] && [ "$HEAD" = "$PUB_COMMIT" ] && [ "$REV" = "$PUB_REV" ]; then
+            echo "nothing new"; echo "build=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
   kernel:
+    needs: check
+    if: needs.check.outputs.build == 'true'
     runs-on: ubuntu-24.04
     env:
       TARGET_CODENAME: y2s
@@ -79,7 +110,12 @@ jobs:
             echo "file=MasterROM-Kernel_${VERSION}_${TARGET_CODENAME}.zip"
           } >> "$GITHUB_OUTPUT"
           # recent kernel commits, shown in the updater as "what's new"
-          git -C "$KDIR" log -8 --no-merges --format='%s' > "$RUNNER_TEMP/changes.txt"
+          echo "commit=$(git -C "$KDIR" rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          # recent kernel commits, shown in the updater as "what's new": no merges, no version
+          # bumps, no very short / meaningless messages, no duplicates, at most 8
+          git -C "$KDIR" log -40 --no-merges --format='%s' \
+            | grep -viE '(^|: *)(bump|update|wip|test|fix|fixup|cleanup|i give up|oops|revert "?(bump|wip))\b *\.?$|^.{0,11}$' \
+            | awk '!seen[tolower($0)]++' | head -n 8 > "$RUNNER_TEMP/changes.txt" || true
           cat "$RUNNER_TEMP/changes.txt"
 
       - name: Sign images with AVB (like the ROM build)
@@ -131,7 +167,8 @@ jobs:
           SF_PROJECT: ${{ secrets.SF_PROJECT }}
           SF_SSH_KEY: ${{ secrets.SF_SSH_KEY }}
           GH_TOKEN: ${{ github.token }}
-          PUBLISH: ${{ inputs.publish }}
+          PUBLISH: ${{ inputs.publish || github.event_name == 'schedule' }}
+          COMMIT: ${{ steps.ver.outputs.commit }}
           FILE: ${{ steps.ver.outputs.file }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
@@ -157,7 +194,8 @@ jobs:
           fi
 
           sleep 60
-          ARGS=(version="$VERSION" date="$(date +%Y-%m-%d)" filename="$FILE" link="$URL" md5="$MD5" size="$SIZE")
+          ARGS=(version="$VERSION" date="$(date +%Y-%m-%d)" filename="$FILE" link="$URL" md5="$MD5" size="$SIZE"
+                commit="$COMMIT" patch_rev="$(tr -d '[:space:]' < platform/exynos990/patches/artisankrnl/patch_rev)")
           while IFS= read -r line; do [ -n "$line" ] && ARGS+=(change="$line"); done < "$RUNNER_TEMP/changes.txt"
 
           rm -rf updater_repo
