@@ -85,7 +85,10 @@ STAMP_KERNEL_VERSION()
     # Raise the number in patch_rev whenever the patches in this folder change.
     local DEFCONFIG="$KERNEL_TMP_DIR/arch/arm64/configs/exynos9830_defconfig"
     local REV PATCH_REV
-    REV="$(git -C "$KERNEL_TMP_DIR" rev-list --count HEAD)"
+    # commits since ArtisanKRNL last changed its version (small numbers, restarts with every new vX.Y.Z)
+    local BUMP
+    BUMP="$(git -C "$KERNEL_TMP_DIR" log -1 --format=%H -G"^CONFIG_LOCALVERSION=" -- arch/arm64/configs/exynos9830_defconfig)"
+    REV="$(git -C "$KERNEL_TMP_DIR" rev-list --count ${BUMP:+$BUMP..}HEAD)"
     PATCH_REV="$(tr -d '[:space:]' < "$(pwd)/platform/exynos990/patches/artisankrnl/patch_rev" 2>/dev/null)"
     [[ -n "$PATCH_REV" ]] || PATCH_REV=1
     sed -i -E "s/^(CONFIG_LOCALVERSION=\"[^\"]*-v[0-9.]+)[^\"]*\"/\1-mr${REV}.${PATCH_REV}\"/" "$DEFCONFIG"
