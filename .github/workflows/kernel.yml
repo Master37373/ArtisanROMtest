@@ -1,0 +1,179 @@
+name: Kernel
+
+# Builds only the kernel (same source, same patches and same version stamp as the ROM build),
+# packs it into a small TWRP zip and uploads it to SourceForge (y2s/kernel/).
+# With "publish" the <kernel> section of updater/v2/y2s.xml is updated, so the
+# MasterROM Updater offers it. The <rom> section is left alone.
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Im Updater anbieten (y2s.xml auf main aktualisieren)'
+        type: boolean
+        default: false
+
+concurrency:
+  group: kernel
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  kernel:
+    runs-on: ubuntu-24.04
+    env:
+      TARGET_CODENAME: y2s
+      TARGET_PLATFORM: exynos990
+      BOOT_SIZE: 67108864
+      DTBO_SIZE: 8388608
+
+    steps:
+      - name: Checkout (only what the kernel needs)
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            platform/exynos990/patches/artisankrnl
+            security/avb
+            scripts/mr
+          sparse-checkout-cone-mode: false
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update
+          DEBIAN_FRONTEND=noninteractive sudo apt-get install -yq \
+            bc bison flex libssl-dev libelf-dev cpio lz4 zip unzip python3 git curl openssl
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Build kernel (same script as the ROM build)
+        run: |
+          mkdir -p out/kwork
+          cat > "$RUNNER_TEMP/stubs.sh" <<'EOF'
+          LOG()  { echo "$*"; }
+          LOGW() { echo "WARNING: $*"; }
+          LOGE() { echo "ERROR: $*" >&2; }
+          ABORT() { echo "ERROR: $*" >&2; exit 1; }
+          EVAL() { eval "$1"; }
+          EOF
+          WORK_DIR="$PWD/out/kwork" bash -c \
+            'source "$RUNNER_TEMP/stubs.sh"; source platform/exynos990/patches/artisankrnl/customize.sh'
+          ls -l out/kwork/kernel
+          for f in boot dtbo dtbo_lte; do
+            [ -s "out/kwork/kernel/$f.img" ] || { echo "ERROR: $f.img missing"; exit 1; }
+          done
+
+      - name: Version
+        id: ver
+        run: |
+          KDIR="out/kernel_tmp-$TARGET_PLATFORM"
+          RELEASE=$(cat "$KDIR/out/include/config/kernel.release")
+          VERSION=$(echo "$RELEASE" | grep -oE '[A-Za-z]+KRNL-v[0-9.]+(-mr[0-9.]+)?' | head -n 1)
+          [ -n "$VERSION" ] || { echo "ERROR: no version in '$RELEASE'"; exit 1; }
+          echo "Kernel release: $RELEASE"
+          echo "Version: $VERSION"
+          {
+            echo "release=$RELEASE"
+            echo "version=$VERSION"
+            echo "file=MasterROM-Kernel_${VERSION}_${TARGET_CODENAME}.zip"
+          } >> "$GITHUB_OUTPUT"
+          # recent kernel commits, shown in the updater as "what's new"
+          git -C "$KDIR" log -8 --no-merges --format='%s' > "$RUNNER_TEMP/changes.txt"
+          cat "$RUNNER_TEMP/changes.txt"
+
+      - name: Sign images with AVB (like the ROM build)
+        run: |
+          git clone -q --depth 1 https://android.googlesource.com/platform/external/avb "$RUNNER_TEMP/avb"
+          sign() {
+            python3 "$RUNNER_TEMP/avb/avbtool.py" add_hash_footer --image "out/kwork/kernel/$1.img" \
+              --partition_size "$2" --partition_name "$3" --hash_algorithm sha256 \
+              --algorithm SHA256_RSA4096 --key security/avb/testkey_rsa4096.pem
+          }
+          sign boot "$BOOT_SIZE" boot
+          sign dtbo "$DTBO_SIZE" dtbo
+          sign dtbo_lte "$DTBO_SIZE" dtbo
+
+      - name: Pack TWRP zip
+        run: |
+          Z=out/kzip
+          mkdir -p "$Z/META-INF/com/google/android"
+          cp out/kwork/kernel/boot.img out/kwork/kernel/dtbo.img out/kwork/kernel/dtbo_lte.img "$Z/"
+          cp "out/kernel_tmp-$TARGET_PLATFORM/build/update-binary" "$Z/META-INF/com/google/android/update-binary"
+          cat > "$Z/META-INF/com/google/android/updater-script" <<EOF
+          getprop("ro.boot.em.model") == "SM-G986B" || getprop("ro.boot.em.model") == "SM-G985F" || abort("E3004: This kernel is for the Galaxy S20+ (y2s) only; this is a \"" + getprop("ro.product.device") + "\".");
+          ui_print(" ");
+          ui_print("MasterROM kernel ${{ steps.ver.outputs.version }}");
+          ui_print("(ArtisanKRNL by Android Artisan)");
+          ui_print(" ");
+          ui_print("Installing boot image...");
+          package_extract_file("boot.img", "/dev/block/by-name/boot");
+          ui_print("Installing dtbo image...");
+          package_extract_file("dtbo.img", "/dev/block/by-name/dtbo");
+          if is_substring("G985F", getprop("ro.bootloader")) then
+              package_extract_file("dtbo_lte.img", "/dev/block/by-name/dtbo");
+          endif;
+          ui_print("Done.");
+          ui_print(" ");
+          EOF
+          (cd "$Z" && zip -r -q "../${{ steps.ver.outputs.file }}" .)
+          ls -l out/*.zip
+
+      - name: Upload zip (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.ver.outputs.file }}
+          path: out/${{ steps.ver.outputs.file }}
+
+      - name: Upload to SourceForge (+ updater XML)
+        env:
+          SF_USER: ${{ secrets.SF_USER }}
+          SF_PROJECT: ${{ secrets.SF_PROJECT }}
+          SF_SSH_KEY: ${{ secrets.SF_SSH_KEY }}
+          GH_TOKEN: ${{ github.token }}
+          PUBLISH: ${{ inputs.publish }}
+          FILE: ${{ steps.ver.outputs.file }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SF_SSH_KEY" > ~/.ssh/sf_deploy
+          chmod 600 ~/.ssh/sf_deploy
+          SSH="ssh -i $HOME/.ssh/sf_deploy -o StrictHostKeyChecking=accept-new"
+          DEST="/home/frs/project/$SF_PROJECT/$TARGET_CODENAME/kernel"
+
+          echo "-mkdir $DEST" | sftp -i ~/.ssh/sf_deploy -o StrictHostKeyChecking=accept-new -b - "$SF_USER@frs.sourceforge.net" || true
+          rsync -avP -e "$SSH" "out/$FILE" "$SF_USER@frs.sourceforge.net:$DEST/"
+          rm -f ~/.ssh/sf_deploy
+
+          URL="https://sourceforge.net/projects/$SF_PROJECT/files/$TARGET_CODENAME/kernel/$FILE/download"
+          MD5=$(md5sum "out/$FILE" | awk '{print $1}')
+          SIZE=$(stat -c%s "out/$FILE")
+          echo "Download: $URL"
+          echo "MD5: $MD5  Size: $SIZE"
+
+          if [ "$PUBLISH" != "true" ]; then
+            echo "publish is off: the updater does not offer this kernel"
+            exit 0
+          fi
+
+          sleep 60
+          ARGS=(version="$VERSION" date="$(date +%Y-%m-%d)" filename="$FILE" link="$URL" md5="$MD5" size="$SIZE")
+          while IFS= read -r line; do [ -n "$line" ] && ARGS+=(change="$line"); done < "$RUNNER_TEMP/changes.txt"
+
+          rm -rf updater_repo
+          git clone --single-branch --branch main "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
+          mkdir -p updater_repo/updater/v2
+          XML="updater_repo/updater/v2/$TARGET_CODENAME.xml"
+          for i in 1 2 3; do
+            (cd updater_repo && git pull --rebase origin main) || true
+            python3 scripts/mr/update_xml.py "$XML" kernel "${ARGS[@]}"
+            cat "$XML"
+            (
+              cd updater_repo
+              git add "updater/v2/$TARGET_CODENAME.xml"
+              git commit -m "updater: v2: $TARGET_CODENAME.xml: kernel $VERSION" || exit 0
+              git push origin main
+            ) && break
+            (cd updater_repo && git reset --hard origin/main)
+            sleep 5
+          done

@@ -76,6 +76,22 @@ APPLY_SEPOLICY_FIX()
     APPLY_PATCH_ONCE "$KERNEL_TMP_DIR"               "$PATCH_DIR/dm-crypt-allow-encrypt-override.patch" "dm-crypt-allow-encrypt-override.patch"
 }
 
+STAMP_KERNEL_VERSION()
+{
+    # MasterROM: adds "-mr<kernel commits>.<patch_rev>" to the kernel version
+    # ("4.19.87-ArtisanKRNL-v4.0.1-mr812.1"). The ROM build and the kernel-only build
+    # (.github/workflows/kernel.yml) both run this, so the same source gives the same
+    # version and the updater only offers a kernel that really is newer.
+    # Raise the number in patch_rev whenever the patches in this folder change.
+    local DEFCONFIG="$KERNEL_TMP_DIR/arch/arm64/configs/exynos9830_defconfig"
+    local REV PATCH_REV
+    REV="$(git -C "$KERNEL_TMP_DIR" rev-list --count HEAD)"
+    PATCH_REV="$(tr -d '[:space:]' < "$(pwd)/platform/exynos990/patches/artisankrnl/patch_rev" 2>/dev/null)"
+    [[ -n "$PATCH_REV" ]] || PATCH_REV=1
+    sed -i -E "s/^(CONFIG_LOCALVERSION=\"[^\"]*-v[0-9.]+)[^\"]*\"/\1-mr${REV}.${PATCH_REV}\"/" "$DEFCONFIG"
+    LOG "- Kernel version: $(grep '^CONFIG_LOCALVERSION=' "$DEFCONFIG")"
+}
+
 REPLACE_KERNEL_BINARIES()
 {
     # 1. Define the directory name based on your requirement
@@ -103,6 +119,7 @@ REPLACE_KERNEL_BINARIES()
 
     # 4. Apply the selinux/KSU fixes (must run after the reset above)
     APPLY_SEPOLICY_FIX
+    STAMP_KERNEL_VERSION
 
     # 5. Execute Build
     LOG "- Starting kernel build process."

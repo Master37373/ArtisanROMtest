@@ -214,34 +214,26 @@ jobs:
               if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME="${{ matrix.target }}"; fi
               echo "Geraetename fuer die XML: $DEVICE_NAME"
               XML_NAME="$DEVICE_NAME.xml"
-              {
-                echo '<?xml version="1.0" encoding="UTF-8"?>'
-                echo '<roms>'
-                echo '  <rom channel="stable">'
-                echo "    <version>$VERSION</version>"
-                echo "    <date>$BUILD_DATE</date>"
-                echo "    <filename>$FILE_NAME</filename>"
-                echo "    <part1>$DOWNLOAD_URL</part1>"
-                echo "    <md5>$FILE_MD5</md5>"
-                echo "    <size>$FILE_SIZE</size>"
-                echo '  </rom>'
-                echo '</roms>'
-              } > "$GITHUB_WORKSPACE/$XML_NAME"
-              cat "$GITHUB_WORKSPACE/$XML_NAME"
 
               rm -rf updater_repo
               git clone --single-branch --branch main "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}" updater_repo
               mkdir -p updater_repo/updater/v2
-              cp "$GITHUB_WORKSPACE/$XML_NAME" "updater_repo/updater/v2/$XML_NAME"
-              (
-                cd updater_repo
-                git add "updater/v2/$XML_NAME"
-                git commit -m "updater: v2: $XML_NAME: Update to $VERSION" || true
-                for i in 1 2 3; do
-                  git pull --rebase origin main && git push origin main && break
-                  sleep 5
-                done
-              )
+              # only the <rom> section is replaced, a published <kernel> section stays
+              for i in 1 2 3; do
+                (cd updater_repo && git pull --rebase origin main) || true
+                python3 scripts/mr/update_xml.py "updater_repo/updater/v2/$XML_NAME" rom \
+                  version="$VERSION" date="$BUILD_DATE" filename="$FILE_NAME" \
+                  part1="$DOWNLOAD_URL" md5="$FILE_MD5" size="$FILE_SIZE"
+                cat "updater_repo/updater/v2/$XML_NAME"
+                (
+                  cd updater_repo
+                  git add "updater/v2/$XML_NAME"
+                  git commit -m "updater: v2: $XML_NAME: Update to $VERSION" || exit 0
+                  git push origin main
+                ) && break
+                (cd updater_repo && git reset --hard origin/main)
+                sleep 5
+              done
             fi
 
             # GitHub Release (nur Link in den Notizen, keine grosse Datei)
