@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->showMain()V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->tile(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,13 +20,15 @@
 # instance fields
 .field final synthetic this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
+.field final synthetic val$bg:Landroid/graphics/drawable/GradientDrawable;
 
-.field final synthetic val$priv:Landroid/os/storage/VolumeInfo;
+.field final synthetic val$onPick:Ljava/lang/Runnable;
+
+.field final synthetic val$selected:Z
 
 
 # direct methods
-.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;ZLandroid/graphics/drawable/GradientDrawable;Ljava/lang/Runnable;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -34,13 +36,14 @@
         }
     .end annotation
 
-    .prologue
-    .line 718
+    .line 816
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$disk:Landroid/os/storage/DiskInfo;
+    iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$selected:Z
 
-    iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$priv:Landroid/os/storage/VolumeInfo;
+    iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$bg:Landroid/graphics/drawable/GradientDrawable;
+
+    iput-object p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$onPick:Ljava/lang/Runnable;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -50,17 +53,68 @@
 
 # virtual methods
 .method public onClick(Landroid/view/View;)V
-    .locals 3
+    .locals 2
 
-    .prologue
-    .line 719
+    .line 818
+    iget-boolean p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$selected:Z
+
+    if-eqz p1, :cond_0
+
+    return-void
+
+    .line 820
+    :cond_0
+    new-instance p1, Landroid/animation/ArgbEvaluator;
+
+    invoke-direct {p1}, Landroid/animation/ArgbEvaluator;-><init>()V
+
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$disk:Landroid/os/storage/DiskInfo;
+    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)I
 
-    iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$priv:Landroid/os/storage/VolumeInfo;
+    move-result v0
 
-    invoke-static {v0, v1, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1500(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
+    invoke-static {v0}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    invoke-static {v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1800(Lcom/masterrom/sdstorage/SdStorageModeActivity;)I
+
+    move-result v1
+
+    invoke-static {v1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v1
+
+    filled-new-array {v0, v1}, [Ljava/lang/Object;
+
+    move-result-object v0
+
+    invoke-static {p1, v0}, Landroid/animation/ValueAnimator;->ofObject(Landroid/animation/TypeEvaluator;[Ljava/lang/Object;)Landroid/animation/ValueAnimator;
+
+    move-result-object p1
+
+    const-wide/16 v0, 0xdc
+
+    .line 821
+    invoke-virtual {p1, v0, v1}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
+
+    .line 822
+    new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15$1;
+
+    invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$15$1;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$15;)V
+
+    invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->addUpdateListener(Landroid/animation/ValueAnimator$AnimatorUpdateListener;)V
+
+    .line 825
+    invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
+
+    .line 826
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$onPick:Ljava/lang/Runnable;
+
+    invoke-interface {p0}, Ljava/lang/Runnable;->run()V
 
     return-void
 .end method

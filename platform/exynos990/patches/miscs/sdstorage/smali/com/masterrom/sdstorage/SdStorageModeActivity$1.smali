@@ -22,8 +22,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .prologue
-    .line 117
+    .line 122
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Landroid/os/storage/StorageEventListener;-><init>()V
@@ -34,37 +33,34 @@
 
 # virtual methods
 .method public onDiskDestroyed(Landroid/os/storage/DiskInfo;)V
-    .locals 1
+    .locals 0
 
-    .prologue
-    .line 120
-    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    .line 125
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     return-void
 .end method
 
 .method public onDiskScanned(Landroid/os/storage/DiskInfo;I)V
-    .locals 1
+    .locals 0
 
-    .prologue
-    .line 119
-    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    .line 124
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     return-void
 .end method
 
 .method public onVolumeStateChanged(Landroid/os/storage/VolumeInfo;II)V
-    .locals 1
+    .locals 0
 
-    .prologue
-    .line 118
-    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    .line 123
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     return-void
 .end method

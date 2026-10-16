@@ -18,7 +18,6 @@
 .method constructor <init>()V
     .locals 0
 
-    .prologue
     .line 80
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -26,13 +25,11 @@
 .end method
 
 .method static alpha(I)I
-    .locals 1
+    .locals 0
 
-    .prologue
-    .line 81
-    ushr-int/lit8 v0, p0, 0x18
+    ushr-int/lit8 p0, p0, 0x18
 
-    and-int/lit16 v0, v0, 0xff
+    and-int/lit16 p0, p0, 0xff
 
-    return v0
+    return p0
 .end method

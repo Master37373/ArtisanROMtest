@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->showMain()V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->requireUnlocked(Ljava/lang/Runnable;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,23 +20,13 @@
 # instance fields
 .field final synthetic this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
-
 
 # direct methods
-.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
+.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()V"
-        }
-    .end annotation
 
-    .prologue
-    .line 749
+    .line 897
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$16;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$16;->val$disk:Landroid/os/storage/DiskInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -46,15 +36,12 @@
 
 # virtual methods
 .method public onClick(Landroid/view/View;)V
-    .locals 2
+    .locals 0
 
-    .prologue
-    .line 750
-    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$16;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    .line 898
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$16;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$16;->val$disk:Landroid/os/storage/DiskInfo;
-
-    invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1600(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1300(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     return-void
 .end method

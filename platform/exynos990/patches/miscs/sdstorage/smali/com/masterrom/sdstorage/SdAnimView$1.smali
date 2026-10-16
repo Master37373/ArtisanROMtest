@@ -25,7 +25,6 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdAnimView;)V
     .locals 0
 
-    .prologue
     .line 134
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
@@ -37,29 +36,27 @@
 
 # virtual methods
 .method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
-    .locals 2
+    .locals 1
 
-    .prologue
     .line 136
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
 
-    move-result-object v0
+    move-result-object p1
 
-    check-cast v0, Ljava/lang/Float;
+    check-cast p1, Ljava/lang/Float;
 
-    invoke-virtual {v0}, Ljava/lang/Float;->floatValue()F
+    invoke-virtual {p1}, Ljava/lang/Float;->floatValue()F
 
-    move-result v0
+    move-result p1
 
-    invoke-static {v1, v0}, Lcom/masterrom/sdstorage/SdAnimView;->access$002(Lcom/masterrom/sdstorage/SdAnimView;F)F
+    invoke-static {v0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->access$002(Lcom/masterrom/sdstorage/SdAnimView;F)F
 
     .line 137
-    iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
-    invoke-virtual {v0}, Lcom/masterrom/sdstorage/SdAnimView;->invalidate()V
+    invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdAnimView;->invalidate()V
 
-    .line 138
     return-void
 .end method

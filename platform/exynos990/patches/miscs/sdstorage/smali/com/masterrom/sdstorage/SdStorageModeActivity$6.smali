@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/view/View$OnApplyWindowInsetsListener;
+.implements Landroid/animation/ValueAnimator$AnimatorUpdateListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->buildFrame()V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->animateCollapse(F)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -25,8 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .prologue
-    .line 339
+    .line 365
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -36,61 +35,23 @@
 
 
 # virtual methods
-.method public onApplyWindowInsets(Landroid/view/View;Landroid/view/WindowInsets;)Landroid/view/WindowInsets;
-    .locals 6
+.method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
+    .locals 0
 
-    .prologue
-    .line 341
-    invoke-static {}, Landroid/view/WindowInsets$Type;->systemBars()I
+    .line 366
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    move-result v0
+    invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
 
-    invoke-static {}, Landroid/view/WindowInsets$Type;->displayCutout()I
+    move-result-object p1
 
-    move-result v1
+    check-cast p1, Ljava/lang/Float;
 
-    or-int/2addr v0, v1
+    invoke-virtual {p1}, Ljava/lang/Float;->floatValue()F
 
-    invoke-virtual {p2, v0}, Landroid/view/WindowInsets;->getInsets(I)Landroid/graphics/Insets;
+    move-result p1
 
-    move-result-object v0
+    invoke-static {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$600(Lcom/masterrom/sdstorage/SdStorageModeActivity;F)V
 
-    .line 342
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$600(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/LinearLayout;
-
-    move-result-object v1
-
-    iget v2, v0, Landroid/graphics/Insets;->left:I
-
-    iget v3, v0, Landroid/graphics/Insets;->top:I
-
-    iget v4, v0, Landroid/graphics/Insets;->right:I
-
-    iget v5, v0, Landroid/graphics/Insets;->bottom:I
-
-    invoke-virtual {v1, v2, v3, v4, v5}, Landroid/widget/LinearLayout;->setPadding(IIII)V
-
-    .line 343
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/FrameLayout;
-
-    move-result-object v1
-
-    iget v2, v0, Landroid/graphics/Insets;->left:I
-
-    iget v3, v0, Landroid/graphics/Insets;->top:I
-
-    iget v4, v0, Landroid/graphics/Insets;->right:I
-
-    iget v0, v0, Landroid/graphics/Insets;->bottom:I
-
-    invoke-virtual {v1, v2, v3, v4, v0}, Landroid/widget/FrameLayout;->setPadding(IIII)V
-
-    .line 344
-    sget-object v0, Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets;
-
-    return-object v0
+    return-void
 .end method

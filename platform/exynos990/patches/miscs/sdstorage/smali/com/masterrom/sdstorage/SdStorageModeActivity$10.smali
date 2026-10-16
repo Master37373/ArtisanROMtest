@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/animation/ValueAnimator$AnimatorUpdateListener;
+.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->animateBlur(FF)V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->refreshMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -25,8 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .prologue
-    .line 597
+    .line 667
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -36,75 +35,54 @@
 
 
 # virtual methods
-.method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
-    .locals 4
+.method public run()V
+    .locals 1
 
-    .prologue
-    .line 599
-    invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
+    .line 668
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/Float;
-
-    invoke-virtual {v0}, Ljava/lang/Float;->floatValue()F
+    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1100(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Z
 
     move-result v0
 
-    .line 601
-    :try_start_0
-    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    if-eqz v0, :cond_0
 
-    invoke-static {v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$600(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/LinearLayout;
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    move-result-object v1
+    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1200(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Z
 
-    const/high16 v2, 0x3f000000    # 0.5f
+    move-result v0
 
-    cmpg-float v2, v0, v2
+    if-nez v0, :cond_0
 
-    if-gez v2, :cond_0
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    const/4 v0, 0x0
+    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$800(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Z
 
-    :goto_0
-    invoke-virtual {v1, v0}, Landroid/widget/LinearLayout;->setRenderEffect(Landroid/graphics/RenderEffect;)V
+    move-result v0
 
-    .line 604
-    :goto_1
-    return-void
+    if-nez v0, :cond_0
 
-    .line 602
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    invoke-virtual {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->isFinishing()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    invoke-virtual {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->isDestroyed()Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1300(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
+
     :cond_0
-    iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {v2, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$900(Lcom/masterrom/sdstorage/SdStorageModeActivity;F)I
-
-    move-result v2
-
-    int-to-float v2, v2
-
-    iget-object v3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {v3, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$900(Lcom/masterrom/sdstorage/SdStorageModeActivity;F)I
-
-    move-result v0
-
-    int-to-float v0, v0
-
-    sget-object v3, Landroid/graphics/Shader$TileMode;->CLAMP:Landroid/graphics/Shader$TileMode;
-
-    invoke-static {v2, v0, v3}, Landroid/graphics/RenderEffect;->createBlurEffect(FFLandroid/graphics/Shader$TileMode;)Landroid/graphics/RenderEffect;
-    :try_end_0
-    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
-
-    move-result-object v0
-
-    goto :goto_0
-
-    .line 603
-    :catch_0
-    move-exception v0
-
-    goto :goto_1
+    return-void
 .end method
