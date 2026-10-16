@@ -300,3 +300,13 @@
     :cond_a
     return-void
 .end method
+
+.method public onResume()V
+    .locals 0
+
+    invoke-super {p0}, Lcom/android/settings/dashboard/DashboardFragment;->onResume()V
+
+    invoke-static {p0}, Lcom/masterrom/glass/GlassStyler;->apply(Ljava/lang/Object;)V
+
+    return-void
+.end method

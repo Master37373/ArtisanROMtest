@@ -237,6 +237,8 @@
 .method public final onResume()V
     .locals 5
 
+    invoke-static {p0}, Lcom/masterrom/glass/GlassStyler;->apply(Ljava/lang/Object;)V
+
     invoke-super {p0}, Lcom/android/settings/dashboard/DashboardFragment;->onResume()V
 
     invoke-virtual {p0}, Landroidx/fragment/app/Fragment;->getActivity()Landroidx/fragment/app/FragmentActivity;

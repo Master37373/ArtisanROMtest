@@ -312,6 +312,8 @@
 .method public final onResume()V
     .locals 2
 
+    invoke-static {p0}, Lcom/masterrom/glass/GlassStyler;->apply(Ljava/lang/Object;)V
+
     invoke-super {p0}, Lcom/android/settings/SettingsPreferenceFragment;->onResume()V
 
     iget-object v0, p0, Lio/mesalabs/unica/settings/hma/HideMyApplistFragment;->mLoadingViewController:Lcom/android/settings/widget/LoadingViewController;

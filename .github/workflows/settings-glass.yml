@@ -1,0 +1,58 @@
+name: Settings glass (Java -> smali)
+
+# Compiles unica/mods/settings/src (com.masterrom.glass) to smali and commits it into the
+# settings mod (SecSettings.apk/smali_classes4/com/masterrom/glass). Only the Android framework
+# is needed: everything Samsung-specific is reached through reflection.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  smali:
+    runs-on: ubuntu-24.04
+    env:
+      SRC: unica/mods/settings/src
+      DST: unica/mods/settings/SecSettings.apk/smali_classes4/com/masterrom/glass
+      R8: "8.5.35"
+      APKTOOL: "2.10.0"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Tools (android.jar, d8, apktool)
+        run: |
+          mkdir -p "$RUNNER_TEMP/t" && cd "$RUNNER_TEMP/t"
+          git clone -q --depth 1 --filter=blob:none --sparse https://github.com/Reginer/aosp-android-jar aaj
+          git -C aaj sparse-checkout set --no-cone /android-35/android.jar
+          curl -sSfL -o r8.jar "https://dl.google.com/android/maven2/com/android/tools/r8/$R8/r8-$R8.jar"
+          curl -sSfL -o apktool.jar "https://github.com/iBotPeaches/Apktool/releases/download/v$APKTOOL/apktool_$APKTOOL.jar"
+
+      - name: Compile
+        run: |
+          T="$RUNNER_TEMP/t"; A="$T/aaj/android-35/android.jar"
+          mkdir -p "$T/cls"
+          javac -nowarn -source 8 -target 8 -bootclasspath "$A" -d "$T/cls" $(find "$SRC/com/masterrom/glass" -name '*.java')
+          java -cp "$T/r8.jar" com.android.tools.r8.D8 --release --min-api 31 --lib "$A" \
+            --output "$T/out.zip" $(find "$T/cls" -name '*.class')
+          (cd "$T" && unzip -o -q out.zip classes.dex && zip -q g.jar classes.dex)
+          java -jar "$T/apktool.jar" d -f -r "$T/g.jar" -o "$T/dec"
+          ls "$T/dec/smali/com/masterrom/glass"
+
+      - name: Replace smali and commit
+        run: |
+          T="$RUNNER_TEMP/t"
+          rm -rf "$DST" && mkdir -p "$DST"
+          cp "$T/dec/smali/com/masterrom/glass/"*.smali "$DST/"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "$DST"
+          git status --short
+          git commit -m "settings: rebuild glass smali from src" || { echo "smali unchanged"; exit 0; }
+          git push
