@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- MasterROM banner: glass background like the updater and the SD card page (light/dark), MasterROM logo on top.
+     The fragment still puts the wallpaper into logo_background_view; that view is hidden. -->
 <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content"
   xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.AppCompatImageView android:id="@id/logo_background_view" android:layout_width="match_parent" android:layout_height="150.0dp" android:scaleType="centerCrop" android:alpha="0.9" />
-        <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center" android:layout_width="match_parent" android:layout_height="80.0dp" android:src="@drawable/unica_logo" android:scaleType="centerInside" />
+    <androidx.appcompat.widget.AppCompatImageView android:id="@id/logo_background_view" android:layout_width="1.0dp" android:layout_height="1.0dp" android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatImageView android:layout_width="match_parent" android:layout_height="150.0dp" android:src="@drawable/masterrom_banner_bg" android:scaleType="centerCrop" />
+    <androidx.appcompat.widget.AppCompatImageView android:layout_gravity="center" android:layout_width="match_parent" android:layout_height="80.0dp" android:src="@drawable/unica_logo" android:scaleType="centerInside" />
 </FrameLayout>
