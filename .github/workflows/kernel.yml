@@ -155,6 +155,27 @@ jobs:
           (cd "$Z" && zip -r -q "../${{ steps.ver.outputs.file }}" .)
           ls -l out/*.zip
 
+      - name: Sign zip with the MasterROM OTA key (like the ROM zip)
+        env:
+          OTA_KEY_PK8: ${{ secrets.OTA_KEY_PK8 }}
+          OTA_KEY_PEM: ${{ secrets.OTA_KEY_PEM }}
+        run: |
+          # whole-file signature (signapk -w): the updater checks it against the ROM's otacerts.zip
+          if [ -z "$OTA_KEY_PK8" ] || [ -z "$OTA_KEY_PEM" ]; then
+            echo "::warning::OTA key secrets missing - the kernel zip stays unsigned"; exit 0
+          fi
+          S="$RUNNER_TEMP/signapk"
+          git clone -q --depth 1 --recurse-submodules --shallow-submodules https://github.com/UN1CA/external_signapk.git "$S"
+          (cd "$S" && ./gradlew -q build)
+          K="$RUNNER_TEMP/keys"; mkdir -p "$K"
+          echo -n "$OTA_KEY_PK8" | base64 --decode > "$K/ota.pk8"
+          echo -n "$OTA_KEY_PEM" | base64 --decode > "$K/ota.x509.pem"
+          F="out/${{ steps.ver.outputs.file }}"
+          java -Xmx1024M -jar "$S/signapk/build/libs/signapk-all.jar" -w "$K/ota.x509.pem" "$K/ota.pk8" "$F" "$F.signed"
+          mv "$F.signed" "$F"
+          rm -rf "$K"
+          ls -l "$F"
+
       - name: Upload zip (artifact)
         uses: actions/upload-artifact@v4
         with:
