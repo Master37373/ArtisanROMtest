@@ -32,7 +32,7 @@
         }
     .end annotation
 
-    .line 965
+    .line 977
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->val$diskId:Ljava/lang/String;
@@ -47,7 +47,7 @@
 .method public run()V
     .locals 4
 
-    .line 966
+    .line 978
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     const-string v1, "Einrichten"

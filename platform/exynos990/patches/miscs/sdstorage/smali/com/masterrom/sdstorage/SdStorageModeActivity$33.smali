@@ -32,7 +32,7 @@
         }
     .end annotation
 
-    .line 1308
+    .line 1320
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$33;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$33;->val$text:Ljava/lang/String;
@@ -47,7 +47,7 @@
 .method public run()V
     .locals 3
 
-    .line 1309
+    .line 1321
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$33;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3900(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
@@ -72,7 +72,7 @@
 
     if-nez v0, :cond_0
 
-    .line 1310
+    .line 1322
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$33;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3900(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
@@ -103,7 +103,7 @@
 
     move-result-object p0
 
-    .line 1315
+    .line 1327
     invoke-virtual {p0}, Landroid/view/ViewPropertyAnimator;->start()V
 
     :cond_0

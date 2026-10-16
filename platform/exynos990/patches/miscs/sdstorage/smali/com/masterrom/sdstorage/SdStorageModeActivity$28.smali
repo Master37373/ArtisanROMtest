@@ -36,7 +36,7 @@
         }
     .end annotation
 
-    .line 1253
+    .line 1265
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;->val$work:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
@@ -55,7 +55,7 @@
 .method public run()V
     .locals 3
 
-    .line 1256
+    .line 1268
     :try_start_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;->val$work:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
 
@@ -70,14 +70,14 @@
     :catchall_0
     move-exception v0
 
-    .line 1258
+    .line 1270
     const-string v1, "MasterROMSdStorage"
 
     const-string v2, "SD storage mode switch failed"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 1259
+    .line 1271
     invoke-virtual {v0}, Ljava/lang/Throwable;->getMessage()Ljava/lang/String;
 
     move-result-object v1
@@ -93,7 +93,7 @@
 
     move-result-object v0
 
-    .line 1262
+    .line 1274
     :goto_0
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 

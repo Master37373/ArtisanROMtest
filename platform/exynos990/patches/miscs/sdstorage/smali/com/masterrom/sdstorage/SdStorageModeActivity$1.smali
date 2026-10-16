@@ -22,7 +22,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 122
+    .line 123
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Landroid/os/storage/StorageEventListener;-><init>()V
@@ -35,7 +35,7 @@
 .method public onDiskDestroyed(Landroid/os/storage/DiskInfo;)V
     .locals 0
 
-    .line 125
+    .line 126
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -46,7 +46,7 @@
 .method public onDiskScanned(Landroid/os/storage/DiskInfo;I)V
     .locals 0
 
-    .line 124
+    .line 125
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -57,7 +57,7 @@
 .method public onVolumeStateChanged(Landroid/os/storage/VolumeInfo;II)V
     .locals 0
 
-    .line 123
+    .line 124
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 342
+    .line 343
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onApplyWindowInsets(Landroid/view/View;Landroid/view/WindowInsets;)Landroid/view/WindowInsets;
     .locals 2
 
-    .line 344
+    .line 345
     invoke-static {}, Landroid/view/WindowInsets$Type;->systemBars()I
 
     move-result p1
@@ -53,7 +53,7 @@
 
     move-result-object p1
 
-    .line 345
+    .line 346
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$500(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/LinearLayout;
@@ -70,7 +70,7 @@
 
     invoke-virtual {p0, p2, v0, v1, p1}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 346
+    .line 347
     sget-object p0, Landroid/view/WindowInsets;->CONSUMED:Landroid/view/WindowInsets;
 
     return-object p0

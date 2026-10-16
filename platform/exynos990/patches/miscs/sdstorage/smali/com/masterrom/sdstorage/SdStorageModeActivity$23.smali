@@ -34,7 +34,7 @@
         }
     .end annotation
 
-    .line 1058
+    .line 1070
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$23;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$23;->val$wantSd:Z
@@ -51,7 +51,7 @@
 .method public run()V
     .locals 2
 
-    .line 1059
+    .line 1071
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$23;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$23$1;

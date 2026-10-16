@@ -38,7 +38,7 @@
         }
     .end annotation
 
-    .line 1297
+    .line 1309
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$32;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$32;->val$title:Ljava/lang/String;
@@ -59,7 +59,7 @@
 .method public onClick(Landroid/view/View;)V
     .locals 1
 
-    .line 1299
+    .line 1311
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$32;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$32$1;

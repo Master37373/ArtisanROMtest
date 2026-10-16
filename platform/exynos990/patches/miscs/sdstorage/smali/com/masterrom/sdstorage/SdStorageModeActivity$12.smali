@@ -34,7 +34,7 @@
         }
     .end annotation
 
-    .line 737
+    .line 749
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$12;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$12;->val$onSd:Z
@@ -51,7 +51,7 @@
 .method public run()V
     .locals 2
 
-    .line 737
+    .line 749
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$12;->val$onSd:Z
 
     if-nez v0, :cond_0

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 331
+    .line 332
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$4;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onScrollChange(Landroid/view/View;IIII)V
     .locals 0
 
-    .line 332
+    .line 333
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$4;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0, p3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$400(Lcom/masterrom/sdstorage/SdStorageModeActivity;I)V

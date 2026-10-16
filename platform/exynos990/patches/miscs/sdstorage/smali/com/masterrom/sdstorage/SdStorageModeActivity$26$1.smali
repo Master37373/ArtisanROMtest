@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$26;)V
     .locals 0
 
-    .line 1119
+    .line 1131
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,7 +43,7 @@
         }
     .end annotation
 
-    .line 1120
+    .line 1132
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -60,7 +60,7 @@
 
     if-nez v0, :cond_0
 
-    .line 1121
+    .line 1133
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -75,7 +75,7 @@
 
     return-object p0
 
-    .line 1122
+    .line 1134
     :cond_0
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
@@ -83,7 +83,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 1123
+    .line 1135
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v1, v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -102,7 +102,7 @@
 
     invoke-static {v1, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2500(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1124
+    .line 1136
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v1, v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -130,7 +130,7 @@
     :cond_1
     const/4 v1, 0x0
 
-    .line 1127
+    .line 1139
     :goto_0
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
@@ -142,7 +142,7 @@
 
     if-ge v1, v2, :cond_3
 
-    .line 1128
+    .line 1140
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v2, v2, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -193,7 +193,7 @@
 
     iget-object v5, v5, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->val$pkgs:Ljava/util/List;
 
-    .line 1129
+    .line 1141
     invoke-interface {v5}, Ljava/util/List;->size()I
 
     move-result v5
@@ -208,10 +208,10 @@
 
     move-result-object v3
 
-    .line 1128
+    .line 1140
     invoke-static {v2, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2500(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1130
+    .line 1142
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v2, v2, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -244,7 +244,7 @@
 
     if-eqz v2, :cond_2
 
-    .line 1131
+    .line 1143
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -278,7 +278,7 @@
 
     goto/16 :goto_0
 
-    .line 1133
+    .line 1145
     :cond_3
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
@@ -298,7 +298,7 @@
 
     invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2500(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1134
+    .line 1146
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -319,7 +319,7 @@
 
     invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2800(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;)V
 
-    .line 1135
+    .line 1147
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -338,7 +338,7 @@
 
     invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2500(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1136
+    .line 1148
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -357,14 +357,14 @@
 
     invoke-virtual {v0, v1}, Landroid/os/storage/StorageManager;->partitionPublic(Ljava/lang/String;)V
 
-    .line 1137
+    .line 1149
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->val$fsUuid:Ljava/lang/String;
 
     if-eqz v0, :cond_4
 
-    .line 1139
+    .line 1151
     :try_start_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$26;
 
@@ -387,7 +387,7 @@
     :catch_0
     move-exception p0
 
-    .line 1141
+    .line 1153
     const-string v0, "MasterROMSdStorage"
 
     const-string v1, "forgetVolume failed"

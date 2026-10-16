@@ -40,7 +40,7 @@
         }
     .end annotation
 
-    .line 1118
+    .line 1130
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->val$primaryOnSd:Z
@@ -63,7 +63,7 @@
 .method public run()V
     .locals 5
 
-    .line 1119
+    .line 1131
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$26;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     const-string v1, "Tragbar machen"
@@ -84,14 +84,14 @@
 
     const-string v4, "The SD card is portable storage again \u2013 without encryption and readable on other devices."
 
-    .line 1145
+    .line 1157
     invoke-static {p0, v3, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2300(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
     const/4 v3, 0x0
 
-    .line 1119
+    .line 1131
     invoke-static {v0, v1, v2, p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3200(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
 
     return-void

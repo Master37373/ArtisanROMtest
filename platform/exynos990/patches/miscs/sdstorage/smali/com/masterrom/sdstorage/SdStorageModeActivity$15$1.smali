@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$15;)V
     .locals 0
 
-    .line 822
+    .line 834
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$15;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
     .locals 2
 
-    .line 823
+    .line 835
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$15;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$bg:Landroid/graphics/drawable/GradientDrawable;
