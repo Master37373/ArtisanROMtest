@@ -1,158 +1,70 @@
-<h1 align="center">
-  <img loading="lazy" src="readme-res/banner.png"/>
-</h1>
-<p align="center">
-  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/Master37373/MasterROM?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/Master37373/MasterROM/commits/sixteen-qpr2"><img loading="lazy" src="https://img.shields.io/github/last-commit/Master37373/MasterROM/sixteen-qpr2?style=for-the-badge"/></a>
-  <a href="https://github.com/Master37373/MasterROM/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/Master37373/MasterROM?style=for-the-badge"/></a>
-</p>
-<p align="center">MasterROM <i>Aether</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+# MasterROM
 
-<p align="center">
-  <a href="https://github.com/Master37373/MasterROM/issues">🚀 issues</a>
-  •
-  <a href="https://discord.gg/TxYWApVRaE">💬 Discord</a>
-  •
-  <a  href="https://github.com/Master37373/MasterROM/wiki">📖 Wiki</a>
-  •
-  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/CHANGELOG.md">📝 Changelog</a>
-  •
-  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/MAINTAINERS">🧑‍💻 Maintainers</a>
-</p>
+A custom firmware for Samsung Galaxy devices with the **Exynos 990** (Galaxy S20 series),
+based on One UI 8.5 / Android 16.
 
-# What is MasterROM Aether?
-MasterROM Aether is a work-in-progress custom firmware for Samsung Galaxy devices.
+> [!IMPORTANT]
+> **MasterROM is based on [ArtisanROM](https://github.com/ArtisanROM/ArtisanROM).**
+> It is a personal continuation of ArtisanROM by **Android Artisan**, which itself is built on
+> [UN1CA](https://github.com/salvogiangri/UN1CA) by **salvogiangri**.
+> Almost everything in this repository – the build system, the device bring-up, most patches and
+> mods – is the work of the ArtisanROM and UN1CA developers and contributors.
+>
+> MasterROM is **not meant as a kang** and does not claim their work as its own. The rename only
+> makes clear that this is a separate build with its own changes (see below), so that bugs in
+> MasterROM are not reported to ArtisanROM. Fixes from ArtisanROM are taken over regularly.
+> If you like the ROM, please support the original projects – see [Credits](#credits).
 
-It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
+## What MasterROM changes compared to ArtisanROM
 
-It is based on the UN1CA build system which allows automatic downloading/extraction of the firmware, applying the required patches and generating a flashable zip package for the specified target device.
+- **MasterROM Updater** – a new update app ([MasterROM-Updater](https://github.com/Master37373/MasterROM-Updater)):
+  downloads from several mirrors at once, resumes, checks MD5, and installs updates **without root**
+- **SD card** – redesigned storage page in the One UI 8.5 glass look, switch between portable and
+  internal storage, Secure Folder handling, factory reset with an adopted SD card
+- **File-based encryption** fixes for the Exynos 990 (hardware inline encryption, SD card as internal storage)
+- ViPER4Android removed
 
-MasterROM Aether supports devices using the Exynos 990 SoC
+The full list of changes is in [CHANGELOG.md](CHANGELOG.md).
 
-Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
+## Supported devices
 
-# Features
-### Core features:
-- Based on the latest stable Galaxy S24+ firmware
-- EROFS powered
-- Galaxy S26 wallpapers/sounds included
-- Galaxy AI support
-  - Audio eraser
-  - Browsing assist
-  - Call assist
-  - Drawing assist
-  - Interpreter
-  - Note assist
-  - Now brief
-  - Photo assist
-  - Semantic search
-  - Transcript assist
-  - Writing assist
-- High end animations
-- Native/live blur support
-- AOD clock transition support
-- Adaptive color tone support
-- Adaptive refresh rate support(HFR WIP)
-- Extra brightness support
-- Picture remaster support
-- Object, shadow and reflection eraser support
-- Image clipper support
-- Multi user support
-- Samsung DeX support*
-- Camera privacy toggle support
-- Debloated from useless system services/additional apps
-- Dual Messenger available for all apps
-- Custom FlipFont fonts support
-- Outdoor mode support
-- Auto PIN confirm with 4 digits
-- [BluetoothLibraryPatcher](https://github.com/3arthur6/BluetoothLibraryPatcher) integrated
-- [KnoxPatch](https://github.com/salvogiangri/KnoxPatch) integrated
-- Extra CSC features enabled (Call recording, Hiya, Network speed in status bar, AltZLife)
+| Device | Codename |
+|---|---|
+| Galaxy S20+ | y2s |
 
-\* DeX via HDMI not available for devices without USB-C DP support
+Other Exynos 990 devices (S20, S20 Ultra, Note20, Note20 Ultra) are supported by the build system
+from ArtisanROM, but MasterROM is only tested on the Galaxy S20+.
 
-### MasterROM-exclusive features:
-- Integrated OTA updates app
-- Completely upstreamed kernels*
+## Installation
 
-\* Exynos990
+1. Unlocked bootloader and TWRP
+2. Flash the MasterROM ZIP in TWRP (or `adb sideload`)
+3. When coming from another ROM: Format Data
+4. Later updates come through the MasterROM Updater
 
-### UN1CA-exclusive features:
-- Native/live blur toggle
-- One UI Home animations option
-- Vulkan renderer toggle
-- Key attestation spoof ([TrickyStore](https://github.com/5ec1cff/TrickyStore)) options*
-- Play Integrity Fix integrated
-- Ability to hide installed apps ([Hide My Applist](https://github.com/Dr-TSNG/Hide-My-Applist))
-- Ability to hide developer options
-- Allow app downgrade toggle
-- Allow installing apps with old targetSdk toggle
-- Allow secure screenshot toggle
-- Screenshot/screen recording detection toggle
-- Unlimited backup storage on Google Photos
-- Games FPS unlock toggle
+## Building
 
-\* Requires a valid keybox
+MasterROM is built with the UN1CA build system through GitHub Actions
+(`.github/workflows/build.yml`). See the [UN1CA documentation](https://github.com/salvogiangri/UN1CA)
+for local builds.
 
-# Licensing
-This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE). External dependencies might be distributed under a different license, such as:
-- [android-tools](https://github.com/nmeum/android-tools), licensed under the [Apache License 2.0](https://github.com/nmeum/android-tools/blob/master/LICENSE)
-- [apktool](https://github.com/iBotPeaches/Apktool), licensed under the [Apache License 2.0](https://github.com/iBotPeaches/Apktool/blob/master/LICENSE.md)
-- [erofs-utils](https://github.com/sekaiacg/erofs-utils/), dual license ([GPL-2.0](https://github.com/sekaiacg/erofs-utils/blob/dev/LICENSES/GPL-2.0), [Apache-2.0](https://github.com/sekaiacg/erofs-utils/blob/dev/LICENSES/Apache-2.0))
-- [img2sdat](https://github.com/xpirt/img2sdat), licensed under the [MIT License](https://github.com/xpirt/img2sdat/blob/master/LICENSE)
-- [platform_build](https://android.googlesource.com/platform/build/) (ext4_utils, f2fs_utils, signapk), licensed under the [Apache License 2.0](https://source.android.com/docs/setup/about/licenses)
+## Credits
 
-# Disclaimer
+MasterROM would not exist without these people and projects:
 
-```cpp
-#include <std_disclaimer.h>
+- **[Android Artisan](https://github.com/Android-Artisan)** – creator of ArtisanROM and ArtisanKRNL,
+  the base of MasterROM
+- **All [ArtisanROM contributors](https://github.com/ArtisanROM/ArtisanROM/graphs/contributors)**
+  and everyone listed in [MAINTAINERS](MAINTAINERS)
+- **[salvogiangri](https://github.com/salvogiangri)** and all
+  [UN1CA contributors](https://github.com/salvogiangri/UN1CA/graphs/contributors) – the build system
+  and the foundation of ArtisanROM
+- **[TeamWin](https://twrp.me)** for TWRP, the **KernelSU-Next** developers
+- **Samsung** for One UI and the kernel sources, and the **AOSP** project
+- Everyone who tests and reports bugs
 
-/*
-* Your warranty is now void.
-*
-* I am not responsible for bricked devices, dead SD cards,
-* thermonuclear war, or you getting fired because the alarm app failed. Please
-* do some research if you have any concerns about doing this to your device
-* YOU are choosing to make these modifications, and if
-* you point the finger at me for messing up your device, I will laugh at you.
-*
-* I am also not responsible for you getting in trouble for using any of the
-* features in this ROM, including but not limited to Call Recording, secure
-* flag removal etc.
-*/
-```
+The history of ArtisanROM is kept in the [ArtisanROM archive](https://github.com/ArtisanROM-archive).
 
-- You are not allowed to modify or redistribute this ROM without prior approval
+## License
 
-# Contributors
-<a href="https://github.com/Master37373/MasterROM/graphs/contributors"><img loading="lazy" src="https://contrib.rocks/image?repo=MasterROM/MasterROM"/></a>
-
-# Credits:
-- **[salvogiangri](https://github.com/salvogiangri)** for the UN1CA build system, OneUI patches, and general help and support while developing.
-- **[ExtremeXT](https://github.com/ExtremeXT)** for helping me fix bugs and giving me support.
-- **[GhasemzadehFard-Dev](https://github.com/GhasemzadehFard-Dev)** for helping fix many bugs I was not able to fix.
-- **[Mesazane](https://github.com/Mesazane)** for testing and helping with the updaters design, and for updating and fixing KernelSU-Next on the Kernels.
-- **[ricci205GTI](https://github.com/ricci205GTI)** for fixing motion photo and help with the x1s.
-- **[immohammeeed](https://github.com/immohammeeed)** for creating the website for this project.
-- **[3q5i](https://github.com/3q5i)** for support and ideas for the ROM.
-- **[irvinhaha](https://github.com/irvinhaha)** for designing many banners and logos
-- **[CiprianDinca](https://github.com/CiprianDinca9)** for custom ExtremeROM ringtones
-- **[Dupazlasu/Milxnaq](https://github.com/milxnaq)** for fixing bluetooth on the S10x and much more
-- More that I can't remember right now and will have to be added in the future
-
-## Original UN1CA credits:
-A special thanks goes to the following for their invaluable contributions in no particular order:
-- **[ShaDisNX255](https://github.com/ShaDisNX255)** for his help, time and for his [NcX ROM](https://github.com/ShaDisNX255/NcX_Stock) which inspired this project
-- **[DavidArsene](https://github.com/DavidArsene)** for his help and time
-- **[paulowesll](https://github.com/paulowesll)** for his help and support
-- **[Simon1511](https://github.com/Simon1511)** for his support and some of the device-specific patches
-- **[ananjaser1211](https://github.com/ananjaser1211)** for troubleshooting and his time
-- **[Fede2782](https://github.com/Fede2782)** for his contributions and help with Exynos/MTK support
-- **[iDrinkCoffee](https://github.com/iDrinkCoffee-TG)** and **[RisenID](https://github.com/RisenID)** for their support
-- **[LineageOS Team](https://www.lineageos.org/)** for their original [OTA updater implementation](https://github.com/LineageOS/android_packages_apps_Updater)
-- *All the UN1CA project forks, contributors, testers and users ❤️*
-
-# MasterROM Archive
-- [ArtisanROM Archive Org](https://github.com/ArtisanROM-archive)
-- [Old Sixteen branch](https://github.com/ArtisanROM-archive/ArtisanROM_old)
-
+MasterROM keeps the license of ArtisanROM and UN1CA, see [LICENSE](LICENSE).
