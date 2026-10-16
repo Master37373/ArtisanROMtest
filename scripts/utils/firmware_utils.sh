@@ -104,7 +104,8 @@ GET_LATEST_FIRMWARE()
 
     "$TOOLS_DIR/bin/samloader" check-update \
         --model "$1" --region "$2" 2>/dev/null || \
-    curl -s --retry 3 -m 3 "https://fota-cloud-dn.ospserver.net/firmware/$2/$1/version.xml" \
+    curl -s --retry 3 -m 3 -A "samsung $1 SyncML DM Client" \
+        "https://fota-cloud-dn.ospserver.net/firmware/$2/$1/version.xml" \
         | perl -nE 'say $1 if /<latest[^>]*>(.*?)<\/latest>/'
 }
 
