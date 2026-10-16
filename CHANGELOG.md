@@ -1,3 +1,13 @@
+# 1.0.2
+- MasterROM Updater 1.0.2 built in: automatic download, install tonight, install your own ZIP
+- New MasterROM logo and banner
+- MasterROM settings in the glass look of the updater, with new icons
+- SD card page with the One UI title bar
+- Preinstalled again: Gaming Hub, Samsung Kids, Samsung Language Core, Smart Touch Call
+- Play Integrity: a freshly set up phone is certified right away
+- Battery protection in the battery settings
+- HDR10+ video playback
+
 # 1.0.1
 - Codename Opus
 - MasterROM Updater 1.0.3 built in: kernel updates, self-update, centred titles
