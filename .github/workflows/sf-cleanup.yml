@@ -1,0 +1,64 @@
+name: SourceForge cleanup
+
+# list (default): only shows what is on SourceForge and what would be deleted.
+# delete: removes all ArtisanROM_* zips, keeps the newest <keep> MasterROM zips and the
+#         newest 3 kernel zips. The file the updater currently offers (y2s.xml) is always kept.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [list, delete]
+        default: list
+      keep:
+        description: 'Wie viele MasterROM-Zips behalten'
+        default: '2'
+
+jobs:
+  sf:
+    runs-on: ubuntu-24.04
+    env:
+      SF_USER: ${{ secrets.SF_USER }}
+      SF_PROJECT: ${{ secrets.SF_PROJECT }}
+      SF_SSH_KEY: ${{ secrets.SF_SSH_KEY }}
+      KEEP: ${{ inputs.keep }}
+      MODE: ${{ inputs.mode }}
+    steps:
+      - name: Clean up
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SF_SSH_KEY" > ~/.ssh/sf
+          chmod 600 ~/.ssh/sf
+          BASE="/home/frs/project/$SF_PROJECT/y2s"
+          sf() { sftp -q -i ~/.ssh/sf -o StrictHostKeyChecking=accept-new -b - "$SF_USER@frs.sourceforge.net"; }
+
+          # the file the updater offers right now must stay
+          OFFERED=$(curl -sfL "https://raw.githubusercontent.com/${{ github.repository }}/main/updater/v2/y2s.xml" \
+            | grep -oE '<filename>[^<]+' | sed 's/<filename>//' | tr '\n' ' ')
+          echo "offered by the updater: $OFFERED"
+
+          list() { echo "ls -1t $1" | sf | grep -v '^sftp>' | sed 's#.*/##' | grep -v '^$'; }
+          ROMS=$(list "$BASE" | grep '\.zip$' || true)
+          KERNELS=$(list "$BASE/kernel" 2>/dev/null | grep '\.zip$' || true)
+          echo "== y2s/";        echo "$ROMS"
+          echo "== y2s/kernel/"; echo "$KERNELS"
+
+          DEL=()
+          DEL+=($(echo "$ROMS" | grep '^ArtisanROM' | sed "s#^#$BASE/#"))
+          DEL+=($(echo "$ROMS" | grep '^MasterROM' | tail -n +$((KEEP + 1)) | sed "s#^#$BASE/#"))
+          DEL+=($(echo "$KERNELS" | tail -n +4 | sed "s#^#$BASE/kernel/#"))
+
+          FINAL=()
+          for f in "${DEL[@]}"; do
+            case " $OFFERED " in *" $(basename "$f") "*) echo "keep (offered): $f"; continue;; esac
+            FINAL+=("$f")
+          done
+
+          echo "== would delete (${#FINAL[@]}):"
+          printf '  %s\n' "${FINAL[@]}"
+          if [ "$MODE" = "delete" ] && [ ${#FINAL[@]} -gt 0 ]; then
+            printf 'rm "%s"\n' "${FINAL[@]}" | sf
+            echo "deleted"
+          fi
+          rm -f ~/.ssh/sf
