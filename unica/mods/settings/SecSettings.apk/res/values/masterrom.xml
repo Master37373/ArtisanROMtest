@@ -10,113 +10,118 @@ Bug reports, suggestions and feature requests are welcome.
 
 &#160;</string>
 
-    <string name="maintainer_1_name">Android Artisan</string>
-    <string name="maintainer_1_role">Lead Developer / Exynos990 Maintainer</string>
-    <string name="maintainer_1_github">Android-Artisan</string>
-    <string name="maintainer_1_avatar">masterrom_avatar</string>
-    
-    <string name="maintainer_2_name">GhasemzadehFard-dev</string>
-    <string name="maintainer_2_role">r8s Maintainer / Developer</string>
-    <string name="maintainer_2_github">GhasemzadehFard-dev</string>
-    <string name="maintainer_2_avatar">mohammad_avatar</string>
-    
-    <string name="maintainer_3_name">Vinsies</string>
-    <string name="maintainer_3_role">Lead Graphic Designer / Tester</string>
-    <string name="maintainer_3_github">irvinhaha</string>
-    <string name="maintainer_3_avatar">irvin_avatar</string>
-    
-    <string name="maintainer_4_name">ExtremeXT</string>
-    <string name="maintainer_4_role">EROM DAD</string>
-    <string name="maintainer_4_github">ExtremeXT</string>
-    <string name="maintainer_4_avatar">extremext_avatar</string>
-    
-    <string name="maintainer_5_name">Cheroo316</string>
-    <string name="maintainer_5_role">Tester / Lead Admin</string>
-    <string name="maintainer_5_github">Chero316</string>
-    <string name="maintainer_5_avatar">cheroo_avatar</string>
-    
-    <string name="maintainer_6_name">Mesazane</string>
-    <string name="maintainer_6_role">Tester / Developer</string>
-    <string name="maintainer_6_github">mesazane</string>
-    <string name="maintainer_6_avatar">mesa_avatar</string>
-    
-    <string name="maintainer_7_name">Chomik</string>
-    <string name="maintainer_7_role">Tester / Helper</string>
-    <string name="maintainer_7_github">chomik4305</string>
-    <string name="maintainer_7_avatar">chomik_avatar</string>
-    
-    <string name="maintainer_8_name">mecyanned</string>
-    <string name="maintainer_8_role">Tester</string>
-    <string name="maintainer_8_github">mecyanned</string>
-    <string name="maintainer_8_avatar">mecy_avatar</string>
-    
-    <string name="maintainer_9_name">Naaak</string>
-    <string name="maintainer_9_role">Tester</string>
-    <string name="maintainer_9_github">naaak007</string>
-    <string name="maintainer_9_avatar">naaak_avatar</string>
-    
-    <string name="maintainer_10_name">Miguel Barreto</string>
-    <string name="maintainer_10_role">Tester / Recognised Troll / Lead 8.5 Dev</string>
-    <string name="maintainer_10_github">miguelbarretoo</string>
-    <string name="maintainer_10_avatar">miguel_avatar</string>
+    <string name="maintainer_1_name">Master37373</string>
+    <string name="maintainer_1_role">MasterROM Developer / Galaxy S20+ Maintainer</string>
+    <string name="maintainer_1_github">Master37373</string>
+    <string name="maintainer_1_avatar">master37373_avatar</string>
 
-    <string name="maintainer_11_name">Ats0c_</string>
-    <string name="maintainer_11_role">Lead 8.5 Dev</string>
-    <string name="maintainer_11_github">At30c</string>
-    <string name="maintainer_11_avatar">ats0c_avatar</string>
+    <string name="maintainer_2_name">Android Artisan</string>
+    <string name="maintainer_2_role">ArtisanROM · Lead Developer / Exynos990 Maintainer</string>
+    <string name="maintainer_2_github">Android-Artisan</string>
+    <string name="maintainer_2_avatar">artisan_avatar</string>
     
-    <string name="maintainer_12_name">WindowsBao2612</string>
-    <string name="maintainer_12_role">Tester</string>
-    <string name="maintainer_12_github">trandinhgiabao2612</string>
-    <string name="maintainer_12_avatar">windowsbao_avatar</string>
+    <string name="maintainer_3_name">GhasemzadehFard-dev</string>
+    <string name="maintainer_3_role">ArtisanROM · r8s Maintainer / Developer</string>
+    <string name="maintainer_3_github">GhasemzadehFard-dev</string>
+    <string name="maintainer_3_avatar">mohammad_avatar</string>
     
-    <string name="maintainer_13_name">RoycsiBence</string>
-    <string name="maintainer_13_role">Tester</string>
-    <string name="maintainer_13_github">Roycsi</string>
-    <string name="maintainer_13_avatar">roycsi_avatar</string>
+    <string name="maintainer_4_name">Vinsies</string>
+    <string name="maintainer_4_role">ArtisanROM · Lead Graphic Designer / Tester</string>
+    <string name="maintainer_4_github">irvinhaha</string>
+    <string name="maintainer_4_avatar">irvin_avatar</string>
     
-    <string name="maintainer_14_name">Jeykel55</string>
-    <string name="maintainer_14_role">Tester</string>
-    <string name="maintainer_14_github">Jeykel55</string>
-    <string name="maintainer_14_avatar">jeykel_avatar</string>
+    <string name="maintainer_5_name">ExtremeXT</string>
+    <string name="maintainer_5_role">ArtisanROM · EROM DAD</string>
+    <string name="maintainer_5_github">ExtremeXT</string>
+    <string name="maintainer_5_avatar">extremext_avatar</string>
+    
+    <string name="maintainer_6_name">Cheroo316</string>
+    <string name="maintainer_6_role">ArtisanROM · Tester / Lead Admin</string>
+    <string name="maintainer_6_github">Chero316</string>
+    <string name="maintainer_6_avatar">cheroo_avatar</string>
+    
+    <string name="maintainer_7_name">Mesazane</string>
+    <string name="maintainer_7_role">ArtisanROM · Tester / Developer</string>
+    <string name="maintainer_7_github">mesazane</string>
+    <string name="maintainer_7_avatar">mesa_avatar</string>
+    
+    <string name="maintainer_8_name">Chomik</string>
+    <string name="maintainer_8_role">ArtisanROM · Tester / Helper</string>
+    <string name="maintainer_8_github">chomik4305</string>
+    <string name="maintainer_8_avatar">chomik_avatar</string>
+    
+    <string name="maintainer_9_name">mecyanned</string>
+    <string name="maintainer_9_role">ArtisanROM · Tester</string>
+    <string name="maintainer_9_github">mecyanned</string>
+    <string name="maintainer_9_avatar">mecy_avatar</string>
+    
+    <string name="maintainer_10_name">Naaak</string>
+    <string name="maintainer_10_role">ArtisanROM · Tester</string>
+    <string name="maintainer_10_github">naaak007</string>
+    <string name="maintainer_10_avatar">naaak_avatar</string>
+    
+    <string name="maintainer_11_name">Miguel Barreto</string>
+    <string name="maintainer_11_role">ArtisanROM · Tester / Recognised Troll / Lead 8.5 Dev</string>
+    <string name="maintainer_11_github">miguelbarretoo</string>
+    <string name="maintainer_11_avatar">miguel_avatar</string>
 
-    <string name="maintainer_15_name">mrd83</string>
-    <string name="maintainer_15_role">Tester / Developer</string>
-    <string name="maintainer_15_github">mrd83</string>
-    <string name="maintainer_15_avatar">mrd83_avatar</string>
+    <string name="maintainer_12_name">Ats0c_</string>
+    <string name="maintainer_12_role">ArtisanROM · Lead 8.5 Dev</string>
+    <string name="maintainer_12_github">At30c</string>
+    <string name="maintainer_12_avatar">ats0c_avatar</string>
+    
+    <string name="maintainer_13_name">WindowsBao2612</string>
+    <string name="maintainer_13_role">ArtisanROM · Tester</string>
+    <string name="maintainer_13_github">trandinhgiabao2612</string>
+    <string name="maintainer_13_avatar">windowsbao_avatar</string>
+    
+    <string name="maintainer_14_name">RoycsiBence</string>
+    <string name="maintainer_14_role">ArtisanROM · Tester</string>
+    <string name="maintainer_14_github">Roycsi</string>
+    <string name="maintainer_14_avatar">roycsi_avatar</string>
+    
+    <string name="maintainer_15_name">Jeykel55</string>
+    <string name="maintainer_15_role">ArtisanROM · Tester</string>
+    <string name="maintainer_15_github">Jeykel55</string>
+    <string name="maintainer_15_avatar">jeykel_avatar</string>
 
-    <string name="maintainer_16_name">Milena</string>
-    <string name="maintainer_16_role">Developer</string>
-    <string name="maintainer_16_github"></string>
-    <string name="maintainer_16_avatar">fishe_avatar</string>
+    <string name="maintainer_16_name">mrd83</string>
+    <string name="maintainer_16_role">ArtisanROM · Tester / Developer</string>
+    <string name="maintainer_16_github">mrd83</string>
+    <string name="maintainer_16_avatar">mrd83_avatar</string>
 
-    <string name="maintainer_17_name">3q5i</string>
-    <string name="maintainer_17_role">Helper</string>
-    <string name="maintainer_17_github">3q5i</string>
-    <string name="maintainer_17_avatar">3q5i_avatar</string>
+    <string name="maintainer_17_name">Milena</string>
+    <string name="maintainer_17_role">ArtisanROM · Developer</string>
+    <string name="maintainer_17_github"></string>
+    <string name="maintainer_17_avatar">fishe_avatar</string>
 
-    <string name="maintainer_18_name">Ohatlas0</string>
-    <string name="maintainer_18_role">Tester</string>
-    <string name="maintainer_18_github"></string>
-    <string name="maintainer_18_avatar">ohatlas0_avatar</string>
+    <string name="maintainer_18_name">3q5i</string>
+    <string name="maintainer_18_role">ArtisanROM · Helper</string>
+    <string name="maintainer_18_github">3q5i</string>
+    <string name="maintainer_18_avatar">3q5i_avatar</string>
 
-    <string name="maintainer_19_name">ariebe9115</string>
-    <string name="maintainer_19_role">Tester</string>
-    <string name="maintainer_19_github">ariebe9115</string>
-    <string name="maintainer_19_avatar">ariebe9115_avatar</string>
+    <string name="maintainer_19_name">Ohatlas0</string>
+    <string name="maintainer_19_role">ArtisanROM · Tester</string>
+    <string name="maintainer_19_github"></string>
+    <string name="maintainer_19_avatar">ohatlas0_avatar</string>
 
-    <string name="maintainer_20_name">Pato G</string>
-    <string name="maintainer_20_role">Tester</string>
-    <string name="maintainer_20_github">PatoKuaKua2711</string>
-    <string name="maintainer_20_avatar">patokua_avatar</string>
+    <string name="maintainer_20_name">ariebe9115</string>
+    <string name="maintainer_20_role">ArtisanROM · Tester</string>
+    <string name="maintainer_20_github">ariebe9115</string>
+    <string name="maintainer_20_avatar">ariebe9115_avatar</string>
 
-    <string name="maintainer_21_name">Игорь</string>
-    <string name="maintainer_21_role">Tester</string>
-    <string name="maintainer_21_github">Rain-droid789</string>
-    <string name="maintainer_21_avatar">igor_avatar</string>
+    <string name="maintainer_21_name">Pato G</string>
+    <string name="maintainer_21_role">ArtisanROM · Tester</string>
+    <string name="maintainer_21_github">PatoKuaKua2711</string>
+    <string name="maintainer_21_avatar">patokua_avatar</string>
 
-    <string name="maintainer_22_name">Brky5807</string>
-    <string name="maintainer_22_role">Tester</string>
-    <string name="maintainer_22_github"></string>
-    <string name="maintainer_22_avatar">brky_avatar</string>
+    <string name="maintainer_22_name">Игорь</string>
+    <string name="maintainer_22_role">ArtisanROM · Tester</string>
+    <string name="maintainer_22_github">Rain-droid789</string>
+    <string name="maintainer_22_avatar">igor_avatar</string>
+
+    <string name="maintainer_23_name">Brky5807</string>
+    <string name="maintainer_23_role">ArtisanROM · Tester</string>
+    <string name="maintainer_23_github"></string>
+    <string name="maintainer_23_avatar">brky_avatar</string>
 </resources>
