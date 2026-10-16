@@ -3,12 +3,12 @@
 .source "SdStorageModeActivity.java"
 
 # interfaces
-.implements Landroid/view/View$OnClickListener;
+.implements Ljava/lang/Runnable;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->showResult(ZLjava/lang/String;)V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->toPortable(Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,13 +20,26 @@
 # instance fields
 .field final synthetic this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
+.field final synthetic val$doIt:Ljava/lang/Runnable;
+
+.field final synthetic val$primaryOnSd:Z
+
 
 # direct methods
-.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
+.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;ZLjava/lang/Runnable;)V
     .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
 
-    .line 1297
+    .line 1197
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$primaryOnSd:Z
+
+    iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$doIt:Ljava/lang/Runnable;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -35,13 +48,27 @@
 
 
 # virtual methods
-.method public onClick(Landroid/view/View;)V
-    .locals 0
+.method public run()V
+    .locals 1
 
-    .line 1298
-    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+    .line 1198
+    iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$primaryOnSd:Z
 
-    invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->finish()V
+    if-eqz v0, :cond_0
 
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$doIt:Ljava/lang/Runnable;
+
+    invoke-static {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4000(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/Runnable;)V
+
+    goto :goto_0
+
+    :cond_0
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$doIt:Ljava/lang/Runnable;
+
+    invoke-interface {p0}, Ljava/lang/Runnable;->run()V
+
+    :goto_0
     return-void
 .end method

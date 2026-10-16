@@ -1,6 +1,9 @@
 .class Lcom/masterrom/sdstorage/SdStorageModeActivity$1;
-.super Landroid/os/storage/StorageEventListener;
+.super Ljava/lang/Object;
 .source "SdStorageModeActivity.java"
+
+# interfaces
+.implements Ljava/lang/Runnable;
 
 
 # annotations
@@ -22,42 +25,20 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 123
+    .line 105
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-direct {p0}, Landroid/os/storage/StorageEventListener;-><init>()V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onDiskDestroyed(Landroid/os/storage/DiskInfo;)V
+.method public run()V
     .locals 0
 
-    .line 126
-    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
-
-    return-void
-.end method
-
-.method public onDiskScanned(Landroid/os/storage/DiskInfo;I)V
-    .locals 0
-
-    .line 125
-    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
-
-    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
-
-    return-void
-.end method
-
-.method public onVolumeStateChanged(Landroid/os/storage/VolumeInfo;II)V
-    .locals 0
-
-    .line 124
+    .line 105
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V

@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->requireUnlocked(Ljava/lang/Runnable;)V
+    value = Lcom/masterrom/sdstorage/SdStorageModeActivity;->showMain()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,11 +20,11 @@
 # instance fields
 .field final synthetic this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-.field final synthetic val$first:Landroid/content/pm/UserInfo;
+.field final synthetic val$disk:Landroid/os/storage/DiskInfo;
 
 
 # direct methods
-.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/content/pm/UserInfo;)V
+.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -32,10 +32,10 @@
         }
     .end annotation
 
-    .line 912
+    .line 816
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->val$first:Landroid/content/pm/UserInfo;
+    iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->val$disk:Landroid/os/storage/DiskInfo;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -47,14 +47,12 @@
 .method public onClick(Landroid/view/View;)V
     .locals 0
 
-    .line 913
+    .line 817
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->val$first:Landroid/content/pm/UserInfo;
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$17;->val$disk:Landroid/os/storage/DiskInfo;
 
-    iget p0, p0, Landroid/content/pm/UserInfo;->id:I
-
-    invoke-static {p1, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2000(Lcom/masterrom/sdstorage/SdStorageModeActivity;I)V
+    invoke-static {p1, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2200(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/DiskInfo;)V
 
     return-void
 .end method
