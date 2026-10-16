@@ -96,10 +96,11 @@ public class SdStorageModeActivity extends Activity {
     private TextView mTitle;
     private TextView mWorkText;
 
-    // One UI app bar: the large title sits in mExpand at the top of the scrolling page,
-    // mHeader is the pinned 56dp bar below the status bar with the back button and small title
+    // One UI app bar: mExpand is the empty expanded area at the top of the scrolling page,
+    // mHeader the pinned 56dp bar with the back button; mTitle floats above both in mTop and
+    // moves/shrinks from the centre of mExpand into the bar
     private FrameLayout mExpand;
-    private TextView mSmallTitle;
+    private FrameLayout mTop;
     private boolean mTouching;
     private boolean mStartCollapsed;   // new page: keep it collapsed until the first touch
     private final Runnable mSnap = new Runnable() { @Override public void run() { snapAppBar(); } };
@@ -283,7 +284,7 @@ public class SdStorageModeActivity extends Activity {
         mFrame.setOrientation(LinearLayout.VERTICAL);
         mRoot.addView(mFrame, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        // bar: round glass back button and the small title (fades in once the page is scrolled)
+        // bar: round glass back button (the title moves in next to it when the page is scrolled)
         mHeader = new LinearLayout(this);
         mHeader.setOrientation(LinearLayout.HORIZONTAL);
         mHeader.setGravity(Gravity.CENTER_VERTICAL);
@@ -310,16 +311,11 @@ public class SdStorageModeActivity extends Activity {
         mBack = back;
         mHeader.addView(back, new LinearLayout.LayoutParams(dp(44), dp(44)));
 
-        mSmallTitle = new TextView(this);
-        mSmallTitle.setTextColor(mText);
-        mSmallTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        mSmallTitle.setTypeface(font(700));
-        mSmallTitle.setSingleLine(true);
-        mSmallTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-        slp.leftMargin = dp(10);
-        mHeader.addView(mSmallTitle, slp);
-        mFrame.addView(mHeader, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
+        mTop = new FrameLayout(this);
+        LinearLayout topCol = new LinearLayout(this);
+        topCol.setOrientation(LinearLayout.VERTICAL);
+        mTop.addView(topCol, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        topCol.addView(mHeader, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
 
         mScroll = new ScrollView(this);
         mScroll.setFillViewport(true);
@@ -331,18 +327,6 @@ public class SdStorageModeActivity extends Activity {
 
         // expanded app bar: large centred title, about 30 % of the screen together with the bar
         mExpand = new FrameLayout(this);
-        mTitle = new TextView(this);
-        mTitle.setTextColor(mText);
-        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
-        mTitle.setTypeface(font(600));
-        mTitle.setMaxLines(2);
-        mTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        mTitle.setGravity(Gravity.CENTER);
-        FrameLayout.LayoutParams tlp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
-        tlp.leftMargin = dp(24);
-        tlp.rightMargin = dp(24);
-        mExpand.addView(mTitle, tlp);
         body.addView(mExpand, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, expandRange()));
 
         mContent = new LinearLayout(this);
@@ -376,7 +360,26 @@ public class SdStorageModeActivity extends Activity {
                 if (mStartCollapsed) mScroll.post(new Runnable() { @Override public void run() { collapseNow(); } });
             }
         });
-        mFrame.addView(mScroll, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
+        topCol.addView(mScroll, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
+
+        // the one title: positioned and scaled by applyAppBar()
+        mTitle = new TextView(this);
+        mTitle.setTextColor(mText);
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
+        mTitle.setTypeface(font(600));
+        mTitle.setSingleLine(true);
+        mTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        mTitle.setMaxWidth(getResources().getDisplayMetrics().widthPixels - dp(48));
+        mTitle.setPivotX(0f);
+        mTitle.setPivotY(0f);
+        mTop.addView(mTitle, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.TOP | Gravity.START));
+        mTitle.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override public void onLayoutChange(View v, int l, int t, int r, int b, int ol, int ot, int or, int ob) {
+                applyAppBar(mScroll.getScrollY());
+            }
+        });
+        mFrame.addView(mTop, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
 
         mBottom = new LinearLayout(this);
         mBottom.setOrientation(LinearLayout.HORIZONTAL);
@@ -401,14 +404,21 @@ public class SdStorageModeActivity extends Activity {
     }
 
     /**
-     * One UI app bar, driven by the scroll position: the large title scrolls up with the page
-     * and fades, the small title in the bar fades in; the large title only comes back when the
-     * page is back at the top.
+     * One UI app bar, driven by the scroll position: the title glides from the centre of the
+     * expanded area into the bar next to the back button and shrinks from 32sp to 20sp on the
+     * way; it only grows back when the page is back at the top.
      */
     private void applyAppBar(int y) {
         float p = Math.min(1f, Math.max(0f, y / (float) expandRange()));
-        mTitle.setAlpha(Math.max(0f, 1f - p / 0.55f));
-        mSmallTitle.setAlpha(Math.min(1f, Math.max(0f, (p - 0.6f) / 0.4f)));
+        float s = 1f + (20f / 32f - 1f) * p;
+        float tw = mTitle.getWidth(), th = mTitle.getHeight(), w = mTop.getWidth();
+        float bar = dp(56), range = expandRange();
+        float xExp = (w - tw) / 2f, xCol = dp(14 + 44 + 12);
+        float yExp = bar + (range - th) / 2f, yCol = (bar - th * s) / 2f;
+        mTitle.setScaleX(s);
+        mTitle.setScaleY(s);
+        mTitle.setTranslationX(xExp + (xCol - xExp) * p);
+        mTitle.setTranslationY(yExp + (yCol - yExp) * p);
     }
 
     /** Letting go half way: snap to expanded or collapsed, like One UI. */
@@ -435,13 +445,12 @@ public class SdStorageModeActivity extends Activity {
         mBottom.removeAllViews();
         mBottom.setVisibility(View.GONE);
         mTitle.setText(title);
-        mSmallTitle.setText(title);
         mContent.setMinimumHeight(mScroll.getHeight());
         mStartCollapsed = true;
         collapseNow();
         mScroll.post(new Runnable() { @Override public void run() { collapseNow(); } });
-        mSmallTitle.setTranslationY(dp(6));
-        mSmallTitle.animate().translationY(0f).setDuration(360).setInterpolator(mEmph).start();
+        mTitle.setAlpha(0f);
+        mTitle.animate().alpha(1f).setDuration(300).setInterpolator(mEmph).start();
     }
 
     /** One UI enter animation for a freshly built page: cards rise and fade in one after another. */
