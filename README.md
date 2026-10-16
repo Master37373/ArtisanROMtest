@@ -2,32 +2,32 @@
   <img loading="lazy" src="readme-res/banner.png"/>
 </h1>
 <p align="center">
-  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen-qpr2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/ArtisanROM/ArtisanROM?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/ArtisanROM/ArtisanROM/commits/sixteen-qpr2"><img loading="lazy" src="https://img.shields.io/github/last-commit/ArtisanROM/ArtisanROM/sixteen-qpr2?style=for-the-badge"/></a>
-  <a href="https://github.com/ArtisanROM/ArtisanROM/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/ArtisanROM/ArtisanROM?style=for-the-badge"/></a>
+  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/Master37373/MasterROM?style=for-the-badge&logo=github"/></a>
+  <a href="https://github.com/Master37373/MasterROM/commits/sixteen-qpr2"><img loading="lazy" src="https://img.shields.io/github/last-commit/Master37373/MasterROM/sixteen-qpr2?style=for-the-badge"/></a>
+  <a href="https://github.com/Master37373/MasterROM/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/Master37373/MasterROM?style=for-the-badge"/></a>
 </p>
-<p align="center">ArtisanROM <i>Aether</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+<p align="center">MasterROM <i>Aether</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
 
 <p align="center">
-  <a href="https://github.com/ArtisanROM/ArtisanROM/issues">🚀 issues</a>
+  <a href="https://github.com/Master37373/MasterROM/issues">🚀 issues</a>
   •
   <a href="https://discord.gg/TxYWApVRaE">💬 Discord</a>
   •
-  <a  href="https://github.com/ArtisanROM/ArtisanROM/wiki">📖 Wiki</a>
+  <a  href="https://github.com/Master37373/MasterROM/wiki">📖 Wiki</a>
   •
-  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen-qpr2/CHANGELOG.md">📝 Changelog</a>
+  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/CHANGELOG.md">📝 Changelog</a>
   •
-  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen-qpr2/MAINTAINERS">🧑‍💻 Maintainers</a>
+  <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/MAINTAINERS">🧑‍💻 Maintainers</a>
 </p>
 
-# What is ArtisanROM Aether?
-ArtisanROM Aether is a work-in-progress custom firmware for Samsung Galaxy devices.
+# What is MasterROM Aether?
+MasterROM Aether is a work-in-progress custom firmware for Samsung Galaxy devices.
 
 It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
 
 It is based on the UN1CA build system which allows automatic downloading/extraction of the firmware, applying the required patches and generating a flashable zip package for the specified target device.
 
-ArtisanROM Aether supports devices using the Exynos 990 SoC
+MasterROM Aether supports devices using the Exynos 990 SoC
 
 Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
 
@@ -71,7 +71,7 @@ Any form of contribution, suggestions, bug report or feature request for the pro
 
 \* DeX via HDMI not available for devices without USB-C DP support
 
-### ArtisanROM-exclusive features:
+### MasterROM-exclusive features:
 - Integrated OTA updates app
 - Completely upstreamed kernels*
 
@@ -125,7 +125,7 @@ This project is licensed under the terms of the [GNU General Public License v3.0
 - You are not allowed to modify or redistribute this ROM without prior approval
 
 # Contributors
-<a href="https://github.com/ArtisanROM/ArtisanROM/graphs/contributors"><img loading="lazy" src="https://contrib.rocks/image?repo=ArtisanROM/ArtisanROM"/></a>
+<a href="https://github.com/Master37373/MasterROM/graphs/contributors"><img loading="lazy" src="https://contrib.rocks/image?repo=MasterROM/MasterROM"/></a>
 
 # Credits:
 - **[salvogiangri](https://github.com/salvogiangri)** for the UN1CA build system, OneUI patches, and general help and support while developing.
@@ -152,7 +152,7 @@ A special thanks goes to the following for their invaluable contributions in no 
 - **[LineageOS Team](https://www.lineageos.org/)** for their original [OTA updater implementation](https://github.com/LineageOS/android_packages_apps_Updater)
 - *All the UN1CA project forks, contributors, testers and users ❤️*
 
-# ArtisanROM Archive
+# MasterROM Archive
 - [ArtisanROM Archive Org](https://github.com/ArtisanROM-archive)
 - [Old Sixteen branch](https://github.com/ArtisanROM-archive/ArtisanROM_old)
 

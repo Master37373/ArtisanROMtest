@@ -1,10 +1,10 @@
 out/
 
 # Cert
-security/artisanrom_ota.x509.pem
-security/artisanrom_ota.pk8
-security/artisanrom_platform.x509.pem
-security/artisanrom_platform.pk8
+security/masterrom_ota.x509.pem
+security/masterrom_ota.pk8
+security/masterrom_platform.x509.pem
+security/masterrom_platform.pk8
 
 #
 # We don't want to ignore the following even if they are dot-files
@@ -12,5 +12,5 @@ security/artisanrom_platform.pk8
 !.gitattributes
 !.gitignore
 !.gitmodules
-security/artisanrom_updater.x509.pem
-security/artisanrom_updater.pk8
+security/masterrom_updater.x509.pem
+security/masterrom_updater.pk8

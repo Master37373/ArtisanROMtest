@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MasterROM Updater: install updates through the recovery without root.
+    RECOVERY + ACCESS_CACHE_FILESYSTEM: uncrypt + /cache/recovery, REBOOT: reboot to recovery,
+    DELETE_PACKAGES: removes the old MasterROM updater left in /data/app.
+-->
+<permissions>
+    <privapp-permissions package="com.masterrom.updater">
+        <permission name="android.permission.RECOVERY"/>
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.ACCESS_CACHE_FILESYSTEM"/>
+        <permission name="android.permission.DELETE_PACKAGES"/>
+    </privapp-permissions>
+</permissions>

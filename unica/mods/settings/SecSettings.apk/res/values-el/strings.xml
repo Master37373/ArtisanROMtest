@@ -49,15 +49,15 @@
     <string name="unica_pif_update_title">Ενημέρωση Play Integrity Fix</string>
     <string name="unica_rom_version_title">Έκδοση ROM</string>
     <string name="unica_secure_ss_title">Επιτρέπεται το ασφαλές στιγμιότυπο οθόνης</string>
-    <string name="unica_settings_title">Ρυθμίσεις ArtisanROM</string>
+    <string name="unica_settings_title">Ρυθμίσεις MasterROM</string>
     <string name="unica_ss_detection_title">Απενεργοποίηση ανίχνευσης στιγμιότυπου οθόνης</string>
     <string name="unica_spoof_settings_title">Ρυθμίσεις πλαστογράφησης</string>
     <string name="unica_ui_settings_title">Ρυθμίσεις διεπαφής</string>
-    <string name="unica_updates_title">Ενημερώσεις ArtisanROM</string>
+    <string name="unica_updates_title">Ενημερώσεις MasterROM</string>
     <string name="unica_vulkan_summary">Αυτή η επιλογή είναι ασταθής και μπορεί να προκαλέσει προβλήματα!</string>
     <string name="unica_vulkan_title">Ενεργοποίηση Vulkan renderer</string>
-    <string name="artisanrom_version_title">Έκδοση ArtisanROM</string>
-    <string name="artisanrom_version_toast_counting">Όχι, συνέχισε να πατάς... (%d)</string>
-    <string name="artisanrom_version_toast_final">Τι ψάχνεις; Οι ρυθμίσεις προγραμματιστή δεν είναι εδώ!</string>
-    <string name="artisanrom_version_toast_done">Ακόμα εδώ; Σου είπα, οι ρυθμίσεις προγραμματιστή δεν είναι εδώ!</string>
+    <string name="masterrom_version_title">Έκδοση MasterROM</string>
+    <string name="masterrom_version_toast_counting">Όχι, συνέχισε να πατάς... (%d)</string>
+    <string name="masterrom_version_toast_final">Τι ψάχνεις; Οι ρυθμίσεις προγραμματιστή δεν είναι εδώ!</string>
+    <string name="masterrom_version_toast_done">Ακόμα εδώ; Σου είπα, οι ρυθμίσεις προγραμματιστή δεν είναι εδώ!</string>
 </resources>

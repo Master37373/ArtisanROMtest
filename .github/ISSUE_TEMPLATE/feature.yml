@@ -1,5 +1,5 @@
 name: "Feature Request"
-description: "Suggest a new feature or improvement for ArtisanROM"
+description: "Suggest a new feature or improvement for MasterROM"
 title: "[Feature Request] "
 labels: ["enhancement"]
 
@@ -7,17 +7,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in improving ArtisanROM!
+        Thank you for your interest in improving MasterROM!
 
         Please fill out the fields below to help us understand your suggestion.
         Before submitting, make sure your idea has not already been proposed:
-        https://github.com/ArtisanROM/ArtisanROM/issues/
+        https://github.com/Master37373/MasterROM/issues/
 
         Also ensure you have checked the **Wiki** to verify that the feature doesn't already exist.
 
   - type: input
     attributes:
-      label: "ArtisanROM version"
+      label: "MasterROM version"
       placeholder: "4.0.0-official"
     validations:
       required: true

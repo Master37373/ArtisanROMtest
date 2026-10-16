@@ -49,15 +49,15 @@
     <string name="unica_pif_update_title">Play Integrity Fix अपडेट करें</string>
     <string name="unica_rom_version_title">ROM संस्करण</string>
     <string name="unica_secure_ss_title">सुरक्षित स्क्रीनशॉट की अनुमति दें</string>
-    <string name="unica_settings_title">ArtisanROM सेटिंग</string>
+    <string name="unica_settings_title">MasterROM सेटिंग</string>
     <string name="unica_ss_detection_title">स्क्रीन कैप्चर पहचान अक्षम करें</string>
     <string name="unica_spoof_settings_title">स्पूफ सेटिंग</string>
     <string name="unica_ui_settings_title">यूआई सेटिंग</string>
-    <string name="unica_updates_title">ArtisanROM अपडेट</string>
+    <string name="unica_updates_title">MasterROM अपडेट</string>
     <string name="unica_vulkan_summary">यह अस्थिर है और इससे समस्याएं उत्पन्न हो सकती हैं!</string>
     <string name="unica_vulkan_title">वल्कन रेंडरर सक्षम करें</string>
-    <string name="artisanrom_version_title">ArtisanROM संस्करण</string>
-    <string name="artisanrom_version_toast_counting">नहीं, टैप करते रहें... (%d)</string>
-    <string name="artisanrom_version_toast_final">आप क्या ढूंढ रहे हैं? डेवलपर सेटिंग्स यहाँ नहीं हैं!</string>
-    <string name="artisanrom_version_toast_done">अभी भी यहाँ? मैंने कहा था, डेवलपर सेटिंग्स यहाँ नहीं हैं!</string>
+    <string name="masterrom_version_title">MasterROM संस्करण</string>
+    <string name="masterrom_version_toast_counting">नहीं, टैप करते रहें... (%d)</string>
+    <string name="masterrom_version_toast_final">आप क्या ढूंढ रहे हैं? डेवलपर सेटिंग्स यहाँ नहीं हैं!</string>
+    <string name="masterrom_version_toast_done">अभी भी यहाँ? मैंने कहा था, डेवलपर सेटिंग्स यहाँ नहीं हैं!</string>
 </resources>

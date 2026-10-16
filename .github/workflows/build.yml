@@ -72,13 +72,13 @@ jobs:
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/artisanrom_platform.pk8
-          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/artisanrom_platform.x509.pem
-          echo -n "${{ secrets.OTA_KEY_PK8 }}" | base64 --decode > security/artisanrom_ota.pk8
-          echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > security/artisanrom_ota.x509.pem
+          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/masterrom_platform.pk8
+          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/masterrom_platform.x509.pem
+          echo -n "${{ secrets.OTA_KEY_PK8 }}" | base64 --decode > security/masterrom_ota.pk8
+          echo -n "${{ secrets.OTA_KEY_PEM }}" | base64 --decode > security/masterrom_ota.x509.pem
           if [ -n "${{ secrets.UPDATER_KEY_PK8 }}" ]; then
-            echo -n "${{ secrets.UPDATER_KEY_PK8 }}" | base64 --decode > security/artisanrom_updater.pk8
-            echo -n "${{ secrets.UPDATER_KEY_PEM }}" | base64 --decode > security/artisanrom_updater.x509.pem
+            echo -n "${{ secrets.UPDATER_KEY_PK8 }}" | base64 --decode > security/masterrom_updater.pk8
+            echo -n "${{ secrets.UPDATER_KEY_PEM }}" | base64 --decode > security/masterrom_updater.x509.pem
           fi
 
           # Samsungs Versions-Abfrage hat im Skript nur 3 Sekunden Zeit, das scheitert von GitHub-Runnern oft
@@ -86,9 +86,9 @@ jobs:
           grep -n "version.xml" scripts/utils/firmware_utils.sh
 
           # Eigene Schluessel als "offiziell" erkennen (nur wenn Platform- und OTA-Key vorhanden sind)
-          if [ -s security/artisanrom_platform.pk8 ] && [ -s security/artisanrom_ota.pk8 ]; then
-            PLAT_SHA1=$(sha1sum security/artisanrom_platform.pk8 | cut -d " " -f 1)
-            OTA_SHA1=$(sha1sum security/artisanrom_ota.pk8 | cut -d " " -f 1)
+          if [ -s security/masterrom_platform.pk8 ] && [ -s security/masterrom_ota.pk8 ]; then
+            PLAT_SHA1=$(sha1sum security/masterrom_platform.pk8 | cut -d " " -f 1)
+            OTA_SHA1=$(sha1sum security/masterrom_ota.pk8 | cut -d " " -f 1)
             sed -i "s/PLATFORM_KEY_SHA1=\"[0-9a-f]*\"/PLATFORM_KEY_SHA1=\"$PLAT_SHA1\"/; s/OTA_KEY_SHA1=\"[0-9a-f]*\"/OTA_KEY_SHA1=\"$OTA_SHA1\"/" scripts/internal/gen_config_file.sh
             grep -n "_KEY_SHA1=" scripts/internal/gen_config_file.sh
           else
@@ -149,21 +149,21 @@ jobs:
 
       - name: Export updater APK
         run: |
-          APK="out/target/${{ matrix.target }}/work_dir/system/system/priv-app/ArtisanUpdater/ArtisanUpdater.apk"
+          APK="out/target/${{ matrix.target }}/work_dir/system/system/priv-app/MasterROMUpdater/MasterROMUpdater.apk"
           mkdir -p out_apk
           if [ -f "$APK" ]; then
-            cp "$APK" out_apk/ArtisanUpdater.apk
-            ls -l out_apk/ArtisanUpdater.apk
-            md5sum out_apk/ArtisanUpdater.apk
+            cp "$APK" out_apk/MasterROMUpdater.apk
+            ls -l out_apk/MasterROMUpdater.apk
+            md5sum out_apk/MasterROMUpdater.apk
           else
-            echo "ArtisanUpdater.apk not found at $APK"
+            echo "MasterROMUpdater.apk not found at $APK"
           fi
 
       - name: Upload updater APK (artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: ArtisanUpdater
-          path: out_apk/ArtisanUpdater.apk
+          name: MasterROMUpdater
+          path: out_apk/MasterROMUpdater.apk
           if-no-files-found: warn
 
       - name: Upload to SourceForge (+ GitHub Release)

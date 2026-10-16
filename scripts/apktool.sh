@@ -39,11 +39,11 @@ BUILD()
 
     if [[ "$INPUT_FILE" == *".apk" ]]; then
         local CERT_PREFIX="aosp"
-        $ROM_IS_OFFICIAL && CERT_PREFIX="artisanrom"
-        # ArtisanUpdater gets its own key: anything signed with the platform key is mapped to
+        $ROM_IS_OFFICIAL && CERT_PREFIX="masterrom"
+        # MasterROM Updater gets its own key: anything signed with the platform key is mapped to
         # Samsung's platform signature by the signature patch, which blocks in-app self-updates.
         local CERT_NAME="${CERT_PREFIX}_platform"
-        if [[ "$FILE_NAME" == "ArtisanUpdater.apk" ]] && [ -f "$SRC_DIR/security/${CERT_PREFIX}_updater.pk8" ]; then
+        if [[ "$FILE_NAME" == "MasterROMUpdater.apk" ]] && [ -f "$SRC_DIR/security/${CERT_PREFIX}_updater.pk8" ]; then
             CERT_NAME="${CERT_PREFIX}_updater"
         fi
 

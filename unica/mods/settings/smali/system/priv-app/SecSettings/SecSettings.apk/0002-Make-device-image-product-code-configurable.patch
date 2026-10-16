@@ -1,5 +1,5 @@
 From 96f014ac0d5ed0e2b85ff7d0574ef828dfca5c18 Mon Sep 17 00:00:00 2001
-From: ArtisanROM <artisanrom@example.com>
+From: MasterROM <masterrom@example.com>
 Date: Wed, 23 Sep 2026 00:00:00 +0000
 Subject: [PATCH] Make device image product code configurable
 
@@ -7,7 +7,7 @@ DeviceImageManager reads the model code from the "ril.product_code"
 property to fetch the device image via SCPM. Read a custom
 "persist.sys.unica.device_image" property first and fall back to
 "ril.product_code" when it is empty, so the device image can be changed
-at runtime from ArtisanROM Settings.
+at runtime from MasterROM Settings.
 
 --- a/smali_classes5/com/samsung/android/settings/deviceinfo/aboutphone/DeviceImageManager$1.smali
 +++ b/smali_classes5/com/samsung/android/settings/deviceinfo/aboutphone/DeviceImageManager$1.smali

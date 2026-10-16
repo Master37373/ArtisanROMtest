@@ -16,7 +16,7 @@ index 1d2c2da8e..6f1e8f374 100644
      invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
  
 -    new-instance p1, Landroid/content/Intent;
-+    const-string v0, "com.artisan.updater"
++    const-string v0, "com.masterrom.updater"
  
 -    const-string v0, "sec.fota.action.SOFTWARE_UPDATE"
 +    invoke-static {p0, v0}, Lcom/samsung/android/settings/PkgUtils;->isPackageEnabled(Landroid/content/Context;Ljava/lang/String;)Z
@@ -37,10 +37,10 @@ index 1d2c2da8e..6f1e8f374 100644
 +    new-instance v1, Landroid/content/ComponentName;
  
 -    invoke-virtual {p1, v0}, Landroid/content/Intent;->setPackage(Ljava/lang/String;)Landroid/content/Intent;
-+    const-string v2, "com.artisan.updater"
++    const-string v2, "com.masterrom.updater"
  
 -    move-result-object p1
-+    const-string v3, "com.artisan.updater.SecSettingsActivity"
++    const-string v3, "com.masterrom.updater.MainActivity"
  
 -    invoke-virtual {p0, p1}, Landroid/content/Context;->sendBroadcast(Landroid/content/Intent;)V
 +    invoke-direct {v1, v2, v3}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V

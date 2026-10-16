@@ -27,17 +27,17 @@ $ROM_IS_OFFICIAL && ROM_STATUS="OFFICIAL"
 ZIP_FILE_SUFFIX="-sign.zip"
 $DEBUG && ! $ROM_IS_OFFICIAL && ZIP_FILE_SUFFIX=".zip"
 
-ZIP_FILE_NAME="ArtisanROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+ZIP_FILE_NAME="MasterROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$ZIP_FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    ZIP_FILE_NAME="ArtisanROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+    ZIP_FILE_NAME="MasterROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 done
 
 PRIVATE_KEY_PATH="$SRC_DIR/security/"
 PUBLIC_KEY_PATH="$SRC_DIR/security/"
 if $ROM_IS_OFFICIAL; then
-    PRIVATE_KEY_PATH+="artisanrom_ota"
-    PUBLIC_KEY_PATH+="artisanrom_ota"
+    PRIVATE_KEY_PATH+="masterrom_ota"
+    PUBLIC_KEY_PATH+="masterrom_ota"
 else
     PRIVATE_KEY_PATH+="aosp_testkey"
     PUBLIC_KEY_PATH+="aosp_testkey"
@@ -487,11 +487,11 @@ PRINT_HEADER()
     echo    'ui_print(" ");'
     echo    'ui_print("****************************************************");'
     echo -n 'ui_print("'
-    echo -n "Welcome to ArtisanROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
+    echo -n "Welcome to MasterROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
     echo    '");'
-    echo    'ui_print("ArtisanROM developed by Android Artisan @XDAforums");'
+    echo    'ui_print("MasterROM by Master37373, based on ArtisanROM by Android Artisan");'
     echo    'ui_print("UN1CA build system coded by salvo_giangri @XDAforums");'
-    echo    'ui_print("Special thanks to all ArtisanROM Maintainers, Contribuitors and Testers");'
+    echo    'ui_print("Special thanks to all MasterROM Maintainers, Contribuitors and Testers");'
     echo    'ui_print("****************************************************");'
     echo -n 'ui_print("'
     echo -n "One UI version: $ONEUI_VERSION"

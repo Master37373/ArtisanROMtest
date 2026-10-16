@@ -1,5 +1,5 @@
 name: "Bug Report"
-description: "Report a reproducible issue with ArtisanROM"
+description: "Report a reproducible issue with MasterROM"
 title: "[BUG] "
 labels: ["bug"]
 
@@ -7,17 +7,17 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in ArtisanROM.
+        Thank you for your interest in MasterROM.
         To help us resolve your issue efficiently, please provide all required information below.
 
         Before submitting, make sure this is **not a duplicate report**.
-        Search existing issues: https://github.com/ArtisanROM/ArtisanROM/issues/
+        Search existing issues: https://github.com/Master37373/MasterROM/issues/
 
         Please ensure you have also read the **Wiki** for installation steps, known issues, and troubleshooting.
 
   - type: input
     attributes:
-      label: "ArtisanROM version"
+      label: "MasterROM version"
       placeholder: "4.0.0-official"
     validations:
       required: true

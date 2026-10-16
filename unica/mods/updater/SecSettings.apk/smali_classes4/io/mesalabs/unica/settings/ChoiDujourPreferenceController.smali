@@ -19,7 +19,7 @@
 
     iget-object v0, p0, Lcom/android/settingslib/core/AbstractPreferenceController;->mContext:Landroid/content/Context;
 
-    const-string p0, "com.artisan.updater"
+    const-string p0, "com.masterrom.updater"
 
     invoke-static {v0, p0}, Lcom/android/settings/Utils;->isPackageEnabled(Landroid/content/Context;Ljava/lang/String;)Z
 

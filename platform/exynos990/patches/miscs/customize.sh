@@ -223,7 +223,7 @@ LOG_STEP_IN "- Adding SD card storage mode switch to SecSettings"
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 SECSET="$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk"
 
-if ! find "$SECSET" -path '*/com/artisan/sdstorage/SdStorageModeActivity.smali' | grep -q .; then
+if ! find "$SECSET" -path '*/com/masterrom/sdstorage/SdStorageModeActivity.smali' | grep -q .; then
     N=2
     while [ -d "$SECSET/smali_classes$N" ]; do N=$((N + 1)); done
     EVAL "mkdir -p \"$SECSET/smali_classes$N\""
@@ -231,21 +231,21 @@ if ! find "$SECSET" -path '*/com/artisan/sdstorage/SdStorageModeActivity.smali' 
     LOG "- Added SdStorageModeActivity to smali_classes$N"
 fi
 
-if ! grep -q 'com.artisan.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml"; then
-    sed -i 's#^\(\s*\)</application>#\1    <activity android:name="com.artisan.sdstorage.SdStorageModeActivity" android:exported="false" android:excludeFromRecents="true" android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|uiMode|density" android:theme="@style/Theme.Settings"/>\n\1</application>#' \
+if ! grep -q 'com.masterrom.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml"; then
+    sed -i 's#^\(\s*\)</application>#\1    <activity android:name="com.masterrom.sdstorage.SdStorageModeActivity" android:exported="false" android:excludeFromRecents="true" android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|uiMode|density" android:theme="@style/Theme.Settings"/>\n\1</application>#' \
         "$SECSET/AndroidManifest.xml"
 fi
-grep -q 'com.artisan.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml" || \
+grep -q 'com.masterrom.sdstorage.SdStorageModeActivity' "$SECSET/AndroidManifest.xml" || \
     ABORT "Failed to register SdStorageModeActivity in the SecSettings manifest"
 
 SDXML="$SECSET/res/xml/sec_security_advanced_settings.xml"
 if grep -q 'android:key="sdcard_encrypt_status"' "$SDXML"; then
-    sed -i '/android:key="sdcard_encrypt_status"/c\    <SecPreference android:title="@string/artisan_sd_storage_title" android:key="artisan_sd_storage_mode" android:summary="@string/artisan_sd_storage_summary" android:order="400" settings:controller="com.artisan.sdstorage.SdStoragePreferenceController"><intent android:action="android.intent.action.MAIN" android:targetPackage="com.android.settings" android:targetClass="com.artisan.sdstorage.SdStorageModeActivity" /></SecPreference>' "$SDXML"
+    sed -i '/android:key="sdcard_encrypt_status"/c\    <SecPreference android:title="@string/masterrom_sd_storage_title" android:key="masterrom_sd_storage_mode" android:summary="@string/masterrom_sd_storage_summary" android:order="400" settings:controller="com.masterrom.sdstorage.SdStoragePreferenceController"><intent android:action="android.intent.action.MAIN" android:targetPackage="com.android.settings" android:targetClass="com.masterrom.sdstorage.SdStorageModeActivity" /></SecPreference>' "$SDXML"
 fi
-grep -q 'artisan_sd_storage_mode' "$SDXML" || ABORT "Failed to add the SD card storage entry to $SDXML"
-grep -q 'com.artisan.sdstorage.SdStoragePreferenceController' "$SDXML" || \
-    sed -i 's#android:key="artisan_sd_storage_mode"#android:key="artisan_sd_storage_mode" settings:controller="com.artisan.sdstorage.SdStoragePreferenceController"#' "$SDXML"
-grep -q 'com.artisan.sdstorage.SdStoragePreferenceController' "$SDXML" || ABORT "Failed to attach the SD card storage controller"
+grep -q 'masterrom_sd_storage_mode' "$SDXML" || ABORT "Failed to add the SD card storage entry to $SDXML"
+grep -q 'com.masterrom.sdstorage.SdStoragePreferenceController' "$SDXML" || \
+    sed -i 's#android:key="masterrom_sd_storage_mode"#android:key="masterrom_sd_storage_mode" settings:controller="com.masterrom.sdstorage.SdStoragePreferenceController"#' "$SDXML"
+grep -q 'com.masterrom.sdstorage.SdStoragePreferenceController' "$SDXML" || ABORT "Failed to attach the SD card storage controller"
 
 # Factory reset from Settings:
 #  1. Samsung's MainClearConfirm silently aborts when ro.frp.pst is empty, which
@@ -258,21 +258,21 @@ F="$(find "$SECSET" -path '*/com/android/settings/MainClearConfirm.smali' | head
 [ -n "$F" ] || ABORT "MainClearConfirm.smali not found"
 sed -i 's#const-string \(v[0-9]*\), "ro.frp.pst"#const-string \1, "ro.product.device"#' "$F"
 grep -q '"ro.frp.pst"' "$F" && ABORT "Failed to patch the factory reset FRP check"
-if ! grep -q 'com/artisan/sdstorage/ResetGuard' "$F"; then
-    perl -0pi -e 's/(\.method public final onResetButtonClick\(\)V\n\s*\.locals [1-9]\d*\n)/$1\n    invoke-static {p0}, Lcom\/artisan\/sdstorage\/ResetGuard;->intercept(Lcom\/android\/settings\/MainClearConfirm;)Z\n\n    move-result v0\n\n    if-eqz v0, :artisan_reset_go\n\n    return-void\n\n    :artisan_reset_go\n/' "$F"
+if ! grep -q 'com/masterrom/sdstorage/ResetGuard' "$F"; then
+    perl -0pi -e 's/(\.method public final onResetButtonClick\(\)V\n\s*\.locals [1-9]\d*\n)/$1\n    invoke-static {p0}, Lcom\/masterrom\/sdstorage\/ResetGuard;->intercept(Lcom\/android\/settings\/MainClearConfirm;)Z\n\n    move-result v0\n\n    if-eqz v0, :masterrom_reset_go\n\n    return-void\n\n    :masterrom_reset_go\n/' "$F"
 fi
-grep -q 'com/artisan/sdstorage/ResetGuard;->intercept' "$F" || ABORT "Failed to hook the SD card check into the factory reset"
+grep -q 'com/masterrom/sdstorage/ResetGuard;->intercept' "$F" || ABORT "Failed to hook the SD card check into the factory reset"
 
 for L in "values:Use SD card as internal storage:Switch between portable and encrypted internal storage" \
          "values-de:SD-Karte als internen Speicher nutzen:Zwischen tragbarem und verschlüsseltem internem Speicher wechseln"; do
     DIR="${L%%:*}"; REST="${L#*:}"; TITLE="${REST%%:*}"; SUMMARY="${REST#*:}"
     F="$SECSET/res/$DIR/strings.xml"
     [ -f "$F" ] || continue
-    if ! grep -q 'name="artisan_sd_storage_title"' "$F"; then
-        sed -i "s#</resources>#    <string name=\"artisan_sd_storage_title\">$TITLE</string>\n    <string name=\"artisan_sd_storage_summary\">$SUMMARY</string>\n</resources>#" "$F"
+    if ! grep -q 'name="masterrom_sd_storage_title"' "$F"; then
+        sed -i "s#</resources>#    <string name=\"masterrom_sd_storage_title\">$TITLE</string>\n    <string name=\"masterrom_sd_storage_summary\">$SUMMARY</string>\n</resources>#" "$F"
     fi
 done
-grep -q 'name="artisan_sd_storage_title"' "$SECSET/res/values/strings.xml" || \
+grep -q 'name="masterrom_sd_storage_title"' "$SECSET/res/values/strings.xml" || \
     ABORT "Failed to add the SD card storage strings"
 unset SECSET SDXML N L DIR REST TITLE SUMMARY F
 LOG_STEP_OUT

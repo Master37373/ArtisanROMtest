@@ -1,4 +1,4 @@
-SdStorageModeActivity (ArtisanROM): portable <-> adoptable SD card switch inside SecSettings.
+SdStorageModeActivity (MasterROM): portable <-> adoptable SD card switch inside SecSettings.
 Full screen One UI 8.5 "glass" page (Theme.Settings): SdGlassBackground, SdAnimView illustrations, bottom sheets; Secure Folder unlock step before moving files; ResetGuard for factory reset.
 src/  : Java source
 smali/: compiled form that the build copies into SecSettings (new smali_classesN dir).
