@@ -6,7 +6,6 @@
 - Preinstalled again: Gaming Hub, Samsung Kids, Samsung Language Core, Smart Touch Call
 - Play Integrity: a freshly set up phone is certified right away
 - Battery protection in the battery settings
-- HDR10+ video playback
 
 # 1.0.1
 - Codename Opus
