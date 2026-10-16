@@ -25,7 +25,7 @@
 
     invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 
-    const-string v1, "This is a beta build of MasterROM Aether.\n\nBugs and instability may occur. Please report any issues you find to the MasterROM development team immediately.\n\nTap OK to continue."
+    const-string v1, "This is a beta build of MasterROM Opus.\n\nBugs and instability may occur. Please report any issues you find to the MasterROM development team immediately.\n\nTap OK to continue."
 
     invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 

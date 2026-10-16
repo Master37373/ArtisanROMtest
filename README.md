@@ -2,7 +2,7 @@
   <a href="https://github.com/Master37373/MasterROM/blob/sixteen-qpr2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/Master37373/MasterROM?style=for-the-badge&logo=github"/></a>
   <a href="https://github.com/Master37373/MasterROM/commits/sixteen-qpr2"><img loading="lazy" src="https://img.shields.io/github/last-commit/Master37373/MasterROM/sixteen-qpr2?style=for-the-badge"/></a>
 </p>
-<p align="center">MasterROM <i>Aether</i> is a custom firmware for the Samsung Galaxy S20+ (Exynos 990), based on ArtisanROM.</p>
+<p align="center">MasterROM <i>Opus</i> is a custom firmware for the Samsung Galaxy S20+ (Exynos 990), based on ArtisanROM.</p>
 
 <p align="center">
   <a href="https://github.com/Master37373/MasterROM/issues">🚀 Issues</a>
@@ -25,8 +25,8 @@
 > to ArtisanROM. Fixes from ArtisanROM are taken over regularly.
 > If you like the ROM, please support the original projects.
 
-# What is MasterROM?
-MasterROM Aether is a personal continuation of ArtisanROM Aether for the Galaxy S20+.
+# What is MasterROM Opus?
+MasterROM Opus is a personal continuation of ArtisanROM Aether for the Galaxy S20+.
 
 Like ArtisanROM, it's based on the latest iteration of Samsung's One UI and includes additional features and tweaks
 for the best possible experience out of the box. It uses the UN1CA build system, which automatically downloads and

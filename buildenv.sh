@@ -89,7 +89,7 @@ run_cmd()
 }
 
 alias unica=run_cmd
-alias aether="./scripts/make_rom.sh"
+alias opus="./scripts/make_rom.sh"
 # ]
 
 SRC_DIR="$(_GET_SRC_DIR)"
