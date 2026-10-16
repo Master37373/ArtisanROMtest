@@ -17,6 +17,9 @@ on:
       keep_also:
         description: 'Also keep these files (space-separated)'
         default: ''
+      remove:
+        description: 'Also delete these files from y2s/ or y2s/kernel/ (space-separated)'
+        default: ''
 
 jobs:
   sf:
@@ -28,6 +31,7 @@ jobs:
       KEEP: ${{ inputs.keep }}
       MODE: ${{ inputs.mode }}
       KEEP_ALSO: ${{ inputs.keep_also }}
+      REMOVE: ${{ inputs.remove }}
     steps:
       - name: Clean up
         run: |
@@ -52,6 +56,12 @@ jobs:
           DEL+=($(echo "$ROMS" | grep '^ArtisanROM' | sed "s#^#$BASE/#"))
           DEL+=($(echo "$ROMS" | grep '^MasterROM' | tail -n +$((KEEP + 1)) | sed "s#^#$BASE/#"))
           DEL+=($(echo "$KERNELS" | tail -n +4 | sed "s#^#$BASE/kernel/#"))
+
+          for n in $REMOVE; do
+            if echo "$ROMS" | grep -qx "$n"; then DEL+=("$BASE/$n")
+            elif echo "$KERNELS" | grep -qx "$n"; then DEL+=("$BASE/kernel/$n")
+            else echo "not found: $n"; fi
+          done
 
           FINAL=()
           for f in "${DEL[@]}"; do
