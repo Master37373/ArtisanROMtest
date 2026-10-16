@@ -62,7 +62,7 @@ import java.util.Locale;
  * MasterROM: switch the microSD card between portable storage and adoptable (internal,
  * encrypted) storage. Full screen page inside SecSettings (system uid) in the same One UI 8.5
  * "glass" design as the MasterROM Updater: drifting colour blobs, translucent cards, a large
- * title that shrinks while scrolling (no toolbar), gradient / tinted pill buttons and
+ * centred title that shrinks and fades out while scrolling down (no toolbar), gradient / tinted pill buttons and
  * illustrations (SdAnimView) that explain every step. Every step, confirmations included,
  * is a full screen page. Built in code, so no extra resources are needed.
  */
@@ -88,7 +88,7 @@ public class SdStorageModeActivity extends Activity {
     // views
     private FrameLayout mRoot;
     private LinearLayout mFrame;
-    private LinearLayout mHeader;
+    private FrameLayout mHeader;
     private LinearLayout mContent;
     private LinearLayout mBottom;
     private ScrollView mScroll;
@@ -96,9 +96,10 @@ public class SdStorageModeActivity extends Activity {
     private TextView mTitle;
     private TextView mWorkText;
 
-    // collapsing title: 0 = large, 1 = small
+    // title: 0 = large and visible, 1 = shrunk and faded out
     private float mCollapse;
     private boolean mCollapsed;
+    private int mLastScroll;
     private ValueAnimator mCollapseAnim;
 
     private boolean mBusy;
@@ -280,10 +281,8 @@ public class SdStorageModeActivity extends Activity {
         mFrame.setOrientation(LinearLayout.VERTICAL);
         mRoot.addView(mFrame, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        // header: round glass back button + large title (shrinks when scrolled, no bar)
-        mHeader = new LinearLayout(this);
-        mHeader.setOrientation(LinearLayout.HORIZONTAL);
-        mHeader.setGravity(Gravity.CENTER_VERTICAL);
+        // header: round glass back button at the left, large centred title (no bar)
+        mHeader = new FrameLayout(this);
         mHeader.setPadding(dp(14), 0, dp(14), 0);
 
         FrameLayout back = new FrameLayout(this);
@@ -305,7 +304,7 @@ public class SdStorageModeActivity extends Activity {
         back.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { if (!handleBack()) finish(); } });
         addPress(back);
         mBack = back;
-        mHeader.addView(back, new LinearLayout.LayoutParams(dp(44), dp(44)));
+        mHeader.addView(back, new FrameLayout.LayoutParams(dp(44), dp(44), Gravity.START | Gravity.CENTER_VERTICAL));
 
         mTitle = new TextView(this);
         mTitle.setTextColor(mText);
@@ -313,9 +312,11 @@ public class SdStorageModeActivity extends Activity {
         mTitle.setTypeface(font(600));
         mTitle.setSingleLine(true);
         mTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        mTitle.setPivotX(0f);
-        LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-        tlp.leftMargin = dp(12);
+        mTitle.setGravity(Gravity.CENTER);
+        FrameLayout.LayoutParams tlp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        tlp.leftMargin = dp(52);
+        tlp.rightMargin = dp(52);
         mHeader.addView(mTitle, tlp);
         mFrame.addView(mHeader, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(84)));
 
@@ -349,12 +350,20 @@ public class SdStorageModeActivity extends Activity {
         setContentView(mRoot);
     }
 
-    /** Title collapses as soon as the content is scrolled (> 8 dp), like the updater. */
+    /**
+     * Like the updater: scrolling down shrinks and fades the title out, scrolling up (or being
+     * back at the top) brings it back.
+     */
     private void onScrolled(int y) {
-        boolean collapsed = y > dp(8);
-        if (collapsed == mCollapsed) return;
-        mCollapsed = collapsed;
-        animateCollapse(collapsed ? 1f : 0f);
+        int jitter = dp(4);
+        boolean hide = mCollapsed;
+        if (y <= dp(8)) hide = false;
+        else if (y - mLastScroll > jitter) hide = true;
+        else if (mLastScroll - y > jitter) hide = false;
+        if (Math.abs(y - mLastScroll) > jitter || y <= dp(8)) mLastScroll = y;
+        if (hide == mCollapsed) return;
+        mCollapsed = hide;
+        animateCollapse(hide ? 1f : 0f);
     }
 
     private void animateCollapse(float to) {
@@ -373,10 +382,12 @@ public class SdStorageModeActivity extends Activity {
         ViewGroup.LayoutParams lp = mHeader.getLayoutParams();
         lp.height = Math.round(dp(84) + (dp(56) - dp(84)) * p);
         mHeader.setLayoutParams(lp);
-        float s = 1f - 0.38f * p;
+        float s = 1f - 0.4f * p;
+        mTitle.setPivotX(mTitle.getWidth() / 2f);
         mTitle.setPivotY(mTitle.getHeight() / 2f);
         mTitle.setScaleX(s);
         mTitle.setScaleY(s);
+        mTitle.setAlpha(1f - p);
     }
 
     /** Starts a new page: clears content and buttons, sets the large title. */
@@ -391,6 +402,7 @@ public class SdStorageModeActivity extends Activity {
         mTitle.setText(title);
         mScroll.scrollTo(0, 0);
         mCollapsed = false;
+        mLastScroll = 0;
         if (mCollapseAnim != null) mCollapseAnim.cancel();
         applyCollapse(0f);
         mTitle.setAlpha(0f);
