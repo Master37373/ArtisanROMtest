@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       build_type:
-        description: 'Build type (debug = nur SourceForge, test = + GitHub release, release = + Updater-XML im Repo)'
+        description: 'Build type (debug = SourceForge only, test = + GitHub release, release = + updater XML in the repo)'
         type: choice
         options:
           - debug
@@ -81,18 +81,18 @@ jobs:
             echo -n "${{ secrets.UPDATER_KEY_PEM }}" | base64 --decode > security/masterrom_updater.x509.pem
           fi
 
-          # Samsungs Versions-Abfrage hat im Skript nur 3 Sekunden Zeit, das scheitert von GitHub-Runnern oft
+          # The script gives Samsung's version query only 3 seconds, which often fails on GitHub runners
           sed -i 's/curl -s --retry 3 -m 3 /curl -s --retry 5 -m 20 /' scripts/utils/firmware_utils.sh
           grep -n "version.xml" scripts/utils/firmware_utils.sh
 
-          # Eigene Schluessel als "offiziell" erkennen (nur wenn Platform- und OTA-Key vorhanden sind)
+          # Treat our own keys as "official" (only when both the platform and the OTA key exist)
           if [ -s security/masterrom_platform.pk8 ] && [ -s security/masterrom_ota.pk8 ]; then
             PLAT_SHA1=$(sha1sum security/masterrom_platform.pk8 | cut -d " " -f 1)
             OTA_SHA1=$(sha1sum security/masterrom_ota.pk8 | cut -d " " -f 1)
             sed -i "s/PLATFORM_KEY_SHA1=\"[0-9a-f]*\"/PLATFORM_KEY_SHA1=\"$PLAT_SHA1\"/; s/OTA_KEY_SHA1=\"[0-9a-f]*\"/OTA_KEY_SHA1=\"$OTA_SHA1\"/" scripts/internal/gen_config_file.sh
             grep -n "_KEY_SHA1=" scripts/internal/gen_config_file.sh
           else
-            echo "WARNUNG: Schluessel fehlen, Build bleibt UNOFFICIAL"
+            echo "WARNING: keys missing, the build stays UNOFFICIAL"
           fi
 
       - name: Set up JDK 17
@@ -189,7 +189,7 @@ jobs:
             VERSION=$(echo "$FILE_NAME" | grep -oP '\d+\.\d+\.\d+' | head -n 1)
             if [ -z "$VERSION" ]; then
               VERSION="0.0.${{ github.run_number }}"
-              echo "WARNING: Keine Version im Dateinamen gefunden, nutze $VERSION"
+              echo "WARNING: no version found in the file name, using $VERSION"
             fi
             BUILD_DATE=$(date +%Y-%m-%d)
 
@@ -204,15 +204,15 @@ jobs:
             echo "$DOWNLOAD_URL" > "$GITHUB_WORKSPACE/download_url.txt"
             echo "Download-Link: $DOWNLOAD_URL"
             sleep 60
-            echo "Link-Pruefung (HTTP-Status, 206 oder 200 ist gut): $(curl -sL -r 0-99 -o /dev/null -w '%{http_code}' "$DOWNLOAD_URL" || true)"
+            echo "Link check (HTTP status, 206 or 200 is fine): $(curl -sL -r 0-99 -o /dev/null -w '%{http_code}' "$DOWNLOAD_URL" || true)"
 
-            # OTA-XML fuer die Updater-App (nur bei release)
+            # OTA XML for the updater app (release builds only)
             if [ "$BUILD_TYPE" = "release" ]; then
               FILE_MD5=$(md5sum "$file" | awk '{print $1}')
               FILE_SIZE=$(stat -c%s "$file")
               DEVICE_NAME=$(unzip -p "$file" build_info.txt | grep '^device=' | cut -d '=' -f 2 | tr -d '\r\n' || true)
               if [ -z "$DEVICE_NAME" ]; then DEVICE_NAME="${{ matrix.target }}"; fi
-              echo "Geraetename fuer die XML: $DEVICE_NAME"
+              echo "Device name for the XML: $DEVICE_NAME"
               XML_NAME="$DEVICE_NAME.xml"
 
               rm -rf updater_repo
@@ -236,7 +236,7 @@ jobs:
               done
             fi
 
-            # GitHub Release (nur Link in den Notizen, keine grosse Datei)
+            # GitHub release (only the link in the notes, no large file)
             if [ "$BUILD_TYPE" = "release" ] || [ "$BUILD_TYPE" = "test" ]; then
               TAG_NAME="v$VERSION-${{ matrix.target }}-${{ github.run_number }}"
               RELEASE_DATA=$(jq -n \
@@ -251,7 +251,7 @@ jobs:
                 -d "$RELEASE_DATA" \
                 "https://api.github.com/repos/${{ github.repository }}/releases")
               if [ "$(echo "$RELEASE_RESPONSE" | jq -r '.id')" = "null" ]; then
-                echo "WARNUNG: GitHub-Release nicht erstellt. Antwort:"
+                echo "WARNING: GitHub release not created. Response:"
                 echo "$RELEASE_RESPONSE" | head -c 400
               else
                 echo "GitHub-Release erstellt: $TAG_NAME"

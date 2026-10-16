@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       publish:
-        description: 'Im Updater anbieten (y2s.xml auf main aktualisieren)'
+        description: 'Offer it in the updater (update y2s.xml on main)'
         type: boolean
         default: false
 

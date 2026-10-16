@@ -12,10 +12,10 @@ on:
         options: [list, delete]
         default: list
       keep:
-        description: 'Wie viele MasterROM-Zips behalten'
+        description: 'How many MasterROM zips to keep'
         default: '2'
       keep_also:
-        description: 'Diese Dateien zusaetzlich behalten (Leerzeichen-getrennt)'
+        description: 'Also keep these files (space-separated)'
         default: ''
 
 jobs:
