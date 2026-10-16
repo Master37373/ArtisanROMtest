@@ -68,7 +68,7 @@ if ! grep -q "(allow priv_app ota_package_file (file" "$SEPOLICY"; then
     LOG "- Allowing the updater to write /data/ota_package (SELinux)"
     {
         echo "(allow priv_app ota_package_file (dir (search read open getattr write add_name remove_name)))"
-        echo "(allow priv_app ota_package_file (file (create read write open getattr setattr unlink)))"
+        echo "(allow priv_app ota_package_file (file (create read write open getattr setattr unlink rename)))"
         # uncrypt resolves /dev/block/by-name/userdata; on Samsung that link carries the
         # userdata_block_device label (AOSP: block_device), which uncrypt may not read
         echo "(allow uncrypt userdata_block_device (lnk_file (read getattr open)))"
