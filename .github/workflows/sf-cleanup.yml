@@ -14,6 +14,9 @@ on:
       keep:
         description: 'Wie viele MasterROM-Zips behalten'
         default: '2'
+      keep_also:
+        description: 'Diese Dateien zusaetzlich behalten (Leerzeichen-getrennt)'
+        default: ''
 
 jobs:
   sf:
@@ -24,6 +27,7 @@ jobs:
       SF_SSH_KEY: ${{ secrets.SF_SSH_KEY }}
       KEEP: ${{ inputs.keep }}
       MODE: ${{ inputs.mode }}
+      KEEP_ALSO: ${{ inputs.keep_also }}
     steps:
       - name: Clean up
         run: |
@@ -52,6 +56,7 @@ jobs:
           FINAL=()
           for f in "${DEL[@]}"; do
             case " $OFFERED " in *" $(basename "$f") "*) echo "keep (offered): $f"; continue;; esac
+            case " $KEEP_ALSO " in *" $(basename "$f") "*) echo "keep (asked): $f"; continue;; esac
             FINAL+=("$f")
           done
 
