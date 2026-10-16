@@ -1,0 +1,68 @@
+name: SD storage page (Java -> smali)
+
+# Compiles platform/exynos990/patches/miscs/sdstorage/src to smali and commits the result.
+# Only the classes that need nothing but the Android framework are rebuilt
+# (SdStorageModeActivity, SdAnimView, SdGlassBackground, SdGlyphView). ResetGuard and
+# SdStoragePreferenceController use SecSettings classes and keep their existing smali.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  smali:
+    runs-on: ubuntu-24.04
+    env:
+      SD: platform/exynos990/patches/miscs/sdstorage
+      R8: "8.5.35"
+      APKTOOL: "2.10.0"
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Tools (framework jar with hidden APIs, d8, apktool)
+        run: |
+          mkdir -p "$RUNNER_TEMP/t" && cd "$RUNNER_TEMP/t"
+          git clone -q --depth 1 --filter=blob:none --sparse https://github.com/Reginer/aosp-android-jar aaj
+          git -C aaj sparse-checkout set --no-cone /android-35/android.jar
+          ls -l aaj/android-35/android.jar
+          curl -sSfL -o r8.jar "https://dl.google.com/android/maven2/com/android/tools/r8/$R8/r8-$R8.jar"
+          curl -sSfL -o apktool.jar "https://github.com/iBotPeaches/Apktool/releases/download/v$APKTOOL/apktool_$APKTOOL.jar"
+
+      - name: Compile
+        run: |
+          T="$RUNNER_TEMP/t"; A="$T/aaj/android-35/android.jar"
+          # Samsung adds UserInfo.isSecureFolder(); compile-time stub only (-implicit:none)
+          mkdir -p "$T/stub/android/content/pm" "$T/stubcls" "$T/cls"
+          printf '%s\n' 'package android.content.pm;' \
+            'public class UserInfo { public int id; public String name; public boolean isSecureFolder() { return false; } }' \
+            > "$T/stub/android/content/pm/UserInfo.java"
+          javac -nowarn -source 8 -target 8 -bootclasspath "$A" -d "$T/stubcls" "$T/stub/android/content/pm/UserInfo.java"
+          S="$SD/src/com/masterrom/sdstorage"
+          javac -nowarn -source 8 -target 8 -bootclasspath "$T/stubcls:$A" -implicit:none -d "$T/cls" \
+            "$S/SdStorageModeActivity.java" "$S/SdAnimView.java" "$S/SdGlassBackground.java" "$S/SdGlyphView.java"
+          find "$T/cls" -name '*.class' > "$T/classes.txt"
+          java -cp "$T/r8.jar" com.android.tools.r8.D8 --release --min-api 31 --lib "$A" \
+            --output "$T/out.zip" $(cat "$T/classes.txt")
+          # apktool decodes a jar with classes.dex to smali
+          (cd "$T" && unzip -o -q out.zip classes.dex && zip -q sd.jar classes.dex)
+          java -jar "$T/apktool.jar" d -f -r "$T/sd.jar" -o "$T/dec"
+          ls "$T/dec/smali/com/masterrom/sdstorage"
+
+      - name: Replace smali and commit
+        run: |
+          T="$RUNNER_TEMP/t"; DST="$SD/smali/com/masterrom/sdstorage"
+          rm -f "$DST"/SdStorageModeActivity*.smali "$DST"/SdAnimView*.smali "$DST"/SdGlassBackground*.smali "$DST"/SdGlyphView*.smali
+          cp "$T/dec/smali/com/masterrom/sdstorage/"*.smali "$DST/"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "$DST"
+          git status --short
+          git commit -m "sdstorage: rebuild smali from src" || { echo "smali unchanged"; exit 0; }
+          git push

@@ -1,6 +1,11 @@
 SdStorageModeActivity (MasterROM): portable <-> adoptable SD card switch inside SecSettings.
-Full screen One UI 8.5 "glass" page (Theme.Settings): SdGlassBackground, SdAnimView illustrations, bottom sheets; Secure Folder unlock step before moving files; ResetGuard for factory reset.
+Full screen page in the same One UI 8.5 glass design as the MasterROM Updater (colours, cards,
+collapsing large title, pill buttons); every step, confirmations included, is a full screen page.
+SdGlassBackground, SdAnimView illustrations, Secure Folder unlock step before moving files;
+ResetGuard for factory reset.
 src/  : Java source
 smali/: compiled form that the build copies into SecSettings (new smali_classesN dir).
-Rebuild: javac --release 8 -cp <framework + SecSettings classes> (stub for cube.Controllable, -implicit:none);
-         d2j-jar2dex ; baksmali (no lambdas: dx has no invokedynamic).
+Rebuild: run the "SD storage page (Java -> smali)" workflow (.github/workflows/sdstorage.yml).
+         It compiles SdStorageModeActivity, SdAnimView, SdGlassBackground and SdGlyphView against
+         a framework jar with hidden APIs (javac -> d8 -> apktool) and commits the smali.
+         ResetGuard and SdStoragePreferenceController need SecSettings classes and are not rebuilt.

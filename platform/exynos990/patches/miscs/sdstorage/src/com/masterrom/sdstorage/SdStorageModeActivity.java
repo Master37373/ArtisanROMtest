@@ -45,6 +45,7 @@ import android.view.animation.PathInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -57,13 +58,13 @@ import android.window.OnBackInvokedDispatcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 /**
  * MasterROM: switch the microSD card between portable storage and adoptable (internal,
- * encrypted) storage. Full screen page inside SecSettings (system uid) in a One UI 8.5
- * "glass" look: drifting colour background, translucent cards, bottom sheets with a blurred
- * backdrop and illustrations (SdAnimView) that explain every step. Built in code, so no
- * extra resources are needed.
+ * encrypted) storage. Full screen page inside SecSettings (system uid) in the same One UI 8.5
+ * "glass" design as the MasterROM Updater: drifting colour blobs, translucent cards, a large
+ * title that shrinks while scrolling (no toolbar), gradient / tinted pill buttons and
+ * illustrations (SdAnimView) that explain every step. Every step, confirmations included,
+ * is a full screen page. Built in code, so no extra resources are needed.
  */
 public class SdStorageModeActivity extends Activity {
     private static final String TAG = "MasterROMSdStorage";
@@ -79,28 +80,31 @@ public class SdStorageModeActivity extends Activity {
     private boolean mDe;
     private boolean mNight;
 
-    // colours
-    private int mBase, mText, mSubText, mAccent, mAccent2, mOnAccent;
-    private int mGlass, mGlassStroke, mGlassHi, mSheetBg, mScrim, mDivider;
+    // colours (identical to the updater's LightGlass / DarkGlass)
+    private int mBase, mText, mSubText, mAccent, mAccent2, mViolet, mOnAccent;
+    private int mGlass, mGlassStroke, mGlassHi, mDivider, mChipBg, mChipText, mError;
+    private Typeface mFont;
 
     // views
     private FrameLayout mRoot;
     private LinearLayout mFrame;
+    private LinearLayout mHeader;
     private LinearLayout mContent;
     private LinearLayout mBottom;
     private ScrollView mScroll;
-    private ImageButton mBack;
-    private TextView mBarTitle;
-    private TextView mBigTitle;
+    private View mBack;
+    private TextView mTitle;
     private TextView mWorkText;
-    private FrameLayout mSheetLayer;
-    private LinearLayout mSheet;
-    private View mScrim2;
+
+    // collapsing title: 0 = large, 1 = small
+    private float mCollapse;
+    private boolean mCollapsed;
+    private ValueAnimator mCollapseAnim;
 
     private boolean mBusy;
     private boolean mOnMain;
-    private boolean mSheetShown;
-    private Runnable mSheetCancel;
+    private boolean mSheetShown;      // a full screen confirmation page is shown
+    private Runnable mSheetCancel;    // runs when that confirmation is cancelled
     private int mPageId;
     private OnBackInvokedCallback mBackCb;
     private volatile VolumeInfo mNewPrivate;
@@ -113,6 +117,7 @@ public class SdStorageModeActivity extends Activity {
 
     private final PathInterpolator mEase = new PathInterpolator(0.2f, 0f, 0f, 1f);
     private final PathInterpolator mEmph = new PathInterpolator(0.05f, 0.7f, 0.1f, 1f);
+    private final PathInterpolator mSpring = new PathInterpolator(0.34f, 1.25f, 0.64f, 1f);
 
     private final StorageEventListener mListener = new StorageEventListener() {
         @Override public void onVolumeStateChanged(VolumeInfo vol, int oldState, int newState) { refreshMain(); }
@@ -153,7 +158,7 @@ public class SdStorageModeActivity extends Activity {
     private boolean handleBack() {
         if (mBusy) return true;
         if (mSheetShown) {
-            hideSheet(null);
+            cancelSheet();
             return true;
         }
         return false;
@@ -169,48 +174,54 @@ public class SdStorageModeActivity extends Activity {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v, getResources().getDisplayMetrics()));
     }
 
-    private int resColor(String name, int fallback) {
-        int id = getResources().getIdentifier(name, "color", getPackageName());
-        if (id == 0) return fallback;
-        try { return getColor(id); } catch (Exception e) { return fallback; }
+    private static int withAlpha(int color, int alpha) {
+        return (color & 0x00FFFFFF) | (Math.max(0, Math.min(255, alpha)) << 24);
     }
 
-    private static int withAlpha(int color, int alpha) {
-        return (color & 0x00FFFFFF) | (alpha << 24);
+    private static int alphaF(int color, float a) {
+        return withAlpha(color, Math.round(255f * a));
+    }
+
+    /** One UI system font ("sec", follows the font picked in the display settings) */
+    private Typeface font(int weight) {
+        return Typeface.create(mFont, weight, false);
     }
 
     private void loadColors() {
-        mAccent = resColor(mNight ? "sesl_primary_color_dark" : "sesl_primary_color_light",
-                mNight ? 0xFF3E91FF : 0xFF0381FE);
-        float[] hsv = new float[3];
-        Color.colorToHSV(mAccent, hsv);
-        hsv[0] = (hsv[0] + 38f) % 360f;
-        mAccent2 = Color.HSVToColor(hsv);
+        mFont = Typeface.create("sec", Typeface.NORMAL);
         mOnAccent = 0xFFFFFFFF;
         if (mNight) {
-            mBase = 0xFF050507;
-            mText = 0xFFF5F5F7;
-            mSubText = 0xFFA9ABB3;
-            mGlass = 0x1FFFFFFF;
-            mGlassStroke = 0x29FFFFFF;
+            mBase = 0xFF07080C;
+            mText = 0xFFF4F5F7;
+            mSubText = 0xFFB3B7C0;
+            mAccent = 0xFF3E91FF;
+            mAccent2 = 0xFF2ED3C6;
+            mViolet = 0xFF7B6CFF;
+            mGlass = 0x12FFFFFF;
+            mGlassStroke = 0x21FFFFFF;
             mGlassHi = 0x14FFFFFF;
-            mSheetBg = 0xEB1C1C20;
-            mScrim = 0x80000000;
-            mDivider = 0x1FFFFFFF;
+            mDivider = 0x14FFFFFF;
+            mChipBg = 0x2E3E91FF;
+            mChipText = 0xFF9CC8FF;
+            mError = 0xFFFF6B6F;
         } else {
-            mBase = 0xFFF2F3F7;
+            mBase = 0xFFF2F4F8;
             mText = 0xFF101114;
-            mSubText = 0xFF5E6168;
-            mGlass = 0xB3FFFFFF;
-            mGlassStroke = 0xE6FFFFFF;
+            mSubText = 0xFF4A4E57;
+            mAccent = 0xFF0A72E6;
+            mAccent2 = 0xFF14B5C9;
+            mViolet = 0xFF5B6CFF;
+            mGlass = 0xA8FFFFFF;
+            mGlassStroke = 0xEBFFFFFF;
             mGlassHi = 0x80FFFFFF;
-            mSheetBg = 0xF2FFFFFF;
-            mScrim = 0x52000000;
-            mDivider = 0x14000000;
+            mDivider = 0x12000000;
+            mChipBg = 0x1C0A72E6;
+            mChipText = 0xFF0A66D1;
+            mError = 0xFFD93A3F;
         }
     }
 
-    /** translucent glass surface with a hairline border and a soft top highlight */
+    /** translucent glass card: hairline border and a soft highlight on the top 56 dp */
     private Drawable glass(int fill, float radiusDp) {
         GradientDrawable body = new GradientDrawable();
         body.setColor(fill);
@@ -218,9 +229,10 @@ public class SdStorageModeActivity extends Activity {
         body.setStroke(Math.max(1, dp(0.8f)), mGlassStroke);
         GradientDrawable hi = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[] { mGlassHi, withAlpha(mGlassHi, 0) });
-        hi.setCornerRadius(dp(radiusDp));
+        hi.setCornerRadii(new float[] { dp(radiusDp), dp(radiusDp), dp(radiusDp), dp(radiusDp), 0, 0, 0, 0 });
         LayerDrawable ld = new LayerDrawable(new Drawable[] { body, hi });
-        ld.setLayerInsetBottom(1, dp(40));
+        ld.setLayerHeight(1, dp(56));
+        ld.setLayerGravity(1, Gravity.TOP | Gravity.FILL_HORIZONTAL);
         return ld;
     }
 
@@ -231,17 +243,17 @@ public class SdStorageModeActivity extends Activity {
         return g;
     }
 
-    /** One UI press feedback: shrink a little while touched */
+    /** One UI press feedback: shrink while touched, spring back */
     private void addPress(final View v) {
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override public boolean onTouch(View view, MotionEvent e) {
                 switch (e.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
-                        view.animate().scaleX(0.96f).scaleY(0.96f).setDuration(120).setInterpolator(mEase).start();
+                        view.animate().scaleX(0.96f).scaleY(0.96f).setDuration(110).setInterpolator(mEase).start();
                         break;
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
-                        view.animate().scaleX(1f).scaleY(1f).setDuration(260).setInterpolator(mEmph).start();
+                        view.animate().scaleX(1f).scaleY(1f).setDuration(320).setInterpolator(mSpring).start();
                         break;
                     default: break;
                 }
@@ -259,45 +271,53 @@ public class SdStorageModeActivity extends Activity {
         } catch (Throwable ignored) { }
 
         mRoot = new FrameLayout(this);
+        float ba = mNight ? 1.1f : 1f;
         mRoot.addView(new SdGlassBackground(this, mBase,
-                withAlpha(mAccent, mNight ? 0x66 : 0x47),
-                withAlpha(mAccent2, mNight ? 0x4D : 0x3D),
-                withAlpha(0xFFB27CF5, mNight ? 0x47 : 0x33)),
+                alphaF(mAccent, 0.34f * ba), alphaF(mAccent2, 0.26f * ba), alphaF(mViolet, 0.22f * ba)),
                 new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         mFrame = new LinearLayout(this);
         mFrame.setOrientation(LinearLayout.VERTICAL);
         mRoot.addView(mFrame, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        // toolbar: navigate up + collapsed title
-        LinearLayout bar = new LinearLayout(this);
-        bar.setOrientation(LinearLayout.HORIZONTAL);
-        bar.setGravity(Gravity.CENTER_VERTICAL);
-        bar.setPadding(dp(4), 0, dp(16), 0);
-        mBack = new ImageButton(this);
+        // header: round glass back button + large title (shrinks when scrolled, no bar)
+        mHeader = new LinearLayout(this);
+        mHeader.setOrientation(LinearLayout.HORIZONTAL);
+        mHeader.setGravity(Gravity.CENTER_VERTICAL);
+        mHeader.setPadding(dp(14), 0, dp(14), 0);
+
+        FrameLayout back = new FrameLayout(this);
+        GradientDrawable backBg = pill(mNight ? 0x1AFFFFFF : 0xC7FFFFFF, 22);
+        backBg.setStroke(dp(1), mNight ? 0x24FFFFFF : 0x12000000);
+        back.setBackground(backBg);
+        ImageView arrow = new ImageView(this);
         int backId = getResources().getIdentifier("ic_arrow_back", "drawable", getPackageName());
-        Drawable back = null;
         if (backId != 0) {
-            try { back = getDrawable(backId).mutate(); } catch (Exception ignored) { }
+            try {
+                Drawable d = getDrawable(backId).mutate();
+                d.setTint(mText);
+                arrow.setImageDrawable(d);
+            } catch (Exception ignored) { }
         }
-        if (back != null) {
-            back.setTint(mText);
-            mBack.setImageDrawable(back);
-        }
-        mBack.setBackground(new RippleDrawable(ColorStateList.valueOf(withAlpha(mText, 0x22)), null, pill(0xFFFFFFFF, 24)));
-        mBack.setContentDescription(t("Zurück", "Navigate up"));
-        mBack.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { if (!handleBack()) finish(); } });
-        bar.addView(mBack, new LinearLayout.LayoutParams(dp(48), dp(48)));
-        mBarTitle = new TextView(this);
-        mBarTitle.setTextColor(mText);
-        mBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19);
-        mBarTitle.setTypeface(Typeface.create(Typeface.DEFAULT, 600, false));
-        mBarTitle.setSingleLine(true);
-        mBarTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
-        mBarTitle.setAlpha(0f);
-        mBarTitle.setPadding(dp(6), 0, 0, 0);
-        bar.addView(mBarTitle, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-        mFrame.addView(bar, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
+        back.addView(arrow, new FrameLayout.LayoutParams(dp(24), dp(24), Gravity.CENTER));
+        back.setContentDescription(t("Zurück", "Navigate up"));
+        back.setClickable(true);
+        back.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { if (!handleBack()) finish(); } });
+        addPress(back);
+        mBack = back;
+        mHeader.addView(back, new LinearLayout.LayoutParams(dp(44), dp(44)));
+
+        mTitle = new TextView(this);
+        mTitle.setTextColor(mText);
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
+        mTitle.setTypeface(font(600));
+        mTitle.setSingleLine(true);
+        mTitle.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        mTitle.setPivotX(0f);
+        LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        tlp.leftMargin = dp(12);
+        mHeader.addView(mTitle, tlp);
+        mFrame.addView(mHeader, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(84)));
 
         mScroll = new ScrollView(this);
         mScroll.setFillViewport(true);
@@ -306,7 +326,7 @@ public class SdStorageModeActivity extends Activity {
         mScroll.setClipToPadding(false);
         mContent = new LinearLayout(this);
         mContent.setOrientation(LinearLayout.VERTICAL);
-        mContent.setPadding(dp(12), 0, dp(12), dp(20));
+        mContent.setPadding(dp(14), dp(2), dp(14), dp(24));
         mScroll.addView(mContent, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mScroll.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override public void onScrollChange(View v, int x, int y, int ox, int oy) { onScrolled(y); }
@@ -316,63 +336,66 @@ public class SdStorageModeActivity extends Activity {
         mBottom = new LinearLayout(this);
         mBottom.setOrientation(LinearLayout.HORIZONTAL);
         mBottom.setGravity(Gravity.CENTER);
-        mBottom.setPadding(dp(20), dp(10), dp(20), dp(16));
+        mBottom.setPadding(dp(14), dp(10), dp(14), dp(16));
         mFrame.addView(mBottom, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        // bottom sheet layer
-        mSheetLayer = new FrameLayout(this);
-        mSheetLayer.setVisibility(View.GONE);
-        mScrim2 = new View(this);
-        mScrim2.setBackgroundColor(mScrim);
-        mScrim2.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { hideSheet(null); } });
-        mSheetLayer.addView(mScrim2, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mSheet = new LinearLayout(this);
-        mSheet.setOrientation(LinearLayout.VERTICAL);
-        mSheet.setClickable(true);
-        mSheet.setBackground(glass(mSheetBg, 32));
-        mSheet.setPadding(dp(24), dp(14), dp(24), dp(18));
-        FrameLayout.LayoutParams slp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
-        slp.setMargins(dp(10), 0, dp(10), dp(10));
-        mSheetLayer.addView(mSheet, slp);
-        mRoot.addView(mSheetLayer, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         mRoot.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
             @Override public WindowInsets onApplyWindowInsets(View v, WindowInsets in) {
                 Insets s = in.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
                 mFrame.setPadding(s.left, s.top, s.right, s.bottom);
-                mSheetLayer.setPadding(s.left, s.top, s.right, s.bottom);
                 return WindowInsets.CONSUMED;
             }
         });
         setContentView(mRoot);
     }
 
+    /** Title collapses as soon as the content is scrolled (> 8 dp), like the updater. */
     private void onScrolled(int y) {
-        float p = Math.max(0f, Math.min(1f, (y - dp(24)) / (float) dp(48)));
-        mBarTitle.setAlpha(p);
-        if (mBigTitle != null) {
-            mBigTitle.setAlpha(1f - p);
-            mBigTitle.setTranslationY(y * 0.35f);
-        }
+        boolean collapsed = y > dp(8);
+        if (collapsed == mCollapsed) return;
+        mCollapsed = collapsed;
+        animateCollapse(collapsed ? 1f : 0f);
     }
 
-    /** Starts a new page: clears content and buttons, adds the big One UI title. */
+    private void animateCollapse(float to) {
+        if (mCollapseAnim != null) mCollapseAnim.cancel();
+        mCollapseAnim = ValueAnimator.ofFloat(mCollapse, to);
+        mCollapseAnim.setDuration(380);
+        mCollapseAnim.setInterpolator(mSpring);
+        mCollapseAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override public void onAnimationUpdate(ValueAnimator a) { applyCollapse((Float) a.getAnimatedValue()); }
+        });
+        mCollapseAnim.start();
+    }
+
+    private void applyCollapse(float p) {
+        mCollapse = p;
+        ViewGroup.LayoutParams lp = mHeader.getLayoutParams();
+        lp.height = Math.round(dp(84) + (dp(56) - dp(84)) * p);
+        mHeader.setLayoutParams(lp);
+        float s = 1f - 0.38f * p;
+        mTitle.setPivotY(mTitle.getHeight() / 2f);
+        mTitle.setScaleX(s);
+        mTitle.setScaleY(s);
+    }
+
+    /** Starts a new page: clears content and buttons, sets the large title. */
     private void newPage(String title) {
         mPageId++;
+        mSheetShown = false;
+        mSheetCancel = null;
+        updateBackCallback();
         mContent.removeAllViews();
         mBottom.removeAllViews();
         mBottom.setVisibility(View.GONE);
-        mBarTitle.setText(title);
-        mBarTitle.setAlpha(0f);
-        mBigTitle = new TextView(this);
-        mBigTitle.setText(title);
-        mBigTitle.setTextColor(mText);
-        mBigTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32);
-        mBigTitle.setTypeface(Typeface.create(Typeface.DEFAULT, 500, false));
-        mBigTitle.setLineSpacing(0, 1.04f);
-        mBigTitle.setPadding(dp(16), dp(30), dp(16), dp(30));
-        mContent.addView(mBigTitle, matchWrap());
+        mTitle.setText(title);
         mScroll.scrollTo(0, 0);
+        mCollapsed = false;
+        if (mCollapseAnim != null) mCollapseAnim.cancel();
+        applyCollapse(0f);
+        mTitle.setAlpha(0f);
+        mTitle.setTranslationY(dp(8));
+        mTitle.animate().alpha(1f).translationY(0f).setDuration(360).setInterpolator(mEmph).start();
     }
 
     /** One UI enter animation for a freshly built page: cards rise and fade in one after another. */
@@ -397,13 +420,14 @@ public class SdStorageModeActivity extends Activity {
         return new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    /** GlassCard: radius 28 dp, padding 22 / 20 dp, 14 dp between cards */
     private LinearLayout card() {
         LinearLayout c = new LinearLayout(this);
         c.setOrientation(LinearLayout.VERTICAL);
         c.setBackground(glass(mGlass, 28));
-        c.setPadding(dp(22), dp(20), dp(22), dp(22));
+        c.setPadding(dp(22), dp(20), dp(22), dp(20));
         LinearLayout.LayoutParams lp = matchWrap();
-        lp.bottomMargin = dp(12);
+        lp.bottomMargin = dp(14);
         mContent.addView(c, lp);
         return c;
     }
@@ -412,7 +436,7 @@ public class SdStorageModeActivity extends Activity {
         SdAnimView v = new SdAnimView(this, mText, mAccent, mOnAccent);
         v.setMode(mode);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp));
-        lp.bottomMargin = dp(10);
+        lp.bottomMargin = dp(12);
         parent.addView(v, lp);
         return v;
     }
@@ -422,7 +446,7 @@ public class SdStorageModeActivity extends Activity {
         v.setText(s);
         v.setTextColor(mText);
         v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        v.setTypeface(Typeface.create(Typeface.DEFAULT, 600, false));
+        v.setTypeface(font(700));
         LinearLayout.LayoutParams lp = matchWrap();
         lp.bottomMargin = dp(8);
         parent.addView(v, lp);
@@ -434,22 +458,24 @@ public class SdStorageModeActivity extends Activity {
         v.setText(s);
         v.setTextColor(mSubText);
         v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        v.setLineSpacing(dp(3), 1f);
+        v.setTypeface(font(400));
+        v.setLineSpacing(dp(4), 1f);
         parent.addView(v, matchWrap());
         return v;
     }
 
+    /** SectionLabel: 14 sp bold, sub text colour, indented like the card content */
     private void sectionLabel(String s) {
         TextView v = new TextView(this);
         v.setText(s);
         v.setTextColor(mSubText);
         v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        v.setTypeface(Typeface.create(Typeface.DEFAULT, 600, false));
+        v.setTypeface(font(700));
         v.setPadding(dp(22), dp(10), dp(22), dp(8));
         mContent.addView(v, matchWrap());
     }
 
-    /** row of small glass chips that sum up a mode */
+    /** Chip row: 13 sp bold, tinted pill */
     private void chips(LinearLayout parent, String... items) {
         HorizontalScrollView hs = new HorizontalScrollView(this);
         hs.setHorizontalScrollBarEnabled(false);
@@ -459,10 +485,10 @@ public class SdStorageModeActivity extends Activity {
         for (int i = 0; i < items.length; i++) {
             TextView c = new TextView(this);
             c.setText(items[i]);
-            c.setTextColor(mAccent);
+            c.setTextColor(mChipText);
             c.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
-            c.setTypeface(Typeface.create(Typeface.DEFAULT, 600, false));
-            c.setBackground(pill(withAlpha(mAccent, mNight ? 0x2E : 0x1F), 16));
+            c.setTypeface(font(700));
+            c.setBackground(pill(mChipBg, 16));
             c.setPadding(dp(12), dp(6), dp(12), dp(6));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             if (i > 0) lp.leftMargin = dp(8);
@@ -474,136 +500,131 @@ public class SdStorageModeActivity extends Activity {
         parent.addView(hs, lp);
     }
 
+    /** InfoRow: label left, value right, 1 dp divider above, 14 dp vertical padding */
     private void row(LinearLayout parent, String label, String value, boolean divider) {
-        if (divider) {
+        if (!divider) {
+            // a card that starts with a row is a list card: less padding, rows bring their own
+            parent.setPadding(dp(22), dp(6), dp(22), dp(6));
+        } else {
             View d = new View(this);
             d.setBackgroundColor(mDivider);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.max(1, dp(0.6f)));
-            lp.topMargin = dp(12);
-            lp.bottomMargin = dp(12);
-            parent.addView(d, lp);
+            parent.addView(d, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.max(1, dp(1))));
         }
         LinearLayout r = new LinearLayout(this);
         r.setOrientation(LinearLayout.HORIZONTAL);
         r.setGravity(Gravity.CENTER_VERTICAL);
+        r.setPadding(0, dp(14), 0, dp(14));
         TextView l = new TextView(this);
         l.setText(label);
         l.setTextColor(mText);
         l.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        l.setTypeface(font(400));
         r.addView(l, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
         TextView v = new TextView(this);
         v.setText(value);
         v.setTextColor(mSubText);
         v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        v.setTypeface(font(400));
         v.setGravity(Gravity.END);
         LinearLayout.LayoutParams vlp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.2f);
-        vlp.leftMargin = dp(12);
+        vlp.leftMargin = dp(16);
         r.addView(v, vlp);
         parent.addView(r, matchWrap());
     }
 
-    private Button button(LinearLayout parent, String text, boolean primary, boolean destructive, View.OnClickListener l) {
-        Button b = new Button(this);
+    /**
+     * Pill buttons like the updater: primary = gradient violet -> accent -> accent2 with white
+     * bold text; secondary = glass with a thin accent border; destructive = red tinted pill.
+     */
+    private TextView button(LinearLayout parent, String text, boolean primary, boolean destructive, View.OnClickListener l) {
+        TextView b = new TextView(this);
         b.setText(text);
-        b.setAllCaps(false);
+        b.setGravity(Gravity.CENTER);
         b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        b.setTypeface(Typeface.create(Typeface.DEFAULT, 600, false));
-        b.setStateListAnimator(null);
-        b.setElevation(0);
-        b.setMinHeight(dp(52));
-        b.setPadding(dp(18), 0, dp(18), 0);
-        int col = destructive ? SdAnimView.ERROR_COLOR : mAccent;
+        b.setMaxLines(2);
+        b.setPadding(dp(16), 0, dp(16), 0);
         Drawable bg;
-        if (primary) {
-            GradientDrawable g = new GradientDrawable(GradientDrawable.Orientation.TL_BR,
-                    destructive ? new int[] { col, col } : new int[] { mAccent, mAccent2 });
-            g.setCornerRadius(dp(26));
+        if (destructive) {
+            GradientDrawable g = pill(alphaF(mError, mNight ? 0.20f : 0.13f), 27);
+            g.setStroke(dp(1), alphaF(mError, 0.45f));
+            bg = g;
+            b.setTextColor(mError);
+            b.setTypeface(font(600));
+        } else if (primary) {
+            GradientDrawable g = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                    new int[] { mViolet, mAccent, mAccent2 });
+            g.setCornerRadius(dp(27));
             bg = g;
             b.setTextColor(mOnAccent);
+            b.setTypeface(font(700));
         } else {
-            bg = glass(mGlass, 26);
-            b.setTextColor(col);
+            GradientDrawable g = pill(mGlass, 27);
+            g.setStroke(dp(1), alphaF(mAccent, 0.28f));
+            bg = g;
+            b.setTextColor(mChipText);
+            b.setTypeface(font(600));
         }
-        b.setBackground(new RippleDrawable(ColorStateList.valueOf(primary ? 0x33FFFFFF : withAlpha(col, 0x2A)), bg, pill(0xFFFFFFFF, 26)));
+        b.setBackground(bg);
+        b.setClickable(true);
+        b.setFocusable(true);
         b.setOnClickListener(l);
         addPress(b);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(52), 1f);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(54), 1f);
         if (parent.getChildCount() > 0) lp.leftMargin = dp(12);
         parent.addView(b, lp);
         if (parent == mBottom) mBottom.setVisibility(View.VISIBLE);
         return b;
     }
 
-    // ---- bottom sheet ------------------------------------------------------------
+    // ---- confirmation (full screen page) ------------------------------------------
 
+    /**
+     * Asks before a step that changes the card. Shown as its own full screen page (title,
+     * illustration, explanation, buttons at the bottom) instead of a bottom sheet.
+     * Back / "Cancel" runs mSheetCancel if one was set right after this call, otherwise
+     * returns to the overview.
+     */
     private void showSheet(String title, String message, int animMode, String negText, String posText,
                            boolean destructive, final Runnable onPos) {
-        mSheet.removeAllViews();
-        View handle = new View(this);
-        handle.setBackground(pill(withAlpha(mText, 0x33), 3));
-        LinearLayout.LayoutParams hlp = new LinearLayout.LayoutParams(dp(36), dp(5));
-        hlp.gravity = Gravity.CENTER_HORIZONTAL;
-        hlp.bottomMargin = dp(14);
-        mSheet.addView(handle, hlp);
-        if (animMode >= 0) anim(mSheet, animMode, 120);
-        headline(mSheet, title);
-        TextView m = body(mSheet, message);
-        m.setPadding(0, 0, 0, dp(20));
-        LinearLayout btns = new LinearLayout(this);
-        btns.setOrientation(LinearLayout.HORIZONTAL);
-        mSheet.addView(btns, matchWrap());
-        button(btns, negText, false, false, new View.OnClickListener() {
-            @Override public void onClick(View v) { hideSheet(null); }
+        mOnMain = false;
+        newPage(t("Bestätigen", "Confirm"));
+        LinearLayout c = card();
+        anim(c, animMode >= 0 ? animMode : SdAnimView.MODE_TO_INTERNAL, 170);
+        headline(c, title);
+        body(c, message);
+        if (destructive) {
+            LinearLayout w = card();
+            TextView note = body(w, t("Dieser Schritt lässt sich nicht rückgängig machen.",
+                    "This step cannot be undone."));
+            note.setTextColor(mError);
+            note.setTypeface(font(600));
+        }
+        button(mBottom, negText, false, false, new View.OnClickListener() {
+            @Override public void onClick(View v) { cancelSheet(); }
         });
-        button(btns, posText, true, destructive, new View.OnClickListener() {
-            @Override public void onClick(View v) { hideSheet(onPos); }
+        button(mBottom, posText, true, destructive, new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (!mSheetShown) return;
+                mSheetShown = false;
+                mSheetCancel = null;
+                updateBackCallback();
+                onPos.run();
+            }
         });
-
         mSheetShown = true;
         mSheetCancel = null;
         updateBackCallback();
-        mSheetLayer.setVisibility(View.VISIBLE);
-        mScrim2.setAlpha(0f);
-        mScrim2.animate().alpha(1f).setDuration(280).setInterpolator(mEase).start();
-        mSheet.setTranslationY(dp(420));
-        mSheet.animate().translationY(0f).setDuration(460).setInterpolator(mEmph).start();
-        animateBlur(0f, 22f);
+        animatePage();
     }
 
-    private void hideSheet(Runnable onPos) {
+    private void cancelSheet() {
         if (!mSheetShown) return;
+        Runnable after = mSheetCancel;
         mSheetShown = false;
-        final Runnable after = onPos != null ? onPos : mSheetCancel;
         mSheetCancel = null;
         updateBackCallback();
-        mScrim2.animate().alpha(0f).setDuration(220).setInterpolator(mEase).start();
-        mSheet.animate().translationY(mSheet.getHeight() + dp(40)).setDuration(260).setInterpolator(mEase)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override public void onAnimationEnd(Animator a) {
-                        mSheet.animate().setListener(null);
-                        mSheetLayer.setVisibility(View.GONE);
-                        if (after != null && !isFinishing() && !isDestroyed()) after.run();
-                    }
-                }).start();
-        animateBlur(22f, 0f);
-    }
-
-    /** blurs the page behind the sheet (frosted glass), Android 12+ */
-    private void animateBlur(float from, float to) {
-        if (Build.VERSION.SDK_INT < 31) return;
-        ValueAnimator va = ValueAnimator.ofFloat(from, to);
-        va.setDuration(300);
-        va.setInterpolator(mEase);
-        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override public void onAnimationUpdate(ValueAnimator a) {
-                float r = (Float) a.getAnimatedValue();
-                try {
-                    mFrame.setRenderEffect(r < 0.5f ? null
-                            : RenderEffect.createBlurEffect(dp(r), dp(r), Shader.TileMode.CLAMP));
-                } catch (Throwable ignored) { }
-            }
-        });
-        va.start();
+        if (isFinishing() || isDestroyed()) return;
+        if (after != null) after.run(); else showMain();
     }
 
     private void updateBackCallback() {
@@ -678,7 +699,7 @@ public class SdStorageModeActivity extends Activity {
         final String size = disk.size > 0 ? Formatter.formatFileSize(this, disk.size) : "–";
 
         if (priv != null) {
-            newPage(t("SD-Karte wieder tragbar machen", "Make SD card portable again"));
+            newPage(t("SD-Karte", "SD card"));
             LinearLayout c = card();
             anim(c, SdAnimView.MODE_TO_PORTABLE, 180);
             headline(c, t("Tragbarer Speicher", "Portable storage"));
@@ -719,7 +740,7 @@ public class SdStorageModeActivity extends Activity {
                 @Override public void onClick(View v) { toPortable(disk, priv); }
             });
         } else {
-            newPage(t("SD-Karte als internen Speicher nutzen", "Use SD card as internal storage"));
+            newPage(t("SD-Karte", "SD card"));
             LinearLayout c = card();
             anim(c, SdAnimView.MODE_TO_INTERNAL, 180);
             headline(c, t("Interner, verschlüsselter Speicher", "Encrypted internal storage"));
@@ -843,7 +864,7 @@ public class SdStorageModeActivity extends Activity {
         }
         mOnMain = false;
         final UserInfo first = locked.get(0);
-        newPage(t("Sicheren Ordner entsperren", "Unlock Secure Folder"));
+        newPage(t("Entsperren", "Unlock"));
         LinearLayout c = card();
         anim(c, SdAnimView.MODE_SECURE, 180);
         headline(c, t("Kurz entsperren, dann geht es weiter", "Unlock briefly, then we continue"));
@@ -942,7 +963,7 @@ public class SdStorageModeActivity extends Activity {
                         "The card is formatted and encrypted. All data on it will be permanently erased."),
                 -1, t("Abbrechen", "Cancel"), t("Löschen und einrichten", "Erase and set up"), true,
                 new Runnable() { @Override public void run() {
-                    runWork(t("SD-Karte wird eingerichtet", "Setting up SD card"), new Work() {
+                    runWork(t("Einrichten", "Setting up"), new Work() {
                         @Override public String run() throws Exception {
                             setProgressText(t("Karte wird sicher ausgehängt …", "Safely unmounting the card …"));
                             DiskInfo d = mSm.findDiskById(diskId);
@@ -979,7 +1000,7 @@ public class SdStorageModeActivity extends Activity {
         mOnMain = false;
         final VolumeInfo target = mNewPrivate;
         DiskInfo disk = findSdDisk();
-        newPage(t("SD-Karte ist bereit", "SD card is ready"));
+        newPage(t("Bereit", "Ready"));
         LinearLayout c = card();
         anim(c, SdAnimView.MODE_DONE, 170);
         headline(c, t("Interner Speicher eingerichtet", "Internal storage set up"));
@@ -1045,7 +1066,7 @@ public class SdStorageModeActivity extends Activity {
     }
 
     private void moveFiles(final VolumeInfo target, final boolean toSd) {
-        runWork(toSd ? t("Dateien werden verschoben", "Moving files") : t("Dateien werden zurückgeholt", "Moving files back"),
+        runWork(t("Verschieben", "Moving files"),
                 new Work() {
                     @Override public String run() throws Exception {
                         if (target == null) return t("Speicher nicht gefunden.", "Storage not found.");
@@ -1095,7 +1116,7 @@ public class SdStorageModeActivity extends Activity {
                 + "It is no longer encrypted and can be read on other devices."));
 
         final Runnable doIt = new Runnable() { @Override public void run() {
-            runWork(t("SD-Karte wird tragbar gemacht", "Making SD card portable"), new Work() { @Override public String run() throws Exception {
+            runWork(t("Tragbar machen", "Make portable"), new Work() { @Override public String run() throws Exception {
                 VolumeInfo internal = mSm.findVolumeById(VolumeInfo.ID_PRIVATE_INTERNAL);
                 if (internal == null) return t("Interner Speicher nicht gefunden.", "Internal storage not found.");
                 if (primaryOnSd) {
@@ -1252,10 +1273,10 @@ public class SdStorageModeActivity extends Activity {
 
     private void showResult(boolean ok, String message) {
         mOnMain = false;
-        newPage(ok ? t("Fertig", "Done") : t("Das hat nicht geklappt", "That didn't work"));
+        newPage(ok ? t("Fertig", "Done") : t("Fehler", "Error"));
         LinearLayout c = card();
         anim(c, ok ? SdAnimView.MODE_DONE : SdAnimView.MODE_ERROR, 170);
-        headline(c, ok ? t("Alles erledigt", "All done") : t("Fehler", "Error"));
+        headline(c, ok ? t("Alles erledigt", "All done") : t("Das hat nicht geklappt", "That didn't work"));
         body(c, message);
         if (ok) {
             button(mBottom, t("Zurück zur Übersicht", "Back to overview"), false, false, new View.OnClickListener() {
