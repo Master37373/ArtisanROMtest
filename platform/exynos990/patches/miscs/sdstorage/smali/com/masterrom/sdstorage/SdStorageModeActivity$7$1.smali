@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$7;)V
     .locals 0
 
-    .line 376
+    .line 360
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$7;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public run()V
     .locals 0
 
-    .line 376
+    .line 360
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$7;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;

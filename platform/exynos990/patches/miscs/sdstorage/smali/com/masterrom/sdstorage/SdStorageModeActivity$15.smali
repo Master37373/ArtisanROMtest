@@ -34,7 +34,7 @@
         }
     .end annotation
 
-    .line 783
+    .line 790
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$onSd:Z
@@ -51,16 +51,16 @@
 .method public run()V
     .locals 2
 
-    .line 783
+    .line 790
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$onSd:Z
 
-    if-nez v0, :cond_0
+    if-eqz v0, :cond_0
 
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$15;->val$priv:Landroid/os/storage/VolumeInfo;
 
-    const/4 v1, 0x1
+    const/4 v1, 0x0
 
     invoke-static {v0, p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2000(Lcom/masterrom/sdstorage/SdStorageModeActivity;Landroid/os/storage/VolumeInfo;Z)V
 

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 251
+    .line 252
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$3;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
     .locals 2
 
-    .line 253
+    .line 254
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getActionMasked()I
 
     move-result p2
@@ -55,7 +55,7 @@
 
     goto :goto_0
 
-    .line 259
+    .line 260
     :cond_0
     invoke-virtual {p1}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
 
@@ -91,7 +91,7 @@
 
     goto :goto_0
 
-    .line 255
+    .line 256
     :cond_1
     invoke-virtual {p1}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
 

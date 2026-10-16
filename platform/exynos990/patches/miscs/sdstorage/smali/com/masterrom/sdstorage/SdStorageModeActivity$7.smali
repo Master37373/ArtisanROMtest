@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 373
+    .line 357
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -44,7 +44,7 @@
 
     if-eq p5, p9, :cond_0
 
-    .line 375
+    .line 359
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$1000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/LinearLayout;
@@ -53,7 +53,7 @@
 
     invoke-virtual {p1, p5}, Landroid/widget/LinearLayout;->setMinimumHeight(I)V
 
-    .line 376
+    .line 360
     :cond_0
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$7;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 

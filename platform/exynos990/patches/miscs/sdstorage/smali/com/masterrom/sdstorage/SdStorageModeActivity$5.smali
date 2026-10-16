@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 353
+    .line 337
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,12 +38,12 @@
 .method public onScrollChange(Landroid/view/View;IIII)V
     .locals 0
 
-    .line 355
+    .line 339
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1, p3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$500(Lcom/masterrom/sdstorage/SdStorageModeActivity;I)V
 
-    .line 356
+    .line 340
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/ScrollView;
@@ -58,7 +58,7 @@
 
     invoke-virtual {p1, p2}, Landroid/widget/ScrollView;->removeCallbacks(Ljava/lang/Runnable;)Z
 
-    .line 357
+    .line 341
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/ScrollView;
