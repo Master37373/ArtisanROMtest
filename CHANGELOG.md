@@ -6,6 +6,7 @@
 - Preinstalled again: Gaming Hub, Samsung Kids, Samsung Language Core, Smart Touch Call
 - Play Integrity: a freshly set up phone is certified right away
 - Battery protection in the battery settings
+- Removed: unlimited Google Photos storage
 
 # 1.0.1
 - Codename Opus

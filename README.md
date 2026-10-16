@@ -101,7 +101,6 @@ Everything below comes from ArtisanROM and UN1CA.
 - Allow installing apps with old targetSdk toggle
 - Allow secure screenshot toggle
 - Screenshot/screen recording detection toggle
-- Unlimited backup storage on Google Photos
 - Games FPS unlock toggle
 
 \* Requires a valid keybox
