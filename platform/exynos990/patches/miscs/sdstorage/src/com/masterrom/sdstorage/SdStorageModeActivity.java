@@ -95,6 +95,8 @@ public class SdStorageModeActivity extends Activity {
     private View mBack;
     private TextView mTitle;
     private TextView mWorkText;
+    private TextView mWorkPercent;   // "42 %" while files or apps are moved
+    private ProgressBar mWorkBar;
 
     // One UI app bar: mExpand is the empty expanded area at the top of the scrolling page,
     // mHeader the pinned 56dp bar with the back button; mTitle floats above both in mTop and
@@ -1241,8 +1243,9 @@ public class SdStorageModeActivity extends Activity {
         long deadline = System.currentTimeMillis() + 60L * 60L * 1000L;
         while (System.currentTimeMillis() < deadline) {
             int s = mPm.getMoveStatus(moveId);
-            if (s == MOVE_SUCCEEDED) return null;
+            if (s == MOVE_SUCCEEDED) { setProgressPercent(100); return null; }
             if (s < 0) return moveError(s);
+            setProgressPercent(s);   // 0..100 while the move runs
             Thread.sleep(500);
         }
         return t("Zeitüberschreitung beim Verschieben.", "Move timed out.");
@@ -1303,9 +1306,21 @@ public class SdStorageModeActivity extends Activity {
         LinearLayout c = card();
         anim(c, SdAnimView.MODE_WORKING, 190);
         mWorkText = headline(c, t("Bitte warten …", "Please wait …"));
+        // percentage, shown as soon as a move reports progress
+        mWorkPercent = new TextView(this);
+        mWorkPercent.setTextColor(mAccent);
+        mWorkPercent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 34);
+        mWorkPercent.setTypeface(font(700));
+        mWorkPercent.setFontFeatureSettings("tnum");
+        mWorkPercent.setVisibility(View.GONE);
+        c.addView(mWorkPercent, matchWrap());
         ProgressBar pb = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         pb.setIndeterminate(true);
+        pb.setMax(100);
         pb.setIndeterminateTintList(ColorStateList.valueOf(mAccent));
+        pb.setProgressTintList(ColorStateList.valueOf(mAccent));
+        pb.setProgressBackgroundTintList(ColorStateList.valueOf(mDivider));
+        mWorkBar = pb;
         LinearLayout.LayoutParams lp = matchWrap();
         lp.topMargin = dp(6);
         lp.bottomMargin = dp(12);
@@ -1369,7 +1384,29 @@ public class SdStorageModeActivity extends Activity {
         animatePage();
     }
 
+    /** Shows "n %" and a determinate bar; -1 goes back to the indeterminate bar. */
+    private void setProgressPercent(final int percent) {
+        mUi.post(new Runnable() { @Override public void run() {
+            if (mWorkPercent == null || mWorkBar == null || !mBusy || isDestroyed()) return;
+            if (percent < 0) {
+                mWorkPercent.setVisibility(View.GONE);
+                mWorkBar.setIndeterminate(true);
+                return;
+            }
+            int p = Math.min(100, percent);
+            if (mWorkPercent.getVisibility() != View.VISIBLE) {
+                mWorkPercent.setAlpha(0f);
+                mWorkPercent.setVisibility(View.VISIBLE);
+                mWorkPercent.animate().alpha(1f).setDuration(220).start();
+            }
+            mWorkPercent.setText(p + " %");
+            if (mWorkBar.isIndeterminate()) mWorkBar.setIndeterminate(false);
+            mWorkBar.setProgress(p, true);
+        } });
+    }
+
     private void setProgressText(final String text) {
+        setProgressPercent(-1);
         mUi.post(new Runnable() { @Override public void run() {
             if (mWorkText != null && mBusy && !isDestroyed()) {
                 mWorkText.animate().alpha(0f).setDuration(120).withEndAction(new Runnable() {
