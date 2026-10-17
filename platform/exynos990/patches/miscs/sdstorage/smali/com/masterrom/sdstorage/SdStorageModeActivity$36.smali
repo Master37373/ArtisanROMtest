@@ -24,13 +24,15 @@
 
 .field final synthetic val$okMsg:Ljava/lang/String;
 
+.field final synthetic val$rev:Z
+
 .field final synthetic val$title:Ljava/lang/String;
 
 .field final synthetic val$work:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
 
 
 # direct methods
-.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
+.method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;ZLjava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
     .locals 0
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -38,16 +40,18 @@
         }
     .end annotation
 
-    .line 1352
+    .line 1362
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$title:Ljava/lang/String;
+    iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$rev:Z
 
-    iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$work:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
+    iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$title:Ljava/lang/String;
 
-    iput-object p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$okMsg:Ljava/lang/String;
+    iput-object p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$work:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
 
-    iput-object p5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$next:Ljava/lang/Runnable;
+    iput-object p5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$okMsg:Ljava/lang/String;
+
+    iput-object p6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->val$next:Ljava/lang/Runnable;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -59,7 +63,7 @@
 .method public onClick(Landroid/view/View;)V
     .locals 1
 
-    .line 1354
+    .line 1364
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$36$1;

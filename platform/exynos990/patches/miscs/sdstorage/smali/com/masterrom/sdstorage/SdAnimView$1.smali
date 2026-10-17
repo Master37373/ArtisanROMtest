@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdAnimView;)V
     .locals 0
 
-    .line 134
+    .line 141
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onAnimationUpdate(Landroid/animation/ValueAnimator;)V
     .locals 1
 
-    .line 136
+    .line 143
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->getAnimatedValue()Ljava/lang/Object;
@@ -53,7 +53,7 @@
 
     invoke-static {v0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->access$002(Lcom/masterrom/sdstorage/SdAnimView;F)F
 
-    .line 137
+    .line 144
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView$1;->this$0:Lcom/masterrom/sdstorage/SdAnimView;
 
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdAnimView;->invalidate()V

@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
     .locals 0
 
-    .line 344
+    .line 347
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,7 +38,7 @@
 .method public onTouch(Landroid/view/View;Landroid/view/MotionEvent;)Z
     .locals 3
 
-    .line 346
+    .line 349
     invoke-virtual {p2}, Landroid/view/MotionEvent;->getActionMasked()I
 
     move-result p1
@@ -49,7 +49,7 @@
 
     if-nez p1, :cond_0
 
-    .line 347
+    .line 350
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$802(Lcom/masterrom/sdstorage/SdStorageModeActivity;Z)Z
@@ -67,13 +67,13 @@
 
     if-ne p1, p2, :cond_2
 
-    .line 349
+    .line 352
     :cond_1
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$802(Lcom/masterrom/sdstorage/SdStorageModeActivity;Z)Z
 
-    .line 350
+    .line 353
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/ScrollView;
@@ -88,7 +88,7 @@
 
     invoke-virtual {p1, p2}, Landroid/widget/ScrollView;->removeCallbacks(Ljava/lang/Runnable;)Z
 
-    .line 351
+    .line 354
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/ScrollView;

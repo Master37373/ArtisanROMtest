@@ -36,7 +36,7 @@
         }
     .end annotation
 
-    .line 871
+    .line 876
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->val$selected:Z
@@ -55,14 +55,14 @@
 .method public onClick(Landroid/view/View;)V
     .locals 2
 
-    .line 873
+    .line 878
     iget-boolean p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->val$selected:Z
 
     if-eqz p1, :cond_0
 
     return-void
 
-    .line 875
+    .line 880
     :cond_0
     new-instance p1, Landroid/animation/ArgbEvaluator;
 
@@ -98,20 +98,20 @@
 
     const-wide/16 v0, 0xdc
 
-    .line 876
+    .line 881
     invoke-virtual {p1, v0, v1}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 877
+    .line 882
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19$1;
 
     invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$19$1;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$19;)V
 
     invoke-virtual {p1, v0}, Landroid/animation/ValueAnimator;->addUpdateListener(Landroid/animation/ValueAnimator$AnimatorUpdateListener;)V
 
-    .line 880
+    .line 885
     invoke-virtual {p1}, Landroid/animation/ValueAnimator;->start()V
 
-    .line 881
+    .line 886
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;->val$onPick:Ljava/lang/Runnable;
 
     invoke-interface {p0}, Ljava/lang/Runnable;->run()V

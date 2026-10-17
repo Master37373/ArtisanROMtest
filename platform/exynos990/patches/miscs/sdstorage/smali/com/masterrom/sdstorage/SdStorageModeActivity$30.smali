@@ -40,7 +40,7 @@
         }
     .end annotation
 
-    .line 1173
+    .line 1180
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$primaryOnSd:Z
@@ -63,7 +63,36 @@
 .method public run()V
     .locals 5
 
-    .line 1174
+    .line 1181
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
+
+    iget-boolean v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$primaryOnSd:Z
+
+    if-nez v1, :cond_1
+
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->val$pkgs:Ljava/util/List;
+
+    invoke-interface {v1}, Ljava/util/List;->isEmpty()Z
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    goto :goto_0
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_1
+
+    :cond_1
+    :goto_0
+    const/4 v1, 0x1
+
+    :goto_1
+    invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4302(Lcom/masterrom/sdstorage/SdStorageModeActivity;Z)Z
+
+    .line 1182
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     const-string v1, "Tragbar machen"
@@ -84,14 +113,14 @@
 
     const-string v4, "The SD card is portable storage again \u2013 without encryption and readable on other devices."
 
-    .line 1200
+    .line 1208
     invoke-static {p0, v3, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$2900(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object p0
 
     const/4 v3, 0x0
 
-    .line 1174
+    .line 1182
     invoke-static {v0, v1, v2, p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3800(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
 
     return-void

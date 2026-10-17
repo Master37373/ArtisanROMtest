@@ -72,6 +72,8 @@
 
 .field private final mRect:Landroid/graphics/RectF;
 
+.field private mReverse:Z
+
 .field private final mShaderPaint:Landroid/graphics/Paint;
 
 .field private final mShadowShader:Landroid/graphics/RadialGradient;
@@ -91,7 +93,7 @@
 
     move/from16 v10, p3
 
-    .line 70
+    .line 72
     invoke-direct/range {p0 .. p1}, Landroid/view/View;-><init>(Landroid/content/Context;)V
 
     .line 45
@@ -216,29 +218,29 @@
     .line 65
     iput v11, v0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
 
-    .line 67
+    .line 69
     iput v9, v0, Lcom/masterrom/sdstorage/SdAnimView;->mA:F
 
-    .line 71
+    .line 73
     iput v1, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFg:I
 
-    .line 72
+    .line 74
     iput v10, v0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     move/from16 v6, p4
 
-    .line 73
+    .line 75
     iput v6, v0, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     const/4 v6, 0x3
 
-    .line 74
+    .line 76
     new-array v6, v6, [F
 
-    .line 75
+    .line 77
     invoke-static {v10, v6}, Landroid/graphics/Color;->colorToHSV(I[F)V
 
-    .line 76
+    .line 78
     aget v7, v6, v11
 
     const/high16 v12, 0x42180000    # 38.0f
@@ -251,7 +253,7 @@
 
     aput v7, v6, v11
 
-    .line 77
+    .line 79
     aget v7, v6, v3
 
     const v12, 0x3f666666    # 0.9f
@@ -264,44 +266,44 @@
 
     aput v7, v6, v3
 
-    .line 78
+    .line 80
     invoke-static {v6}, Landroid/graphics/Color;->HSVToColor([F)I
 
     move-result v12
 
     iput v12, v0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent2:I
 
-    .line 80
+    .line 82
     sget-object v3, Landroid/graphics/Paint$Style;->STROKE:Landroid/graphics/Paint$Style;
 
     invoke-virtual {v4, v3}, Landroid/graphics/Paint;->setStyle(Landroid/graphics/Paint$Style;)V
 
-    .line 81
+    .line 83
     sget-object v3, Landroid/graphics/Paint$Cap;->ROUND:Landroid/graphics/Paint$Cap;
 
     invoke-virtual {v4, v3}, Landroid/graphics/Paint;->setStrokeCap(Landroid/graphics/Paint$Cap;)V
 
-    .line 82
+    .line 84
     sget-object v3, Landroid/graphics/Paint$Join;->ROUND:Landroid/graphics/Paint$Join;
 
     invoke-virtual {v4, v3}, Landroid/graphics/Paint;->setStrokeJoin(Landroid/graphics/Paint$Join;)V
 
-    .line 83
+    .line 85
     sget-object v3, Landroid/graphics/Paint$Style;->FILL:Landroid/graphics/Paint$Style;
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setStyle(Landroid/graphics/Paint$Style;)V
 
-    .line 84
+    .line 86
     sget-object v2, Landroid/graphics/Paint$Style;->STROKE:Landroid/graphics/Paint$Style;
 
     invoke-virtual {v5, v2}, Landroid/graphics/Paint;->setStyle(Landroid/graphics/Paint$Style;)V
 
     const/high16 v2, 0x40000000    # 2.0f
 
-    .line 85
+    .line 87
     invoke-virtual {v5, v2}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 86
+    .line 88
     new-instance v2, Landroid/graphics/DashPathEffect;
 
     const/4 v3, 0x2
@@ -316,14 +318,14 @@
 
     const/high16 v2, -0x1000000
 
-    .line 87
+    .line 89
     invoke-static {v2}, Lcom/masterrom/sdstorage/SdAnimView;->glow(I)Landroid/graphics/RadialGradient;
 
     move-result-object v2
 
     iput-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mShadowShader:Landroid/graphics/RadialGradient;
 
-    .line 88
+    .line 90
     invoke-static/range {p3 .. p3}, Lcom/masterrom/sdstorage/SdAnimView;->glow(I)Landroid/graphics/RadialGradient;
 
     move-result-object v2
@@ -332,14 +334,14 @@
 
     const v2, -0x1ab7b3
 
-    .line 89
+    .line 91
     invoke-static {v2}, Lcom/masterrom/sdstorage/SdAnimView;->glow(I)Landroid/graphics/RadialGradient;
 
     move-result-object v2
 
     iput-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mErrorGlow:Landroid/graphics/RadialGradient;
 
-    .line 90
+    .line 92
     new-instance v13, Landroid/graphics/LinearGradient;
 
     const/high16 v6, 0x3f800000    # 1.0f
@@ -362,7 +364,7 @@
 
     iput-object v13, v0, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
-    .line 91
+    .line 93
     new-instance v2, Landroid/graphics/LinearGradient;
 
     const v3, 0xffffff
@@ -397,12 +399,12 @@
 
     const v2, -0xc22974
 
-    .line 93
+    .line 95
     filled-new-array {v10, v12, v1, v2}, [I
 
     move-result-object v1
 
-    .line 94
+    .line 96
     :goto_0
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPartCos:[F
 
@@ -412,7 +414,7 @@
 
     int-to-double v3, v11
 
-    .line 95
+    .line 97
     array-length v5, v2
 
     int-to-double v5, v5
@@ -433,7 +435,7 @@
 
     add-double/2addr v3, v5
 
-    .line 96
+    .line 98
     invoke-static {v3, v4}, Ljava/lang/Math;->cos(D)D
 
     move-result-wide v5
@@ -442,7 +444,7 @@
 
     aput v5, v2, v11
 
-    .line 97
+    .line 99
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPartSin:[F
 
     invoke-static {v3, v4}, Ljava/lang/Math;->sin(D)D
@@ -453,7 +455,7 @@
 
     aput v3, v2, v11
 
-    .line 98
+    .line 100
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPartDist:[F
 
     mul-int/lit8 v3, v11, 0x25
@@ -472,7 +474,7 @@
 
     aput v3, v2, v11
 
-    .line 99
+    .line 101
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPartColor:[I
 
     rem-int/lit8 v3, v11, 0x4
@@ -509,7 +511,7 @@
 .method private al(F)I
     .locals 0
 
-    .line 182
+    .line 189
     iget p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mA:F
 
     mul-float/2addr p1, p0
@@ -542,30 +544,30 @@
 
     move/from16 v9, p6
 
-    .line 474
+    .line 484
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v10
 
-    .line 475
+    .line 485
     invoke-virtual/range {p1 .. p3}, Landroid/graphics/Canvas;->translate(FF)V
 
     move/from16 v0, p4
 
-    .line 476
+    .line 486
     invoke-virtual {v8, v0}, Landroid/graphics/Canvas;->rotate(F)V
 
     move/from16 v0, p5
 
-    .line 477
+    .line 487
     invoke-virtual {v8, v0, v0}, Landroid/graphics/Canvas;->scale(FF)V
 
-    .line 478
+    .line 488
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     invoke-virtual {v0}, Landroid/graphics/Path;->reset()V
 
-    .line 479
+    .line 489
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v1, -0x3ee00000    # -10.0f
@@ -574,14 +576,14 @@
 
     invoke-virtual {v0, v1, v11}, Landroid/graphics/Path;->moveTo(FF)V
 
-    .line 480
+    .line 490
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v1, 0x41600000    # 14.0f
 
     invoke-virtual {v0, v1, v11}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 481
+    .line 491
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v2, -0x3e480000    # -23.0f
@@ -590,47 +592,47 @@
 
     invoke-virtual {v0, v3, v11, v3, v2}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 482
+    .line 492
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v2, 0x41b80000    # 23.0f
 
     invoke-virtual {v0, v3, v2}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 483
+    .line 493
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v4, 0x41d80000    # 27.0f
 
     invoke-virtual {v0, v3, v4, v1, v4}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 484
+    .line 494
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v1, -0x3ea00000    # -14.0f
 
     invoke-virtual {v0, v1, v4}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 485
+    .line 495
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v12, -0x3e700000    # -18.0f
 
     invoke-virtual {v0, v12, v4, v12, v2}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 486
+    .line 496
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     const/high16 v1, -0x3e680000    # -19.0f
 
     invoke-virtual {v0, v12, v1}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 487
+    .line 497
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     invoke-virtual {v0}, Landroid/graphics/Path;->close()V
 
-    .line 488
+    .line 498
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mAccentGlow:Landroid/graphics/RadialGradient;
 
     int-to-float v13, v9
@@ -655,14 +657,14 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawGlow(Landroid/graphics/Canvas;Landroid/graphics/RadialGradient;FFFF)V
 
-    .line 489
+    .line 499
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 490
+    .line 500
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42100000    # 36.0f
@@ -671,19 +673,19 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 491
+    .line 501
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, v12, v11}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 492
+    .line 502
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, v1}, Landroid/graphics/LinearGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 493
+    .line 503
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {p0, v13}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -692,28 +694,28 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 494
+    .line 504
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v8, v0, v1}, Landroid/graphics/Canvas;->drawPath(Landroid/graphics/Path;Landroid/graphics/Paint;)V
 
-    .line 495
+    .line 505
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 496
+    .line 506
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 497
+    .line 507
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     mul-int/lit16 v1, v9, 0xc8
@@ -745,7 +747,7 @@
 
     add-float/2addr v1, v2
 
-    .line 500
+    .line 510
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const v3, 0x3fcccccd    # 1.6f
@@ -760,7 +762,7 @@
 
     invoke-virtual {v2, v4, v5, v1, v3}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 501
+    .line 511
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -780,12 +782,12 @@
 
     if-lez v0, :cond_1
 
-    .line 504
+    .line 514
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v0
 
-    .line 505
+    .line 515
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mCardPath:Landroid/graphics/Path;
 
     invoke-virtual {v8, v1}, Landroid/graphics/Canvas;->clipPath(Landroid/graphics/Path;)Z
@@ -800,17 +802,17 @@
 
     const/high16 v2, 0x41a00000    # 20.0f
 
-    .line 507
+    .line 517
     invoke-virtual {v8, v2}, Landroid/graphics/Canvas;->rotate(F)V
 
-    .line 508
+    .line 518
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v3, -0x1
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 509
+    .line 519
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     mul-int/lit8 v3, v9, 0x5a
@@ -825,7 +827,7 @@
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 510
+    .line 520
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v3, 0x40c00000    # 6.0f
@@ -840,17 +842,17 @@
 
     invoke-virtual {v2, v4, v5, v1, v3}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 511
+    .line 521
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v8, v1, v2}, Landroid/graphics/Canvas;->drawRect(Landroid/graphics/RectF;Landroid/graphics/Paint;)V
 
-    .line 512
+    .line 522
     invoke-virtual {v8, v0}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
-    .line 514
+    .line 524
     :cond_1
     invoke-virtual {v8, v10}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
@@ -860,23 +862,23 @@
 .method private drawCheck(Landroid/graphics/Canvas;FFFFIF)V
     .locals 1
 
-    .line 622
+    .line 632
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v0
 
-    .line 623
+    .line 633
     invoke-virtual {p1, p2, p3}, Landroid/graphics/Canvas;->translate(FF)V
 
-    .line 624
+    .line 634
     invoke-virtual {p1, p4, p4}, Landroid/graphics/Canvas;->scale(FF)V
 
-    .line 625
+    .line 635
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {p2, p6}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 626
+    .line 636
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 p3, 0x437f0000    # 255.0f
@@ -887,7 +889,7 @@
 
     invoke-virtual {p2, p3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 627
+    .line 637
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {p2, p7}, Landroid/graphics/Paint;->setStrokeWidth(F)V
@@ -896,12 +898,12 @@
 
     mul-float/2addr p2, p5
 
-    .line 629
+    .line 639
     iget-object p3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {p3}, Landroid/graphics/Path;->reset()V
 
-    .line 630
+    .line 640
     iget-object p3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p4, -0x3e500000    # -22.0f
@@ -918,7 +920,7 @@
 
     div-float/2addr p2, p3
 
-    .line 633
+    .line 643
     iget-object p3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p6, 0x41800000    # 16.0f
@@ -940,7 +942,7 @@
 
     div-float/2addr p2, p3
 
-    .line 636
+    .line 646
     iget-object p3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p4, -0x3f400000    # -6.0f
@@ -949,7 +951,7 @@
 
     invoke-virtual {p3, p4, p5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 637
+    .line 647
     iget-object p3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p6, 0x41f00000    # 30.0f
@@ -966,7 +968,7 @@
 
     invoke-virtual {p3, p6, p5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 639
+    .line 649
     :goto_0
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
@@ -974,7 +976,7 @@
 
     invoke-virtual {p1, p2, p0}, Landroid/graphics/Canvas;->drawPath(Landroid/graphics/Path;Landroid/graphics/Paint;)V
 
-    .line 640
+    .line 650
     invoke-virtual {p1, v0}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
     return-void
@@ -983,23 +985,23 @@
 .method private drawDoc(Landroid/graphics/Canvas;FFFFFI)V
     .locals 7
 
-    .line 577
+    .line 587
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v0
 
-    .line 578
+    .line 588
     invoke-virtual {p1, p2, p3}, Landroid/graphics/Canvas;->translate(FF)V
 
-    .line 579
+    .line 589
     invoke-virtual {p1, p4}, Landroid/graphics/Canvas;->rotate(F)V
 
-    .line 580
+    .line 590
     invoke-virtual {p1, p5, p5}, Landroid/graphics/Canvas;->scale(FF)V
 
     const/high16 p2, 0x3f800000    # 1.0f
 
-    .line 581
+    .line 591
     invoke-static {p2, p6}, Ljava/lang/Math;->min(FF)F
 
     move-result p3
@@ -1014,21 +1016,21 @@
 
     mul-float/2addr p3, p4
 
-    .line 582
+    .line 592
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 p5, 0x0
 
     invoke-virtual {p4, p5}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 583
+    .line 593
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 p5, -0x1
 
     invoke-virtual {p4, p5}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 584
+    .line 594
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {p0, p3}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1037,7 +1039,7 @@
 
     invoke-virtual {p4, p5}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 585
+    .line 595
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 p5, 0x41200000    # 10.0f
@@ -1050,7 +1052,7 @@
 
     invoke-virtual {p4, v1, v2, p5, p6}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 586
+    .line 596
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object p5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -1059,14 +1061,14 @@
 
     invoke-virtual {p1, p4, p6, p6, p5}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 587
+    .line 597
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     iget p5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFg:I
 
     invoke-virtual {p4, p5}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 588
+    .line 598
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 p5, 0x3e800000    # 0.25f
@@ -1079,12 +1081,12 @@
 
     invoke-virtual {p4, p5}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 589
+    .line 599
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {p4, p2}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 590
+    .line 600
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object p5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
@@ -1095,7 +1097,7 @@
 
     if-ne p7, p4, :cond_0
 
-    .line 592
+    .line 602
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 p5, -0x3f200000    # -7.0f
@@ -1106,14 +1108,14 @@
 
     invoke-virtual {p4, p5, v1, p6, p7}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 593
+    .line 603
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent2:I
 
     invoke-virtual {p4, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 594
+    .line 604
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const v1, 0x3ee66666    # 0.45f
@@ -1126,7 +1128,7 @@
 
     invoke-virtual {p4, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 595
+    .line 605
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -1135,14 +1137,14 @@
 
     invoke-virtual {p1, p4, v2, v2, v1}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 596
+    .line 606
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/16 v1, -0x3ac3
 
     invoke-virtual {p4, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 597
+    .line 607
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {p0, p3}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1153,7 +1155,7 @@
 
     const p4, 0x400ccccd    # 2.2f
 
-    .line 598
+    .line 608
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v2, -0x3fc00000    # -3.0f
@@ -1162,55 +1164,55 @@
 
     invoke-virtual {p1, v2, v3, p4, v1}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 599
+    .line 609
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {p4}, Landroid/graphics/Path;->reset()V
 
-    .line 600
+    .line 610
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {p4, p5, p7}, Landroid/graphics/Path;->moveTo(FF)V
 
-    .line 601
+    .line 611
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p5, -0x40800000    # -1.0f
 
     invoke-virtual {p4, p5, p5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 602
+    .line 612
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p5, 0x40400000    # 3.0f
 
     invoke-virtual {p4, p5, p5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 603
+    .line 613
     iget-object p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 p5, 0x40a00000    # 5.0f
 
     invoke-virtual {p4, p5, p2}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 604
+    .line 614
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {p2, p6, p7}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 605
+    .line 615
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {p2}, Landroid/graphics/Path;->close()V
 
-    .line 606
+    .line 616
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget p4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     invoke-virtual {p2, p4}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 607
+    .line 617
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {p0, p3}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1219,7 +1221,7 @@
 
     invoke-virtual {p2, p3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 608
+    .line 618
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -1228,7 +1230,7 @@
 
     goto :goto_0
 
-    .line 610
+    .line 620
     :cond_0
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
@@ -1236,7 +1238,7 @@
 
     invoke-virtual {p2, p4}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 611
+    .line 621
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-direct {p0, p3}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1245,7 +1247,7 @@
 
     invoke-virtual {p2, p3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 612
+    .line 622
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 p3, 0x40000000    # 2.0f
@@ -1254,7 +1256,7 @@
 
     const/high16 v5, -0x3f400000    # -6.0f
 
-    .line 613
+    .line 623
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v2, -0x3f400000    # -6.0f
@@ -1269,7 +1271,7 @@
 
     const/high16 p6, -0x40800000    # -1.0f
 
-    .line 614
+    .line 624
     iget-object p7, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 p3, -0x3f400000    # -6.0f
@@ -1284,7 +1286,7 @@
 
     const/high16 v5, 0x40800000    # 4.0f
 
-    .line 615
+    .line 625
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v3, 0x40800000    # 4.0f
@@ -1293,7 +1295,7 @@
 
     invoke-virtual/range {v1 .. v6}, Landroid/graphics/Canvas;->drawLine(FFFFLandroid/graphics/Paint;)V
 
-    .line 617
+    .line 627
     :goto_0
     invoke-virtual {p1, v0}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
@@ -1309,7 +1311,7 @@
 
     const/4 v9, 0x0
 
-    .line 328
+    .line 338
     invoke-direct {p0, v9, v0}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v7
@@ -1318,12 +1320,12 @@
 
     const v1, 0x3f333333    # 0.7f
 
-    .line 329
+    .line 339
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v10
 
-    .line 330
+    .line 340
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v1, 0x3e19999a    # 0.15f
@@ -1334,7 +1336,7 @@
 
     move-result v6
 
-    .line 331
+    .line 341
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v1, 0x3e4ccccd    # 0.2f
@@ -1359,7 +1361,7 @@
 
     move-object/from16 v1, p1
 
-    .line 332
+    .line 342
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     cmpl-float v0, v6, v9
@@ -1370,7 +1372,7 @@
 
     if-gez v0, :cond_0
 
-    .line 333
+    .line 343
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mEase:Landroid/view/animation/PathInterpolator;
 
     invoke-virtual {v0, v6}, Landroid/view/animation/PathInterpolator;->getInterpolation(F)F
@@ -1401,7 +1403,7 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawRing(Landroid/graphics/Canvas;FFFFI)V
 
-    .line 334
+    .line 344
     :cond_0
     iget-object v2, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccentGlow:Landroid/graphics/RadialGradient;
 
@@ -1421,21 +1423,21 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawGlow(Landroid/graphics/Canvas;Landroid/graphics/RadialGradient;FFFF)V
 
-    .line 335
+    .line 345
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 336
+    .line 346
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42b80000    # 92.0f
 
     invoke-virtual {v0, v1, v1}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 337
+    .line 347
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42940000    # 74.0f
@@ -1444,14 +1446,14 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 338
+    .line 348
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, v1}, Landroid/graphics/LinearGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 339
+    .line 349
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v1, 0x437f0000    # 255.0f
@@ -1466,7 +1468,7 @@
 
     mul-float/2addr v7, v0
 
-    .line 340
+    .line 350
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v1, 0x42f00000    # 120.0f
@@ -1477,7 +1479,7 @@
 
     invoke-virtual {v14, v1, v2, v7, v0}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 341
+    .line 351
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
@@ -1488,7 +1490,7 @@
 
     if-lez v0, :cond_1
 
-    .line 342
+    .line 352
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     const/high16 v7, 0x41000000    # 8.0f
@@ -1516,7 +1518,7 @@
 
     if-gez v0, :cond_2
 
-    .line 343
+    .line 353
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mEase:Landroid/view/animation/PathInterpolator;
 
     invoke-virtual {v0, v12}, Landroid/view/animation/PathInterpolator;->getInterpolation(F)F
@@ -1554,12 +1556,12 @@
 
     const v1, 0x3ecccccd    # 0.4f
 
-    .line 347
+    .line 357
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v7
 
-    .line 348
+    .line 358
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v1, 0x3eb33333    # 0.35f
@@ -1580,7 +1582,7 @@
 
     mul-double/2addr v1, v3
 
-    .line 349
+    .line 359
     invoke-static {v1, v2}, Ljava/lang/Math;->sin(D)D
 
     move-result-wide v1
@@ -1611,10 +1613,10 @@
 
     move-object v1, p1
 
-    .line 350
+    .line 360
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
-    .line 351
+    .line 361
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mErrorGlow:Landroid/graphics/RadialGradient;
 
     const/high16 v0, 0x42f00000    # 120.0f
@@ -1635,21 +1637,21 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawGlow(Landroid/graphics/Canvas;Landroid/graphics/RadialGradient;FFFF)V
 
-    .line 352
+    .line 362
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 353
+    .line 363
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const v1, -0x1ab7b3
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 354
+    .line 364
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v6, 0x437f0000    # 255.0f
@@ -1664,7 +1666,7 @@
 
     mul-float/2addr v0, v7
 
-    .line 355
+    .line 365
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v2, 0x429c0000    # 78.0f
@@ -1677,14 +1679,14 @@
 
     if-lez v0, :cond_0
 
-    .line 357
+    .line 367
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/4 v7, -0x1
 
     invoke-virtual {v0, v7}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 358
+    .line 368
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-direct {p0, v6}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1693,7 +1695,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 359
+    .line 369
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x41000000    # 8.0f
@@ -1702,7 +1704,7 @@
 
     const/high16 v4, 0x42a40000    # 82.0f
 
-    .line 360
+    .line 370
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v2, 0x42700000    # 60.0f
@@ -1715,12 +1717,12 @@
 
     invoke-virtual/range {v0 .. v5}, Landroid/graphics/Canvas;->drawLine(FFFFLandroid/graphics/Paint;)V
 
-    .line 361
+    .line 371
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v0, v7}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 362
+    .line 372
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {p0, v6}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -1731,7 +1733,7 @@
 
     const v0, 0x40933333    # 4.6f
 
-    .line 363
+    .line 373
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v2, 0x42c00000    # 96.0f
@@ -1747,7 +1749,7 @@
 
     move-object/from16 v8, p0
 
-    .line 253
+    .line 261
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdAnimView;->loopFade()V
 
     const/high16 v4, 0x42200000    # 40.0f
@@ -1762,7 +1764,7 @@
 
     move-object/from16 v1, p1
 
-    .line 254
+    .line 262
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/high16 v4, 0x41c00000    # 24.0f
@@ -1773,7 +1775,7 @@
 
     const/high16 v3, 0x43120000    # 146.0f
 
-    .line 255
+    .line 263
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/high16 v0, 0x3e800000    # 0.25f
@@ -1782,7 +1784,7 @@
 
     move-object/from16 v9, p1
 
-    .line 256
+    .line 264
     invoke-direct {v8, v9, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
 
     const/4 v10, 0x0
@@ -1802,7 +1804,7 @@
 
     const/high16 v6, 0x3f800000    # 1.0f
 
-    if-ge v0, v7, :cond_1
+    if-ge v0, v7, :cond_2
 
     int-to-float v1, v0
 
@@ -1810,7 +1812,22 @@
 
     add-float v1, v1, v16
 
-    .line 260
+    .line 268
+    iget-boolean v2, v8, Lcom/masterrom/sdstorage/SdAnimView;->mReverse:Z
+
+    if-eqz v2, :cond_0
+
+    iget v2, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
+
+    const v3, 0x3d23d70a    # 0.04f
+
+    sub-float v3, v1, v3
+
+    const v4, 0x3dcccccd    # 0.1f
+
+    goto :goto_1
+
+    :cond_0
     iget v2, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v3, 0x3eb851ec    # 0.36f
@@ -1819,6 +1836,7 @@
 
     const/high16 v4, 0x3f000000    # 0.5f
 
+    :goto_1
     add-float/2addr v1, v4
 
     invoke-static {v2, v3, v1}, Lcom/masterrom/sdstorage/SdAnimView;->lin(FFF)F
@@ -1827,17 +1845,17 @@
 
     cmpl-float v2, v1, v10
 
-    if-lez v2, :cond_0
+    if-lez v2, :cond_1
 
     cmpg-float v2, v1, v6
 
-    if-gez v2, :cond_0
+    if-gez v2, :cond_1
 
     float-to-double v1, v1
 
     mul-double/2addr v1, v13
 
-    .line 261
+    .line 269
     invoke-static {v1, v2}, Ljava/lang/Math;->sin(D)D
 
     move-result-wide v1
@@ -1848,12 +1866,12 @@
 
     move-result v12
 
-    :cond_0
+    :cond_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    :cond_1
+    :cond_2
     const v0, 0x3d75c28f    # 0.06f
 
     mul-float/2addr v0, v12
@@ -1884,14 +1902,14 @@
 
     move/from16 v7, v19
 
-    .line 264
+    .line 272
     invoke-direct/range {v0 .. v7}, Lcom/masterrom/sdstorage/SdAnimView;->drawCard(Landroid/graphics/Canvas;FFFFIF)V
 
     const v0, 0x3f0ccccd    # 0.55f
 
     mul-float v4, v17, v0
 
-    .line 265
+    .line 273
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     iget v7, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
@@ -1908,7 +1926,7 @@
 
     const v14, 0x3eb33333    # 0.35f
 
-    if-lez v0, :cond_2
+    if-lez v0, :cond_3
 
     const/high16 v0, 0x41000000    # 8.0f
 
@@ -1920,7 +1938,7 @@
 
     mul-float v5, v12, v14
 
-    .line 266
+    .line 274
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     const/high16 v2, 0x432c0000    # 172.0f
@@ -1933,11 +1951,11 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawRing(Landroid/graphics/Canvas;FFFFI)V
 
-    :cond_2
+    :cond_3
     const/4 v12, 0x0
 
-    :goto_1
-    if-ge v12, v13, :cond_5
+    :goto_2
+    if-ge v12, v13, :cond_7
 
     int-to-float v0, v12
 
@@ -1949,37 +1967,50 @@
 
     add-float/2addr v1, v0
 
-    .line 269
+    .line 277
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v0
 
     cmpg-float v1, v0, v10
 
-    if-lez v1, :cond_4
+    if-lez v1, :cond_6
 
     cmpl-float v1, v0, v11
 
-    if-ltz v1, :cond_3
+    if-ltz v1, :cond_4
 
-    goto :goto_2
+    goto :goto_4
 
-    :cond_3
+    .line 279
+    :cond_4
+    iget-boolean v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mReverse:Z
+
+    if-eqz v1, :cond_5
+
+    sub-float v6, v11, v0
+
+    goto :goto_3
+
+    :cond_5
+    move v6, v0
+
+    :goto_3
     const/high16 v1, 0x42c20000    # 97.0f
 
-    mul-float/2addr v1, v0
+    mul-float/2addr v1, v6
 
     const/high16 v2, 0x42960000    # 75.0f
 
     add-float/2addr v2, v1
 
-    float-to-double v3, v0
+    float-to-double v3, v6
 
     const-wide v17, 0x400921fb54442d18L    # Math.PI
 
     mul-double v3, v3, v17
 
-    .line 272
+    .line 281
     invoke-static {v3, v4}, Ljava/lang/Math;->sin(D)D
 
     move-result-wide v3
@@ -1996,13 +2027,13 @@
 
     const/high16 v1, 0x41200000    # 10.0f
 
-    mul-float/2addr v1, v0
+    mul-float/2addr v1, v6
 
     add-float/2addr v3, v1
 
     const v1, 0x3df5c28f    # 0.12f
 
-    .line 273
+    .line 282
     invoke-static {v0, v10, v1}, Lcom/masterrom/sdstorage/SdAnimView;->lin(FFF)F
 
     move-result v1
@@ -2011,47 +2042,51 @@
 
     invoke-static {v0, v4, v11}, Lcom/masterrom/sdstorage/SdAnimView;->lin(FFF)F
 
-    move-result v4
+    move-result v0
 
-    sub-float v6, v11, v4
+    sub-float v0, v11, v0
 
-    invoke-static {v1, v6}, Ljava/lang/Math;->min(FF)F
+    invoke-static {v1, v0}, Ljava/lang/Math;->min(FF)F
 
-    move-result v6
+    move-result v7
 
-    const/high16 v1, 0x42100000    # 36.0f
+    const/high16 v0, 0x42100000    # 36.0f
 
-    mul-float/2addr v1, v0
+    mul-float/2addr v0, v6
 
-    const/high16 v4, -0x3e700000    # -18.0f
+    const/high16 v1, -0x3e700000    # -18.0f
 
-    add-float/2addr v4, v1
+    add-float v4, v0, v1
 
-    mul-float/2addr v0, v14
+    mul-float/2addr v6, v14
 
-    sub-float v5, v11, v0
+    sub-float v5, v11, v6
 
-    .line 274
-    rem-int/lit8 v7, v12, 0x2
+    .line 283
+    rem-int/lit8 v19, v12, 0x2
 
     move-object/from16 v0, p0
 
     move-object/from16 v1, p1
 
+    move v6, v7
+
+    move/from16 v7, v19
+
     invoke-direct/range {v0 .. v7}, Lcom/masterrom/sdstorage/SdAnimView;->drawDoc(Landroid/graphics/Canvas;FFFFFI)V
 
-    goto :goto_3
+    goto :goto_5
 
-    :cond_4
-    :goto_2
+    :cond_6
+    :goto_4
     const-wide v17, 0x400921fb54442d18L    # Math.PI
 
-    :goto_3
+    :goto_5
     add-int/lit8 v12, v12, 0x1
 
-    goto :goto_1
+    goto :goto_2
 
-    :cond_5
+    :cond_7
     return-void
 .end method
 
@@ -2070,28 +2105,28 @@
 
     goto :goto_0
 
-    .line 429
+    .line 439
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, p5, p5}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 430
+    .line 440
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, p3, p4}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 431
+    .line 441
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {p2, v0}, Landroid/graphics/RadialGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 432
+    .line 442
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
 
     invoke-virtual {v0, p2}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 433
+    .line 443
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
 
     const/high16 v0, 0x437f0000    # 255.0f
@@ -2104,7 +2139,7 @@
 
     invoke-virtual {p2, p6}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 434
+    .line 444
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
 
     invoke-virtual {p1, p3, p4, p5, p0}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
@@ -2133,31 +2168,31 @@
 
     return-void
 
-    .line 520
+    .line 530
     :cond_0
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v5
 
-    .line 521
+    .line 531
     invoke-virtual/range {p1 .. p3}, Landroid/graphics/Canvas;->translate(FF)V
 
-    .line 522
+    .line 532
     invoke-virtual {v1, v2, v2}, Landroid/graphics/Canvas;->scale(FF)V
 
-    .line 523
+    .line 533
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v6, 0x0
 
     invoke-virtual {v2, v6}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 524
+    .line 534
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 525
+    .line 535
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v6, 0x437f0000    # 255.0f
@@ -2168,7 +2203,7 @@
 
     invoke-virtual {v2, v7}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 526
+    .line 536
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v7, 0x41500000    # 13.0f
@@ -2181,7 +2216,7 @@
 
     invoke-virtual {v2, v9, v10, v7, v8}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 527
+    .line 537
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v7, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -2190,12 +2225,12 @@
 
     invoke-virtual {v1, v2, v8, v8, v7}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 528
+    .line 538
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 529
+    .line 539
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-direct {v0, v6}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -2204,14 +2239,14 @@
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 530
+    .line 540
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const v3, 0x408ccccd    # 4.4f
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 531
+    .line 541
     invoke-virtual/range {p1 .. p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v2
@@ -2220,7 +2255,7 @@
 
     mul-float v3, v3, p5
 
-    .line 532
+    .line 542
     invoke-virtual {v1, v4, v3}, Landroid/graphics/Canvas;->translate(FF)V
 
     const/high16 v3, -0x3e200000    # -28.0f
@@ -2229,29 +2264,29 @@
 
     const/high16 v7, 0x41000000    # 8.0f
 
-    .line 533
+    .line 543
     invoke-virtual {v1, v3, v7, v10}, Landroid/graphics/Canvas;->rotate(FFF)V
 
-    .line 534
+    .line 544
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v3}, Landroid/graphics/Path;->reset()V
 
-    .line 535
+    .line 545
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v9, -0x3f000000    # -8.0f
 
     invoke-virtual {v3, v9, v10}, Landroid/graphics/Path;->moveTo(FF)V
 
-    .line 536
+    .line 546
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v11, -0x3ee00000    # -10.0f
 
     invoke-virtual {v3, v9, v11}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 537
+    .line 547
     iget-object v12, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v17, 0x41000000    # 8.0f
@@ -2268,29 +2303,29 @@
 
     invoke-virtual/range {v12 .. v18}, Landroid/graphics/Path;->cubicTo(FFFFFF)V
 
-    .line 538
+    .line 548
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v3, v7, v10}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 539
+    .line 549
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     iget-object v7, v0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {v1, v3, v7}, Landroid/graphics/Canvas;->drawPath(Landroid/graphics/Path;Landroid/graphics/Paint;)V
 
-    .line 540
+    .line 550
     invoke-virtual {v1, v2}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
-    .line 541
+    .line 551
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     move/from16 v3, p7
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 542
+    .line 552
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {v0, v6}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -2301,14 +2336,14 @@
 
     const/high16 v2, 0x40400000    # 3.0f
 
-    .line 543
+    .line 553
     iget-object v3, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v6, 0x40900000    # 4.5f
 
     invoke-virtual {v1, v4, v6, v2, v3}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 544
+    .line 554
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const v3, -0x4059999a    # -1.3f
@@ -2319,14 +2354,14 @@
 
     invoke-virtual {v2, v3, v8, v6, v4}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 545
+    .line 555
     iget-object v2, v0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v1, v2, v6, v6, v0}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 546
+    .line 556
     invoke-virtual {v1, v5}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
     return-void
@@ -2335,7 +2370,7 @@
 .method private drawNoCard(Landroid/graphics/Canvas;)V
     .locals 11
 
-    .line 305
+    .line 315
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mEaseInOut:Landroid/view/animation/PathInterpolator;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
@@ -2356,7 +2391,7 @@
 
     move-object v1, p1
 
-    .line 306
+    .line 316
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/high16 v0, 0x3f800000    # 1.0f
@@ -2385,24 +2420,24 @@
 
     move-object v1, p1
 
-    .line 307
+    .line 317
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/4 v0, 0x0
 
     const v1, 0x3e99999a    # 0.3f
 
-    .line 308
+    .line 318
     invoke-direct {p0, p1, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
 
-    .line 309
+    .line 319
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mDash:Landroid/graphics/Paint;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFg:I
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 310
+    .line 320
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mDash:Landroid/graphics/Paint;
 
     const/high16 v1, 0x42dc0000    # 110.0f
@@ -2413,7 +2448,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 311
+    .line 321
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     mul-float v9, v8, v6
@@ -2432,7 +2467,7 @@
 
     invoke-virtual {v0, v3, v1, v4, v2}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 312
+    .line 322
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v1, 0x40c00000    # 6.0f
@@ -2469,7 +2504,7 @@
 
     move-object v1, p1
 
-    .line 313
+    .line 323
     invoke-direct/range {v0 .. v7}, Lcom/masterrom/sdstorage/SdAnimView;->drawCard(Landroid/graphics/Canvas;FFFFIF)V
 
     const v0, 0x3e19999a    # 0.15f
@@ -2484,21 +2519,21 @@
 
     sub-float v6, v0, v9
 
-    .line 316
+    .line 326
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 317
+    .line 327
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 318
+    .line 328
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v1, 0x437f0000    # 255.0f
@@ -2513,21 +2548,21 @@
 
     mul-float/2addr v0, v8
 
-    .line 319
+    .line 329
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v3, 0x43420000    # 194.0f
 
     invoke-virtual {p1, v3, v6, v0, v2}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 320
+    .line 330
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     iget v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     invoke-virtual {v0, v2}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 321
+    .line 331
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -2536,7 +2571,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 322
+    .line 332
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const v1, 0x4019999a    # 2.4f
@@ -2549,7 +2584,7 @@
 
     add-float/2addr v3, v8
 
-    .line 323
+    .line 333
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     move-object v0, p1
@@ -2564,7 +2599,7 @@
 
     add-float v4, v6, v8
 
-    .line 324
+    .line 334
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x43420000    # 194.0f
@@ -2579,7 +2614,7 @@
 .method private drawParticles(Landroid/graphics/Canvas;FFFFF)V
     .locals 8
 
-    .line 557
+    .line 567
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
@@ -2588,7 +2623,7 @@
 
     const/4 v0, 0x0
 
-    .line 558
+    .line 568
     :goto_0
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPartCos:[F
 
@@ -2596,21 +2631,21 @@
 
     if-ge v0, v2, :cond_1
 
-    .line 559
+    .line 569
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPartDist:[F
 
     aget v2, v2, v0
 
     mul-float/2addr v2, p4
 
-    .line 560
+    .line 570
     aget v1, v1, v0
 
     mul-float/2addr v1, v2
 
     add-float/2addr v1, p2
 
-    .line 561
+    .line 571
     iget-object v3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPartSin:[F
 
     aget v3, v3, v0
@@ -2619,7 +2654,7 @@
 
     add-float/2addr v3, p3
 
-    .line 562
+    .line 572
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget-object v4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mPartColor:[I
@@ -2628,7 +2663,7 @@
 
     invoke-virtual {v2, v4}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 563
+    .line 573
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v4, 0x437f0000    # 255.0f
@@ -2641,19 +2676,19 @@
 
     invoke-virtual {v2, v4}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 564
+    .line 574
     rem-int/lit8 v2, v0, 0x2
 
     if-nez v2, :cond_0
 
-    .line 565
+    .line 575
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {p1, v1, v3, p6, v2}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
     goto :goto_1
 
-    .line 567
+    .line 577
     :cond_0
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
@@ -2671,7 +2706,7 @@
 
     invoke-virtual {v2, v4, v6, v7, v5}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 568
+    .line 578
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
     move-result v2
@@ -2688,10 +2723,10 @@
 
     add-float/2addr v4, v5
 
-    .line 569
+    .line 579
     invoke-virtual {p1, v4, v1, v3}, Landroid/graphics/Canvas;->rotate(FFF)V
 
-    .line 570
+    .line 580
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -2700,7 +2735,7 @@
 
     invoke-virtual {p1, v1, v4, v4, v3}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 571
+    .line 581
     invoke-virtual {p1, v2}, Landroid/graphics/Canvas;->restoreToCount(I)V
 
     :goto_1
@@ -2719,7 +2754,7 @@
 
     move-object/from16 v8, p1
 
-    .line 439
+    .line 449
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v9, 0x42300000    # 44.0f
@@ -2732,14 +2767,14 @@
 
     invoke-virtual {v0, v9, v10, v11, v12}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 440
+    .line 450
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mBodyShader:Landroid/graphics/LinearGradient;
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 441
+    .line 451
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42f00000    # 120.0f
@@ -2748,21 +2783,21 @@
 
     invoke-virtual {v0, v13, v1}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 442
+    .line 452
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/4 v14, 0x0
 
     invoke-virtual {v0, v14, v10}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 443
+    .line 453
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mBodyShader:Landroid/graphics/LinearGradient;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, v1}, Landroid/graphics/LinearGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 444
+    .line 454
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v15, 0x437f0000    # 255.0f
@@ -2773,7 +2808,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 445
+    .line 455
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -2782,7 +2817,7 @@
 
     invoke-virtual {v8, v0, v6, v6, v1}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 446
+    .line 456
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
@@ -2793,7 +2828,7 @@
 
     if-lez v0, :cond_0
 
-    .line 447
+    .line 457
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mAccentGlow:Landroid/graphics/RadialGradient;
 
     const v0, 0x3e99999a    # 0.3f
@@ -2821,7 +2856,7 @@
     :cond_0
     move v15, v6
 
-    .line 448
+    .line 458
     :goto_0
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
@@ -2829,7 +2864,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 449
+    .line 459
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x43480000    # 200.0f
@@ -2840,33 +2875,33 @@
 
     invoke-virtual {v0, v2}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 450
+    .line 460
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const v2, 0x404ccccd    # 3.2f
 
     invoke-virtual {v0, v2}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 451
+    .line 461
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     invoke-virtual {v0, v9, v10, v11, v12}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 452
+    .line 462
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {v8, v0, v15, v15, v2}, Landroid/graphics/Canvas;->drawRoundRect(Landroid/graphics/RectF;FFLandroid/graphics/Paint;)V
 
-    .line 453
+    .line 463
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFg:I
 
     invoke-virtual {v0, v2}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 454
+    .line 464
     iget-object v0, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v2, 0x432a0000    # 170.0f
@@ -2879,7 +2914,7 @@
 
     const v0, 0x4019999a    # 2.4f
 
-    .line 455
+    .line 465
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v3, 0x42960000    # 75.0f
@@ -2905,7 +2940,7 @@
 
     add-float/2addr v3, v4
 
-    .line 458
+    .line 468
     iget-object v4, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v5, 0x40800000    # 4.0f
@@ -2918,14 +2953,14 @@
 
     invoke-virtual {v4, v6, v3, v9, v5}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 459
+    .line 469
     iget-object v4, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v9, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFg:I
 
     invoke-virtual {v4, v9}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 460
+    .line 470
     iget-object v4, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v9, 0x42080000    # 34.0f
@@ -2936,7 +2971,7 @@
 
     invoke-virtual {v4, v9}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 461
+    .line 471
     iget-object v4, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v9, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -2955,7 +2990,7 @@
 
     mul-float v2, p3, v4
 
-    .line 462
+    .line 472
     invoke-static {v13, v2}, Ljava/lang/Math;->min(FF)F
 
     move-result v2
@@ -2968,7 +3003,7 @@
 
     if-lez v4, :cond_3
 
-    .line 464
+    .line 474
     iget-object v4, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v9, 0x42280000    # 42.0f
@@ -2979,7 +3014,7 @@
 
     invoke-virtual {v4, v6, v3, v2, v5}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 465
+    .line 475
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     if-nez v0, :cond_1
@@ -2994,7 +3029,7 @@
     :goto_2
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 466
+    .line 476
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     if-nez v0, :cond_2
@@ -3013,7 +3048,7 @@
 
     invoke-virtual {v2, v3}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 467
+    .line 477
     iget-object v2, v7, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v3, v7, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -3032,12 +3067,12 @@
 .method private drawRing(Landroid/graphics/Canvas;FFFFI)V
     .locals 1
 
-    .line 550
+    .line 560
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {v0, p6}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 551
+    .line 561
     iget-object p6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v0, 0x43480000    # 200.0f
@@ -3050,7 +3085,7 @@
 
     invoke-virtual {p6, v0}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 552
+    .line 562
     iget-object p6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v0, 0x40000000    # 2.0f
@@ -3063,7 +3098,7 @@
 
     invoke-virtual {p6, p5}, Landroid/graphics/Paint;->setStrokeWidth(F)V
 
-    .line 553
+    .line 563
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     invoke-virtual {p1, p2, p3, p4, p0}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
@@ -3078,14 +3113,14 @@
 
     move-object/from16 v9, p1
 
-    .line 368
+    .line 378
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdAnimView;->loopFade()V
 
     const v0, 0x3e3851ec    # 0.18f
 
     const v1, 0x3eae147b    # 0.34f
 
-    .line 369
+    .line 379
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v7
@@ -3094,7 +3129,7 @@
 
     const v1, 0x3ef5c28f    # 0.48f
 
-    .line 370
+    .line 380
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v10
@@ -3103,12 +3138,12 @@
 
     const v2, 0x3f1eb852    # 0.62f
 
-    .line 371
+    .line 381
     invoke-direct {v8, v0, v2}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v11
 
-    .line 372
+    .line 382
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v2, 0x3f4ccccd    # 0.8f
@@ -3129,10 +3164,10 @@
 
     move-object/from16 v1, p1
 
-    .line 373
+    .line 383
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
-    .line 374
+    .line 384
     iget-object v2, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccentGlow:Landroid/graphics/RadialGradient;
 
     const/high16 v5, 0x42a00000    # 80.0f
@@ -3145,14 +3180,14 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawGlow(Landroid/graphics/Canvas;Landroid/graphics/RadialGradient;FFFF)V
 
-    .line 375
+    .line 385
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 376
+    .line 386
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42c00000    # 96.0f
@@ -3161,7 +3196,7 @@
 
     invoke-virtual {v0, v13, v1}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 377
+    .line 387
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     const/high16 v1, 0x42200000    # 40.0f
@@ -3170,14 +3205,14 @@
 
     invoke-virtual {v0, v2, v1}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 378
+    .line 388
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mCardShader:Landroid/graphics/LinearGradient;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v0, v1}, Landroid/graphics/LinearGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 379
+    .line 389
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v14, 0x437f0000    # 255.0f
@@ -3188,12 +3223,12 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 380
+    .line 390
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v0}, Landroid/graphics/Path;->reset()V
 
-    .line 381
+    .line 391
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v1, 0x42480000    # 50.0f
@@ -3202,7 +3237,7 @@
 
     invoke-virtual {v0, v3, v1}, Landroid/graphics/Path;->moveTo(FF)V
 
-    .line 382
+    .line 392
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v1, 0x42280000    # 42.0f
@@ -3211,14 +3246,14 @@
 
     invoke-virtual {v0, v3, v1, v4, v1}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 383
+    .line 393
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v5, 0x42cc0000    # 102.0f
 
     invoke-virtual {v0, v5, v1}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 384
+    .line 394
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v1, 0x42e00000    # 112.0f
@@ -3227,71 +3262,71 @@
 
     invoke-virtual {v0, v1, v5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 385
+    .line 395
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v1, 0x43260000    # 166.0f
 
     invoke-virtual {v0, v1, v5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 386
+    .line 396
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v6, 0x432e0000    # 174.0f
 
     invoke-virtual {v0, v6, v5, v6, v2}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 387
+    .line 397
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v5, 0x42f80000    # 124.0f
 
     invoke-virtual {v0, v6, v5}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 388
+    .line 398
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     const/high16 v15, 0x43040000    # 132.0f
 
     invoke-virtual {v0, v6, v15, v1, v15}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 389
+    .line 399
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v0, v4, v15}, Landroid/graphics/Path;->lineTo(FF)V
 
-    .line 390
+    .line 400
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v0, v3, v15, v3, v5}, Landroid/graphics/Path;->quadTo(FFFF)V
 
-    .line 391
+    .line 401
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     invoke-virtual {v0}, Landroid/graphics/Path;->close()V
 
-    .line 392
+    .line 402
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mPath:Landroid/graphics/Path;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {v9, v0, v1}, Landroid/graphics/Canvas;->drawPath(Landroid/graphics/Path;Landroid/graphics/Paint;)V
 
-    .line 393
+    .line 403
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, 0x0
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 394
+    .line 404
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v1, -0x1
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 395
+    .line 405
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v1, 0x42380000    # 46.0f
@@ -3302,14 +3337,14 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 396
+    .line 406
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v1, 0x42900000    # 72.0f
 
     invoke-virtual {v0, v3, v2, v6, v1}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 397
+    .line 407
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
@@ -3328,7 +3363,7 @@
 
     mul-float v4, v1, v0
 
-    .line 398
+    .line 408
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     iget v10, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
@@ -3358,7 +3393,7 @@
 
     if-gez v0, :cond_1
 
-    .line 399
+    .line 409
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mEase:Landroid/view/animation/PathInterpolator;
 
     invoke-virtual {v0, v12}, Landroid/view/animation/PathInterpolator;->getInterpolation(F)F
@@ -3394,14 +3429,14 @@
 
     if-lez v0, :cond_2
 
-    .line 401
+    .line 411
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     iget v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 402
+    .line 412
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-direct {v8, v14}, Lcom/masterrom/sdstorage/SdAnimView;->al(F)I
@@ -3414,7 +3449,7 @@
 
     mul-float/2addr v0, v11
 
-    .line 403
+    .line 413
     iget-object v1, v8, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v2, 0x42bc0000    # 94.0f
@@ -3425,7 +3460,7 @@
 
     mul-float v4, v11, v0
 
-    .line 404
+    .line 414
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     const/high16 v7, 0x40e00000    # 7.0f
@@ -3466,31 +3501,31 @@
 
     mul-float/2addr v0, p4
 
-    .line 418
+    .line 428
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v1, p4, v0}, Landroid/graphics/Matrix;->setScale(FF)V
 
-    .line 419
+    .line 429
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v1, p2, p3}, Landroid/graphics/Matrix;->postTranslate(FF)Z
 
-    .line 420
+    .line 430
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShadowShader:Landroid/graphics/RadialGradient;
 
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMatrix:Landroid/graphics/Matrix;
 
     invoke-virtual {v1, v2}, Landroid/graphics/RadialGradient;->setLocalMatrix(Landroid/graphics/Matrix;)V
 
-    .line 421
+    .line 431
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
 
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShadowShader:Landroid/graphics/RadialGradient;
 
     invoke-virtual {v1, v2}, Landroid/graphics/Paint;->setShader(Landroid/graphics/Shader;)Landroid/graphics/Shader;
 
-    .line 422
+    .line 432
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
 
     const/high16 v2, 0x437f0000    # 255.0f
@@ -3503,7 +3538,7 @@
 
     invoke-virtual {v1, p5}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 423
+    .line 433
     iget-object p5, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     sub-float v1, p2, p4
@@ -3516,7 +3551,7 @@
 
     invoke-virtual {p5, v1, v2, p2, p3}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 424
+    .line 434
     iget-object p2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mShaderPaint:Landroid/graphics/Paint;
@@ -3533,19 +3568,19 @@
 
     move-object/from16 v8, p0
 
-    .line 214
+    .line 221
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdAnimView;->loopFade()V
 
     const v0, 0x3d75c28f    # 0.06f
 
     const v1, 0x3ecccccd    # 0.4f
 
-    .line 215
+    .line 222
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->segIO(FF)F
 
     move-result v6
 
-    .line 216
+    .line 223
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     float-to-double v0, v0
@@ -3590,7 +3625,7 @@
 
     const v1, 0x3f19999a    # 0.6f
 
-    .line 219
+    .line 226
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v12
@@ -3599,7 +3634,7 @@
 
     const v1, 0x3f3d70a4    # 0.74f
 
-    .line 220
+    .line 227
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v13
@@ -3608,12 +3643,12 @@
 
     const v1, 0x3f28f5c3    # 0.66f
 
-    .line 221
+    .line 228
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v14
 
-    .line 222
+    .line 229
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v1, 0x3f051eb8    # 0.52f
@@ -3638,7 +3673,7 @@
 
     move v2, v10
 
-    .line 224
+    .line 231
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/high16 v4, 0x42200000    # 40.0f
@@ -3649,7 +3684,7 @@
 
     const/high16 v3, 0x43130000    # 147.0f
 
-    .line 225
+    .line 232
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const v0, 0x3f333333    # 0.7f
@@ -3662,7 +3697,7 @@
 
     move-object/from16 v5, p1
 
-    .line 226
+    .line 233
     invoke-direct {v8, v5, v12, v13}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
 
     const/high16 v0, -0x3ee00000    # -10.0f
@@ -3679,7 +3714,7 @@
 
     const v1, 0x3eb851ec    # 0.36f
 
-    .line 227
+    .line 234
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->shine(FF)F
 
     move-result v7
@@ -3724,7 +3759,7 @@
 
     sub-float v5, v9, v15
 
-    .line 228
+    .line 235
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     move-object/from16 v0, p0
@@ -3750,7 +3785,7 @@
 
     mul-float v4, v14, v0
 
-    .line 229
+    .line 236
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     iget v7, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
@@ -3770,30 +3805,30 @@
 .end method
 
 .method private drawToPortable(Landroid/graphics/Canvas;)V
-    .locals 18
+    .locals 16
 
     move-object/from16 v8, p0
 
-    .line 233
+    .line 240
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdAnimView;->loopFade()V
 
     const v0, 0x3da3d70a    # 0.08f
 
     const v1, 0x3e75c28f    # 0.24f
 
-    .line 234
+    .line 241
     invoke-direct {v8, v0, v1}, Lcom/masterrom/sdstorage/SdAnimView;->segOver(FF)F
 
     move-result v9
 
     const v0, 0x3eb851ec    # 0.36f
 
-    .line 235
+    .line 242
     invoke-direct {v8, v1, v0}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
 
     move-result v10
 
-    .line 236
+    .line 243
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const v2, 0x3eeb851f    # 0.46f
@@ -3802,36 +3837,20 @@
 
     move-result v11
 
-    const v6, 0x3e99999a    # 0.3f
+    const v0, 0x3ed70a3d    # 0.42f
 
-    const v0, 0x3f051eb8    # 0.52f
+    const v6, 0x3f3d70a4    # 0.74f
 
-    .line 237
-    invoke-direct {v8, v6, v0}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
+    .line 244
+    invoke-direct {v8, v0, v6}, Lcom/masterrom/sdstorage/SdAnimView;->segIO(FF)F
 
-    move-result v1
+    move-result v7
 
     const/high16 v12, 0x3f800000    # 1.0f
 
-    sub-float v7, v12, v1
+    sub-float v13, v12, v7
 
-    .line 238
-    invoke-direct {v8, v6, v0}, Lcom/masterrom/sdstorage/SdAnimView;->seg(FF)F
-
-    move-result v0
-
-    sub-float v13, v12, v0
-
-    const v0, 0x3ed70a3d    # 0.42f
-
-    const v14, 0x3f3d70a4    # 0.74f
-
-    .line 239
-    invoke-direct {v8, v0, v14}, Lcom/masterrom/sdstorage/SdAnimView;->segIO(FF)F
-
-    move-result v15
-
-    .line 240
+    .line 248
     iget v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     float-to-double v0, v0
@@ -3854,19 +3873,19 @@
 
     mul-float/2addr v0, v1
 
-    mul-float/2addr v0, v15
+    mul-float/2addr v0, v7
 
     const/high16 v1, 0x42c20000    # 97.0f
 
-    mul-float/2addr v1, v15
+    mul-float/2addr v1, v7
 
     const/high16 v2, 0x42960000    # 75.0f
 
-    add-float v16, v1, v2
+    add-float v14, v1, v2
 
     const/high16 v1, 0x42a80000    # 84.0f
 
-    add-float v17, v0, v1
+    add-float v15, v0, v1
 
     const/high16 v4, 0x42200000    # 40.0f
 
@@ -3878,12 +3897,12 @@
 
     move-object/from16 v1, p1
 
-    .line 244
+    .line 252
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const v0, 0x3e0f5c29    # 0.14f
 
-    mul-float v5, v15, v0
+    mul-float v5, v7, v0
 
     const/high16 v3, 0x43120000    # 146.0f
 
@@ -3891,48 +3910,54 @@
 
     move-object/from16 v0, p0
 
-    move/from16 v2, v16
+    move v2, v14
 
-    .line 245
+    .line 253
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const v0, 0x3f333333    # 0.7f
 
-    mul-float/2addr v7, v0
+    mul-float/2addr v0, v13
 
-    add-float/2addr v7, v6
+    const v1, 0x3e99999a    # 0.3f
 
-    move-object/from16 v6, p1
+    add-float/2addr v0, v1
 
-    .line 246
-    invoke-direct {v8, v6, v13, v7}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
+    move-object/from16 v5, p1
+
+    .line 254
+    invoke-direct {v8, v5, v13, v0}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
 
     const/high16 v0, 0x41200000    # 10.0f
 
-    mul-float v4, v15, v0
+    mul-float v4, v7, v0
 
     const v0, 0x3e3851ec    # 0.18f
 
-    mul-float/2addr v15, v0
+    mul-float/2addr v7, v0
 
     const v0, 0x3f51eb85    # 0.82f
 
-    add-float v5, v15, v0
+    add-float/2addr v7, v0
 
     const v0, 0x3f6b851f    # 0.92f
 
-    .line 247
-    invoke-direct {v8, v14, v0}, Lcom/masterrom/sdstorage/SdAnimView;->shine(FF)F
+    .line 255
+    invoke-direct {v8, v6, v0}, Lcom/masterrom/sdstorage/SdAnimView;->shine(FF)F
 
-    move-result v7
+    move-result v13
 
-    const/16 v13, 0xff
+    const/16 v6, 0xff
 
     move-object/from16 v0, p0
 
-    move/from16 v3, v17
+    move-object/from16 v1, p1
 
-    move v6, v13
+    move v3, v15
+
+    move v5, v7
+
+    move v7, v13
 
     invoke-direct/range {v0 .. v7}, Lcom/masterrom/sdstorage/SdAnimView;->drawCard(Landroid/graphics/Canvas;FFFFIF)V
 
@@ -3942,7 +3967,7 @@
 
     if-gez v0, :cond_0
 
-    add-float v3, v17, v13
+    add-float v3, v15, v13
 
     const v0, 0x3f1eb852    # 0.62f
 
@@ -3950,7 +3975,7 @@
 
     mul-float v4, v1, v0
 
-    .line 248
+    .line 256
     iget v6, v8, Lcom/masterrom/sdstorage/SdAnimView;->mOnAccent:I
 
     iget v7, v8, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
@@ -3959,7 +3984,7 @@
 
     move-object/from16 v1, p1
 
-    move/from16 v2, v16
+    move v2, v14
 
     move v5, v9
 
@@ -3976,9 +4001,9 @@
 
     if-gez v0, :cond_1
 
-    add-float v3, v17, v13
+    add-float v3, v15, v13
 
-    .line 249
+    .line 257
     iget-object v0, v8, Lcom/masterrom/sdstorage/SdAnimView;->mEase:Landroid/view/animation/PathInterpolator;
 
     invoke-virtual {v0, v11}, Landroid/view/animation/PathInterpolator;->getInterpolation(F)F
@@ -3997,7 +4022,7 @@
 
     move-object/from16 v1, p1
 
-    move/from16 v2, v16
+    move v2, v14
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdAnimView;->drawParticles(Landroid/graphics/Canvas;FFFFF)V
 
@@ -4020,7 +4045,7 @@
 
     move-object v1, p1
 
-    .line 279
+    .line 288
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
     const/high16 v10, 0x41c00000    # 24.0f
@@ -4035,10 +4060,10 @@
 
     move-object v7, p1
 
-    .line 280
+    .line 289
     invoke-direct/range {v6 .. v11}, Lcom/masterrom/sdstorage/SdAnimView;->drawShadow(Landroid/graphics/Canvas;FFFF)V
 
-    .line 281
+    .line 290
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     float-to-double v0, v0
@@ -4073,10 +4098,10 @@
 
     const v4, 0x3f19999a    # 0.6f
 
-    .line 282
+    .line 291
     invoke-direct {p0, p1, v1, v4}, Lcom/masterrom/sdstorage/SdAnimView;->drawPhone(Landroid/graphics/Canvas;FF)V
 
-    .line 283
+    .line 292
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/4 v4, 0x0
@@ -4090,9 +4115,9 @@
 
     const/high16 v5, 0x3f800000    # 1.0f
 
-    if-ge v1, v4, :cond_1
+    if-ge v1, v4, :cond_2
 
-    .line 285
+    .line 294
     iget v4, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     int-to-float v6, v1
@@ -4105,6 +4130,14 @@
 
     rem-float/2addr v4, v5
 
+    .line 295
+    iget-boolean v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mReverse:Z
+
+    if-eqz v6, :cond_0
+
+    sub-float v4, v5, v4
+
+    :cond_0
     const/high16 v5, 0x42680000    # 58.0f
 
     mul-float/2addr v5, v4
@@ -4117,7 +4150,7 @@
 
     mul-double/2addr v6, v2
 
-    .line 287
+    .line 297
     invoke-static {v6, v7}, Ljava/lang/Math;->sin(D)D
 
     move-result-wide v8
@@ -4132,31 +4165,31 @@
 
     sub-float/2addr v8, v4
 
-    .line 288
+    .line 298
     invoke-static {v6, v7}, Ljava/lang/Math;->sin(D)D
 
     move-result-wide v6
 
     double-to-float v4, v6
 
-    .line 289
+    .line 299
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     rem-int/lit8 v7, v1, 0x2
 
-    if-nez v7, :cond_0
+    if-nez v7, :cond_1
 
     iget v7, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     goto :goto_1
 
-    :cond_0
+    :cond_1
     iget v7, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent2:I
 
     :goto_1
     invoke-virtual {v6, v7}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 290
+    .line 300
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     const/high16 v7, 0x43660000    # 230.0f
@@ -4177,7 +4210,7 @@
 
     add-float/2addr v4, v6
 
-    .line 291
+    .line 301
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdAnimView;->mFill:Landroid/graphics/Paint;
 
     invoke-virtual {p1, v5, v8, v4, v6}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
@@ -4186,7 +4219,7 @@
 
     goto :goto_0
 
-    :cond_1
+    :cond_2
     const v1, 0x3cf5c28f    # 0.03f
 
     mul-float/2addr v0, v1
@@ -4207,17 +4240,17 @@
 
     move-object v7, p1
 
-    .line 293
+    .line 303
     invoke-direct/range {v6 .. v13}, Lcom/masterrom/sdstorage/SdAnimView;->drawCard(Landroid/graphics/Canvas;FFFFIF)V
 
-    .line 294
+    .line 304
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAccent:I
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setColor(I)V
 
-    .line 295
+    .line 305
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x42700000    # 60.0f
@@ -4228,7 +4261,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 296
+    .line 306
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x40400000    # 3.0f
@@ -4237,7 +4270,7 @@
 
     const/high16 v0, 0x42200000    # 40.0f
 
-    .line 297
+    .line 307
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v4, 0x432c0000    # 172.0f
@@ -4246,7 +4279,7 @@
 
     invoke-virtual {p1, v4, v5, v0, v1}, Landroid/graphics/Canvas;->drawCircle(FFFLandroid/graphics/Paint;)V
 
-    .line 298
+    .line 308
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mStroke:Landroid/graphics/Paint;
 
     const/high16 v1, 0x437f0000    # 255.0f
@@ -4257,7 +4290,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Paint;->setAlpha(I)V
 
-    .line 299
+    .line 309
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     const/high16 v1, 0x43540000    # 212.0f
@@ -4270,7 +4303,7 @@
 
     invoke-virtual {v0, v5, v6, v1, v4}, Landroid/graphics/RectF;->set(FFFF)V
 
-    .line 300
+    .line 310
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     float-to-double v0, v0
@@ -4291,7 +4324,7 @@
 
     add-float v5, v0, v1
 
-    .line 301
+    .line 311
     iget-object v3, p0, Lcom/masterrom/sdstorage/SdAnimView;->mRect:Landroid/graphics/RectF;
 
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
@@ -4322,7 +4355,7 @@
 
     and-int/2addr p0, v0
 
-    .line 105
+    .line 107
     new-instance v7, Landroid/graphics/RadialGradient;
 
     const/high16 v0, -0x1000000
@@ -4400,7 +4433,7 @@
 .method private loopFade()V
     .locals 4
 
-    .line 210
+    .line 217
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     const/4 v1, 0x0
@@ -4435,7 +4468,7 @@
 .method private once()Z
     .locals 1
 
-    .line 115
+    .line 122
     iget p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
 
     const/4 v0, 0x5
@@ -4464,7 +4497,7 @@
 .method private restart()V
     .locals 5
 
-    .line 119
+    .line 126
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
@@ -4474,7 +4507,7 @@
     :cond_0
     const/4 v0, 0x2
 
-    .line 120
+    .line 127
     new-array v1, v0, [F
 
     fill-array-data v1, :array_0
@@ -4485,7 +4518,7 @@
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
-    .line 122
+    .line 129
     iget v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
 
     const/4 v3, 0x3
@@ -4535,11 +4568,11 @@
     :cond_5
     const-wide/16 v2, 0x708
 
-    .line 130
+    .line 137
     :goto_0
     invoke-virtual {v1, v2, v3}, Landroid/animation/ValueAnimator;->setDuration(J)Landroid/animation/ValueAnimator;
 
-    .line 131
+    .line 138
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v2, Landroid/view/animation/LinearInterpolator;
@@ -4548,7 +4581,7 @@
 
     invoke-virtual {v1, v2}, Landroid/animation/ValueAnimator;->setInterpolator(Landroid/animation/TimeInterpolator;)V
 
-    .line 132
+    .line 139
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdAnimView;->once()Z
@@ -4567,7 +4600,7 @@
     :goto_1
     invoke-virtual {v1, v2}, Landroid/animation/ValueAnimator;->setRepeatCount(I)V
 
-    .line 133
+    .line 140
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     iget v2, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
@@ -4582,7 +4615,7 @@
     :goto_2
     invoke-virtual {v1, v0}, Landroid/animation/ValueAnimator;->setRepeatMode(I)V
 
-    .line 134
+    .line 141
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     new-instance v1, Lcom/masterrom/sdstorage/SdAnimView$1;
@@ -4593,10 +4626,10 @@
 
     const/4 v0, 0x0
 
-    .line 140
+    .line 147
     iput v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
-    .line 141
+    .line 148
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdAnimView;->isAttachedToWindow()Z
 
     move-result v0
@@ -4620,7 +4653,7 @@
 .method private seg(FF)F
     .locals 2
 
-    .line 158
+    .line 165
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     cmpg-float v1, v0, p1
@@ -4640,7 +4673,7 @@
 
     return p0
 
-    .line 160
+    .line 167
     :cond_1
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mEase:Landroid/view/animation/PathInterpolator;
 
@@ -4660,7 +4693,7 @@
 .method private segIO(FF)F
     .locals 2
 
-    .line 164
+    .line 171
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     cmpg-float v1, v0, p1
@@ -4680,7 +4713,7 @@
 
     return p0
 
-    .line 166
+    .line 173
     :cond_1
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mEaseInOut:Landroid/view/animation/PathInterpolator;
 
@@ -4700,7 +4733,7 @@
 .method private segOver(FF)F
     .locals 2
 
-    .line 170
+    .line 177
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     cmpg-float v1, v0, p1
@@ -4720,7 +4753,7 @@
 
     return p0
 
-    .line 172
+    .line 179
     :cond_1
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mOver:Landroid/view/animation/PathInterpolator;
 
@@ -4740,7 +4773,7 @@
 .method private shine(FF)F
     .locals 0
 
-    .line 411
+    .line 421
     iget p0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mT:F
 
     invoke-static {p0, p1, p2}, Lcom/masterrom/sdstorage/SdAnimView;->lin(FFF)F
@@ -4771,10 +4804,10 @@
 .method protected onAttachedToWindow()V
     .locals 2
 
-    .line 145
+    .line 152
     invoke-super {p0}, Landroid/view/View;->onAttachedToWindow()V
 
-    .line 146
+    .line 153
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     if-nez v0, :cond_0
@@ -4783,7 +4816,7 @@
 
     goto :goto_0
 
-    .line 147
+    .line 154
     :cond_0
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->isStarted()Z
 
@@ -4818,14 +4851,14 @@
 .method protected onDetachedFromWindow()V
     .locals 1
 
-    .line 151
+    .line 158
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mAnimator:Landroid/animation/ValueAnimator;
 
     if-eqz v0, :cond_0
 
     invoke-virtual {v0}, Landroid/animation/ValueAnimator;->cancel()V
 
-    .line 152
+    .line 159
     :cond_0
     invoke-super {p0}, Landroid/view/View;->onDetachedFromWindow()V
 
@@ -4835,7 +4868,7 @@
 .method protected onDraw(Landroid/graphics/Canvas;)V
     .locals 6
 
-    .line 188
+    .line 195
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdAnimView;->getWidth()I
 
     move-result v0
@@ -4869,12 +4902,12 @@
 
     div-float v5, v1, v4
 
-    .line 190
+    .line 197
     invoke-static {v3, v5}, Ljava/lang/Math;->min(FF)F
 
     move-result v3
 
-    .line 191
+    .line 198
     invoke-virtual {p1}, Landroid/graphics/Canvas;->save()I
 
     mul-float/2addr v2, v3
@@ -4891,68 +4924,68 @@
 
     div-float/2addr v1, v2
 
-    .line 192
+    .line 199
     invoke-virtual {p1, v0, v1}, Landroid/graphics/Canvas;->translate(FF)V
 
-    .line 193
+    .line 200
     invoke-virtual {p1, v3, v3}, Landroid/graphics/Canvas;->scale(FF)V
 
     const/high16 v0, 0x3f800000    # 1.0f
 
-    .line 194
+    .line 201
     iput v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mA:F
 
-    .line 195
+    .line 202
     iget v0, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
 
     packed-switch v0, :pswitch_data_0
 
-    .line 203
+    .line 210
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawToInternal(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 202
+    .line 209
     :pswitch_0
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawError(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 201
+    .line 208
     :pswitch_1
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawSecure(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 200
+    .line 207
     :pswitch_2
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawDone(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 199
+    .line 206
     :pswitch_3
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawNoCard(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 198
+    .line 205
     :pswitch_4
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawWorking(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 197
+    .line 204
     :pswitch_5
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawFiles(Landroid/graphics/Canvas;)V
 
     goto :goto_0
 
-    .line 196
+    .line 203
     :pswitch_6
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdAnimView;->drawToPortable(Landroid/graphics/Canvas;)V
 
-    .line 205
+    .line 212
     :goto_0
     invoke-virtual {p1}, Landroid/graphics/Canvas;->restore()V
 
@@ -4977,11 +5010,23 @@
 .method public setMode(I)V
     .locals 0
 
-    .line 110
+    .line 117
     iput p1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mMode:I
 
-    .line 111
+    .line 118
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdAnimView;->restart()V
+
+    return-void
+.end method
+
+.method public setReverse(Z)V
+    .locals 0
+
+    .line 112
+    iput-boolean p1, p0, Lcom/masterrom/sdstorage/SdAnimView;->mReverse:Z
+
+    .line 113
+    invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdAnimView;->invalidate()V
 
     return-void
 .end method

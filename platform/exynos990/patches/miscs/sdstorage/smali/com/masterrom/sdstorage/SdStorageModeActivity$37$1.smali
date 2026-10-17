@@ -25,7 +25,7 @@
 .method constructor <init>(Lcom/masterrom/sdstorage/SdStorageModeActivity$37;)V
     .locals 0
 
-    .line 1365
+    .line 1375
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$37$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$37;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,12 +38,12 @@
 .method public run()V
     .locals 2
 
-    .line 1367
+    .line 1377
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$37$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$37;
 
     iget-object v0, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4500(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+    invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4600(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
 
     move-result-object v0
 
@@ -53,12 +53,12 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 1368
+    .line 1378
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$37$1;->this$1:Lcom/masterrom/sdstorage/SdStorageModeActivity$37;
 
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
-    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4500(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+    invoke-static {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4600(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
 
     move-result-object p0
 
