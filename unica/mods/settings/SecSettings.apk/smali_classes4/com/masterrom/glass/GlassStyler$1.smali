@@ -34,7 +34,7 @@
         }
     .end annotation
 
-    .line 90
+    .line 92
     iput-object p1, p0, Lcom/masterrom/glass/GlassStyler$1;->val$l:Landroid/view/ViewGroup;
 
     iput-boolean p2, p0, Lcom/masterrom/glass/GlassStyler$1;->val$dk:Z
@@ -51,7 +51,7 @@
 .method public onPreDraw()Z
     .locals 2
 
-    .line 92
+    .line 94
     iget-object v0, p0, Lcom/masterrom/glass/GlassStyler$1;->val$l:Landroid/view/ViewGroup;
 
     iget-boolean v1, p0, Lcom/masterrom/glass/GlassStyler$1;->val$dk:Z
