@@ -67,6 +67,8 @@ public final class GlassStyler {
                 return;
             }
             callQuiet(list, "seslSetFillBottomEnabled", new Class[] { boolean.class }, false);
+            // Samsung paints the list's side padding (28px each side) in the old page grey
+            callQuiet(list, "seslSetFillHorizontalPaddingEnabled", new Class[] { boolean.class }, false);
             callQuiet(list, "seslSetFadingEdgeEnabled", new Class[] { boolean.class }, false);
 
             // 3) everything between the list and the window is made transparent
@@ -128,6 +130,7 @@ public final class GlassStyler {
                     // no own fill: the card is drawn behind; keep a press ripple inside the row
                     c.setBackground(new GlassRipple(dark ? 0x22FFFFFF : 0x14000000));
                 }
+                clearLinkCard(c);
             } else if (k == 2) {
                 if (!c.getClipToOutline()) {
                     final float r = 26 * d;
@@ -143,6 +146,20 @@ public final class GlassStyler {
                 c.setBackground(null);
             }
         }
+    }
+
+    /**
+     * "Looking for something else?" footer (SecRelativeLinkView): Samsung gives it its own opaque
+     * rounded card. Its fill is removed so it sits on a glass card like every other row.
+     */
+    static void clearLinkCard(View row) {
+        if (!(row instanceof ViewGroup) || ((ViewGroup) row).getChildCount() == 0) return;
+        View link = ((ViewGroup) row).getChildAt(0);
+        if (!link.getClass().getName().endsWith("RelativeLinkView")) return;
+        if (link.getBackground() != null) link.setBackground(null);
+        int id = link.getResources().getIdentifier("relative_link_container", "id", link.getContext().getPackageName());
+        View box = id == 0 ? null : link.findViewById(id);
+        if (box != null && box.getBackground() != null) box.setBackground(null);
     }
 
     /** Press ripple without a fill, so the glass card behind the row stays visible. */
