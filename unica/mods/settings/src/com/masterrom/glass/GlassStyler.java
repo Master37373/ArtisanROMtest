@@ -71,9 +71,9 @@ public final class GlassStyler {
 
             // 3) everything between the list and the window is made transparent
             View top = w.getDecorView();
-            for (ViewParent p = list.getParent(); p instanceof View; p = p.getParent()) {
+            // (stops below the decor view: its background IS the window background from step 1)
+            for (ViewParent p = list.getParent(); p instanceof View && p != top; p = p.getParent()) {
                 clear((View) p);
-                if (p == top) break;
             }
             clearAppBar(top, activity);
             hideById(top, activity, "round_corner");
