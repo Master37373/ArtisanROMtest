@@ -57,11 +57,11 @@
 
     check-cast v3, Landroid/app/Activity;
 
-    if-eqz v2, :cond_8
+    if-eqz v2, :cond_7
 
     if-nez v3, :cond_0
 
-    goto/16 :goto_4
+    goto/16 :goto_3
 
     .line 51
     :cond_0
@@ -201,7 +201,7 @@
 
     move-result-object v1
 
-    .line 74
+    .line 75
     invoke-virtual {v2}, Landroid/view/ViewGroup;->getParent()Landroid/view/ViewParent;
 
     move-result-object v6
@@ -209,21 +209,18 @@
     :goto_1
     instance-of v7, v6, Landroid/view/View;
 
-    if-eqz v7, :cond_4
+    if-eqz v7, :cond_3
 
-    .line 75
+    if-eq v6, v1, :cond_3
+
+    .line 76
     move-object v7, v6
 
     check-cast v7, Landroid/view/View;
 
     invoke-static {v7}, Lcom/masterrom/glass/GlassStyler;->clear(Landroid/view/View;)V
 
-    if-ne v6, v1, :cond_3
-
-    goto :goto_2
-
-    .line 74
-    :cond_3
+    .line 75
     invoke-interface {v6}, Landroid/view/ViewParent;->getParent()Landroid/view/ViewParent;
 
     move-result-object v6
@@ -231,8 +228,7 @@
     goto :goto_1
 
     .line 78
-    :cond_4
-    :goto_2
+    :cond_3
     invoke-static {v1, v3}, Lcom/masterrom/glass/GlassStyler;->clearAppBar(Landroid/view/View;Landroid/content/Context;)V
 
     .line 79
@@ -247,7 +243,7 @@
 
     instance-of v1, v1, Lcom/masterrom/glass/GlassStyler$CardsDrawable;
 
-    if-nez v1, :cond_5
+    if-nez v1, :cond_4
 
     .line 83
     new-instance v1, Lcom/masterrom/glass/GlassStyler$CardsDrawable;
@@ -256,7 +252,7 @@
 
     invoke-virtual {v2, v1}, Landroid/view/ViewGroup;->setBackground(Landroid/graphics/drawable/Drawable;)V
 
-    :cond_5
+    :cond_4
     const v1, 0x7f6d6173
 
     .line 85
@@ -264,7 +260,7 @@
 
     move-result-object v3
 
-    if-nez v3, :cond_6
+    if-nez v3, :cond_5
 
     .line 89
     sget-object v3, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
@@ -283,7 +279,7 @@
     invoke-virtual {v1, v3}, Landroid/view/ViewTreeObserver;->addOnPreDrawListener(Landroid/view/ViewTreeObserver$OnPreDrawListener;)V
 
     .line 97
-    :cond_6
+    :cond_5
     invoke-static {v2, v4, v5}, Lcom/masterrom/glass/GlassStyler;->styleChildren(Landroid/view/ViewGroup;ZF)V
 
     .line 98
@@ -308,16 +304,16 @@
 
     invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    if-eqz v4, :cond_7
+    if-eqz v4, :cond_6
 
     const-string p0, " (dark)"
 
-    goto :goto_3
+    goto :goto_2
 
-    :cond_7
+    :cond_6
     const-string p0, " (light)"
 
-    :goto_3
+    :goto_2
     invoke-virtual {v1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
@@ -328,10 +324,10 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    goto :goto_5
+    goto :goto_4
 
-    :cond_8
-    :goto_4
+    :cond_7
+    :goto_3
     return-void
 
     :catchall_0
@@ -352,7 +348,7 @@
 
     invoke-static {v0, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    :goto_5
+    :goto_4
     return-void
 .end method
 
