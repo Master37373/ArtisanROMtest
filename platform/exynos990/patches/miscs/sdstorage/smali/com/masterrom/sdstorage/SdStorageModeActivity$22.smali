@@ -36,7 +36,7 @@
         }
     .end annotation
 
-    .line 966
+    .line 968
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->val$page:I
@@ -55,7 +55,7 @@
 .method public run()V
     .locals 4
 
-    .line 968
+    .line 970
     iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->val$page:I
 
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -84,7 +84,7 @@
 
     goto :goto_0
 
-    .line 969
+    .line 971
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
@@ -98,7 +98,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 970
+    .line 972
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->val$status:Landroid/widget/TextView;
 
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -113,7 +113,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 971
+    .line 973
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->val$status:Landroid/widget/TextView;
 
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
@@ -124,7 +124,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 972
+    .line 974
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3000(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/os/Handler;
@@ -141,7 +141,7 @@
 
     return-void
 
-    .line 979
+    .line 981
     :cond_1
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 

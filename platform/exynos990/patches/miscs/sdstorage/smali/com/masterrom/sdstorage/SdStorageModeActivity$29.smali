@@ -34,7 +34,7 @@
         }
     .end annotation
 
-    .line 1132
+    .line 1134
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$29;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$29;->val$target:Landroid/os/storage/VolumeInfo;
@@ -56,7 +56,7 @@
         }
     .end annotation
 
-    .line 1134
+    .line 1136
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$29;->val$target:Landroid/os/storage/VolumeInfo;
 
     if-nez v0, :cond_0
@@ -73,7 +73,7 @@
 
     return-object p0
 
-    .line 1135
+    .line 1137
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$29;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
@@ -91,7 +91,7 @@
 
     goto :goto_0
 
-    .line 1137
+    .line 1139
     :cond_1
     const-string v1, "Fotos, Downloads und andere Dateien kommen in den internen Speicher \u2026"
 
@@ -101,11 +101,11 @@
 
     move-result-object v1
 
-    .line 1135
+    .line 1137
     :goto_0
     invoke-static {v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$3100(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
-    .line 1139
+    .line 1141
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity$29;->this$0:Lcom/masterrom/sdstorage/SdStorageModeActivity;
 
     invoke-static {v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->access$4100(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/content/pm/PackageManager;

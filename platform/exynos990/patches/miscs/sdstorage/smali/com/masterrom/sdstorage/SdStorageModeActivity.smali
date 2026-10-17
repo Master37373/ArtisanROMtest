@@ -126,6 +126,10 @@
 
 .field private mViolet:I
 
+.field private mWorkBar:Landroid/widget/ProgressBar;
+
+.field private mWorkPercent:Landroid/widget/TextView;
+
 .field private mWorkText:Landroid/widget/TextView;
 
 
@@ -136,14 +140,14 @@
     .line 69
     invoke-direct {p0}, Landroid/app/Activity;-><init>()V
 
-    .line 106
+    .line 108
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;
 
     invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$1;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSnap:Ljava/lang/Runnable;
 
-    .line 125
+    .line 127
     new-instance v0, Landroid/view/animation/PathInterpolator;
 
     const v1, 0x3e4ccccd    # 0.2f
@@ -156,7 +160,7 @@
 
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mEase:Landroid/view/animation/PathInterpolator;
 
-    .line 126
+    .line 128
     new-instance v0, Landroid/view/animation/PathInterpolator;
 
     const v1, 0x3f333333    # 0.7f
@@ -169,7 +173,7 @@
 
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mEmph:Landroid/view/animation/PathInterpolator;
 
-    .line 127
+    .line 129
     new-instance v0, Landroid/view/animation/PathInterpolator;
 
     const/high16 v1, 0x3fa00000    # 1.25f
@@ -182,7 +186,7 @@
 
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSpring:Landroid/view/animation/PathInterpolator;
 
-    .line 129
+    .line 131
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$2;
 
     invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$2;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -598,6 +602,24 @@
     .locals 0
 
     .line 69
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    return-object p0
+.end method
+
+.method static synthetic access$4700(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/ProgressBar;
+    .locals 0
+
+    .line 69
+    iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkBar:Landroid/widget/ProgressBar;
+
+    return-object p0
+.end method
+
+.method static synthetic access$4800(Lcom/masterrom/sdstorage/SdStorageModeActivity;)Landroid/widget/TextView;
+    .locals 0
+
+    .line 69
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkText:Landroid/widget/TextView;
 
     return-object p0
@@ -660,7 +682,7 @@
 .method private addPress(Landroid/view/View;)V
     .locals 1
 
-    .line 255
+    .line 257
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$3;
 
     invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$3;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -677,7 +699,7 @@
 
     mul-float/2addr p1, v0
 
-    .line 189
+    .line 191
     invoke-static {p1}, Ljava/lang/Math;->round(F)I
 
     move-result p1
@@ -692,7 +714,7 @@
 .method private anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
     .locals 4
 
-    .line 494
+    .line 496
     new-instance v0, Lcom/masterrom/sdstorage/SdAnimView;
 
     iget v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
@@ -703,20 +725,20 @@
 
     invoke-direct {v0, p0, v1, v2, v3}, Lcom/masterrom/sdstorage/SdAnimView;-><init>(Landroid/content/Context;III)V
 
-    .line 495
+    .line 497
     invoke-virtual {v0, p2}, Lcom/masterrom/sdstorage/SdAnimView;->setMode(I)V
 
-    .line 496
+    .line 498
     iget-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNextReverse:Z
 
     invoke-virtual {v0, p2}, Lcom/masterrom/sdstorage/SdAnimView;->setReverse(Z)V
 
     const/4 p2, 0x0
 
-    .line 497
+    .line 499
     iput-boolean p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNextReverse:Z
 
-    .line 498
+    .line 500
     new-instance p2, Landroid/widget/LinearLayout$LayoutParams;
 
     int-to-float p3, p3
@@ -731,14 +753,14 @@
 
     const/high16 p3, 0x41400000    # 12.0f
 
-    .line 499
+    .line 501
     invoke-direct {p0, p3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p0
 
     iput p0, p2, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
-    .line 500
+    .line 502
     invoke-virtual {p1, v0, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     return-object v0
@@ -749,7 +771,7 @@
 
     const/4 v0, 0x0
 
-    .line 461
+    .line 463
     :goto_0
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
@@ -763,19 +785,19 @@
 
     if-ge v0, v1, :cond_0
 
-    .line 462
+    .line 464
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     invoke-virtual {v1, v0}, Landroid/widget/LinearLayout;->getChildAt(I)Landroid/view/View;
 
     move-result-object v1
 
-    .line 463
+    .line 465
     invoke-virtual {v1, v3}, Landroid/view/View;->setAlpha(F)V
 
     const/high16 v4, 0x42100000    # 36.0f
 
-    .line 464
+    .line 466
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v4
@@ -786,13 +808,13 @@
 
     const v4, 0x3f7851ec    # 0.97f
 
-    .line 465
+    .line 467
     invoke-virtual {v1, v4}, Landroid/view/View;->setScaleX(F)V
 
-    .line 466
+    .line 468
     invoke-virtual {v1, v4}, Landroid/view/View;->setScaleY(F)V
 
-    .line 467
+    .line 469
     invoke-virtual {v1}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
 
     move-result-object v1
@@ -819,7 +841,7 @@
 
     mul-long/2addr v4, v2
 
-    .line 468
+    .line 470
     invoke-virtual {v1, v4, v5}, Landroid/view/ViewPropertyAnimator;->setStartDelay(J)Landroid/view/ViewPropertyAnimator;
 
     move-result-object v1
@@ -842,7 +864,7 @@
 
     goto :goto_0
 
-    .line 470
+    .line 472
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -852,12 +874,12 @@
 
     if-nez v0, :cond_1
 
-    .line 471
+    .line 473
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0, v3}, Landroid/widget/LinearLayout;->setAlpha(F)V
 
-    .line 472
+    .line 474
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const/high16 v1, 0x41c00000    # 24.0f
@@ -870,7 +892,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/LinearLayout;->setTranslationY(F)V
 
-    .line 473
+    .line 475
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0}, Landroid/widget/LinearLayout;->animate()Landroid/view/ViewPropertyAnimator;
@@ -914,7 +936,7 @@
 
     int-to-float p1, p1
 
-    .line 415
+    .line 417
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->expandRange()I
 
     move-result v0
@@ -941,7 +963,7 @@
 
     add-float/2addr v1, v0
 
-    .line 417
+    .line 419
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v0}, Landroid/widget/TextView;->getWidth()I
@@ -968,7 +990,7 @@
 
     const/high16 v4, 0x42600000    # 56.0f
 
-    .line 418
+    .line 420
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v4
@@ -989,7 +1011,7 @@
 
     const/high16 v6, 0x428c0000    # 70.0f
 
-    .line 419
+    .line 421
     invoke-direct {p0, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v6
@@ -1008,17 +1030,17 @@
 
     div-float/2addr v4, v0
 
-    .line 421
+    .line 423
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setScaleX(F)V
 
-    .line 422
+    .line 424
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setScaleY(F)V
 
-    .line 423
+    .line 425
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     sub-float/2addr v6, v3
@@ -1029,7 +1051,7 @@
 
     invoke-virtual {v0, v3}, Landroid/widget/TextView;->setTranslationX(F)V
 
-    .line 424
+    .line 426
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     sub-float/2addr v4, v5
@@ -1046,15 +1068,15 @@
 .method private body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
     .locals 2
 
-    .line 517
+    .line 519
     new-instance v0, Landroid/widget/TextView;
 
     invoke-direct {v0, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 518
+    .line 520
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 519
+    .line 521
     iget p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTextColor(I)V
@@ -1063,12 +1085,12 @@
 
     const/high16 v1, 0x41700000    # 15.0f
 
-    .line 520
+    .line 522
     invoke-virtual {v0, p2, v1}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/16 p2, 0x190
 
-    .line 521
+    .line 523
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
@@ -1077,7 +1099,7 @@
 
     const/high16 p2, 0x40800000    # 4.0f
 
-    .line 522
+    .line 524
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p2
@@ -1088,7 +1110,7 @@
 
     invoke-virtual {v0, p2, v1}, Landroid/widget/TextView;->setLineSpacing(FF)V
 
-    .line 523
+    .line 525
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object p0
@@ -1101,7 +1123,7 @@
 .method private buildFrame()V
     .locals 13
 
-    .line 273
+    .line 275
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
     move-result-object v0
@@ -1116,7 +1138,7 @@
 
     const/4 v0, 0x0
 
-    .line 275
+    .line 277
     :try_start_0
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
@@ -1124,14 +1146,14 @@
 
     invoke-virtual {v1, v0}, Landroid/view/Window;->setStatusBarColor(I)V
 
-    .line 276
+    .line 278
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
     move-result-object v1
 
     invoke-virtual {v1, v0}, Landroid/view/Window;->setNavigationBarColor(I)V
 
-    .line 277
+    .line 279
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
     move-result-object v1
@@ -1140,7 +1162,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 280
+    .line 282
     :catchall_0
     new-instance v1, Landroid/widget/FrameLayout;
 
@@ -1148,7 +1170,7 @@
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mRoot:Landroid/widget/FrameLayout;
 
-    .line 281
+    .line 283
     iget-boolean v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
 
     const/high16 v3, 0x3f800000    # 1.0f
@@ -1162,7 +1184,7 @@
     :cond_0
     move v2, v3
 
-    .line 282
+    .line 284
     :goto_0
     new-instance v10, Lcom/masterrom/sdstorage/SdGlassBackground;
 
@@ -1174,7 +1196,7 @@
 
     mul-float/2addr v5, v2
 
-    .line 283
+    .line 285
     invoke-static {v4, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->alphaF(IF)I
 
     move-result v7
@@ -1211,10 +1233,10 @@
 
     invoke-direct {v2, v4, v4}, Landroid/widget/FrameLayout$LayoutParams;-><init>(II)V
 
-    .line 282
+    .line 284
     invoke-virtual {v1, v10, v2}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 286
+    .line 288
     new-instance v1, Landroid/widget/LinearLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
@@ -1223,10 +1245,10 @@
 
     const/4 v2, 0x1
 
-    .line 287
+    .line 289
     invoke-virtual {v1, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 288
+    .line 290
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mRoot:Landroid/widget/FrameLayout;
 
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mFrame:Landroid/widget/LinearLayout;
@@ -1237,24 +1259,24 @@
 
     invoke-virtual {v1, v5, v6}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 291
+    .line 293
     new-instance v1, Landroid/widget/LinearLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mHeader:Landroid/widget/LinearLayout;
 
-    .line 292
+    .line 294
     invoke-virtual {v1, v0}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 293
+    .line 295
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mHeader:Landroid/widget/LinearLayout;
 
     const/16 v5, 0x10
 
     invoke-virtual {v1, v5}, Landroid/widget/LinearLayout;->setGravity(I)V
 
-    .line 294
+    .line 296
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mHeader:Landroid/widget/LinearLayout;
 
     const/high16 v5, 0x41600000    # 14.0f
@@ -1269,12 +1291,12 @@
 
     invoke-virtual {v1, v6, v0, v7, v0}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 296
+    .line 298
     new-instance v1, Landroid/widget/FrameLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;)V
 
-    .line 297
+    .line 299
     iget-boolean v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
 
     if-eqz v6, :cond_1
@@ -1293,7 +1315,7 @@
 
     move-result-object v6
 
-    .line 298
+    .line 300
     invoke-direct {p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v7
@@ -1312,15 +1334,15 @@
     :goto_2
     invoke-virtual {v6, v7, v8}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
 
-    .line 299
+    .line 301
     invoke-virtual {v1, v6}, Landroid/widget/FrameLayout;->setBackground(Landroid/graphics/drawable/Drawable;)V
 
-    .line 300
+    .line 302
     new-instance v6, Landroid/widget/ImageView;
 
     invoke-direct {v6, p0}, Landroid/widget/ImageView;-><init>(Landroid/content/Context;)V
 
-    .line 301
+    .line 303
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getResources()Landroid/content/res/Resources;
 
     move-result-object v7
@@ -1339,7 +1361,7 @@
 
     if-eqz v7, :cond_3
 
-    .line 304
+    .line 306
     :try_start_1
     invoke-virtual {p0, v7}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1349,17 +1371,17 @@
 
     move-result-object v7
 
-    .line 305
+    .line 307
     iget v8, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     invoke-virtual {v7, v8}, Landroid/graphics/drawable/Drawable;->setTint(I)V
 
-    .line 306
+    .line 308
     invoke-virtual {v6, v7}, Landroid/widget/ImageView;->setImageDrawable(Landroid/graphics/drawable/Drawable;)V
     :try_end_1
     .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 309
+    .line 311
     :catch_0
     :cond_3
     new-instance v7, Landroid/widget/FrameLayout$LayoutParams;
@@ -1380,7 +1402,7 @@
 
     invoke-virtual {v1, v6, v7}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 310
+    .line 312
     const-string v6, "Zur\u00fcck"
 
     const-string v7, "Navigate up"
@@ -1391,23 +1413,23 @@
 
     invoke-virtual {v1, v6}, Landroid/widget/FrameLayout;->setContentDescription(Ljava/lang/CharSequence;)V
 
-    .line 311
+    .line 313
     invoke-virtual {v1, v2}, Landroid/widget/FrameLayout;->setClickable(Z)V
 
-    .line 312
+    .line 314
     new-instance v6, Lcom/masterrom/sdstorage/SdStorageModeActivity$4;
 
     invoke-direct {v6, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$4;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
 
     invoke-virtual {v1, v6}, Landroid/widget/FrameLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 313
+    .line 315
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->addPress(Landroid/view/View;)V
 
-    .line 314
+    .line 316
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBack:Landroid/view/View;
 
-    .line 315
+    .line 317
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mHeader:Landroid/widget/LinearLayout;
 
     new-instance v7, Landroid/widget/LinearLayout$LayoutParams;
@@ -1426,22 +1448,22 @@
 
     invoke-virtual {v6, v1, v7}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 317
+    .line 319
     new-instance v1, Landroid/widget/FrameLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTop:Landroid/widget/FrameLayout;
 
-    .line 318
+    .line 320
     new-instance v1, Landroid/widget/LinearLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 319
+    .line 321
     invoke-virtual {v1, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 320
+    .line 322
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTop:Landroid/widget/FrameLayout;
 
     new-instance v7, Landroid/widget/FrameLayout$LayoutParams;
@@ -1450,7 +1472,7 @@
 
     invoke-virtual {v6, v1, v7}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 321
+    .line 323
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mHeader:Landroid/widget/LinearLayout;
 
     new-instance v7, Landroid/widget/LinearLayout$LayoutParams;
@@ -1465,47 +1487,47 @@
 
     invoke-virtual {v1, v6, v7}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 323
+    .line 325
     new-instance v6, Landroid/widget/ScrollView;
 
     invoke-direct {v6, p0}, Landroid/widget/ScrollView;-><init>(Landroid/content/Context;)V
 
     iput-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
-    .line 324
-    invoke-virtual {v6, v2}, Landroid/widget/ScrollView;->setFillViewport(Z)V
-
-    .line 325
-    iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
-
-    invoke-virtual {v6, v0}, Landroid/widget/ScrollView;->setVerticalScrollBarEnabled(Z)V
-
     .line 326
-    iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
-
-    invoke-virtual {v6, v2}, Landroid/widget/ScrollView;->setOverScrollMode(I)V
+    invoke-virtual {v6, v2}, Landroid/widget/ScrollView;->setFillViewport(Z)V
 
     .line 327
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
-    invoke-virtual {v6, v0}, Landroid/widget/ScrollView;->setClipToPadding(Z)V
+    invoke-virtual {v6, v0}, Landroid/widget/ScrollView;->setVerticalScrollBarEnabled(Z)V
 
     .line 328
+    iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
+
+    invoke-virtual {v6, v2}, Landroid/widget/ScrollView;->setOverScrollMode(I)V
+
+    .line 329
+    iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
+
+    invoke-virtual {v6, v0}, Landroid/widget/ScrollView;->setClipToPadding(Z)V
+
+    .line 330
     new-instance v6, Landroid/widget/LinearLayout;
 
     invoke-direct {v6, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 329
+    .line 331
     invoke-virtual {v6, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 332
+    .line 334
     new-instance v7, Landroid/widget/FrameLayout;
 
     invoke-direct {v7, p0}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mExpand:Landroid/widget/FrameLayout;
 
-    .line 333
+    .line 335
     new-instance v9, Landroid/widget/LinearLayout$LayoutParams;
 
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->expandRange()I
@@ -1516,17 +1538,17 @@
 
     invoke-virtual {v6, v7, v9}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 335
+    .line 337
     new-instance v7, Landroid/widget/LinearLayout;
 
     invoke-direct {v7, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
-    .line 336
+    .line 338
     invoke-virtual {v7, v2}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 337
+    .line 339
     iget-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     invoke-direct {p0, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
@@ -1549,7 +1571,7 @@
 
     invoke-virtual {v7, v9, v10, v12, v8}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 338
+    .line 340
     iget-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     new-instance v8, Landroid/widget/LinearLayout$LayoutParams;
@@ -1560,7 +1582,7 @@
 
     invoke-virtual {v6, v7, v8}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 339
+    .line 341
     iget-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v8, Landroid/view/ViewGroup$LayoutParams;
@@ -1569,7 +1591,7 @@
 
     invoke-virtual {v7, v6, v8}, Landroid/widget/ScrollView;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 340
+    .line 342
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v7, Lcom/masterrom/sdstorage/SdStorageModeActivity$5;
@@ -1578,7 +1600,7 @@
 
     invoke-virtual {v6, v7}, Landroid/widget/ScrollView;->setOnScrollChangeListener(Landroid/view/View$OnScrollChangeListener;)V
 
-    .line 347
+    .line 349
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v7, Lcom/masterrom/sdstorage/SdStorageModeActivity$6;
@@ -1587,7 +1609,7 @@
 
     invoke-virtual {v6, v7}, Landroid/widget/ScrollView;->setOnTouchListener(Landroid/view/View$OnTouchListener;)V
 
-    .line 360
+    .line 362
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v7, Lcom/masterrom/sdstorage/SdStorageModeActivity$7;
@@ -1596,7 +1618,7 @@
 
     invoke-virtual {v6, v7}, Landroid/widget/ScrollView;->addOnLayoutChangeListener(Landroid/view/View$OnLayoutChangeListener;)V
 
-    .line 366
+    .line 368
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v7, Landroid/widget/LinearLayout$LayoutParams;
@@ -1605,19 +1627,19 @@
 
     invoke-virtual {v1, v6, v7}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 369
+    .line 371
     new-instance v1, Landroid/widget/TextView;
 
     invoke-direct {v1, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
-    .line 370
+    .line 372
     iget v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     invoke-virtual {v1, v6}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 371
+    .line 373
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     const/4 v6, 0x2
@@ -1626,7 +1648,7 @@
 
     invoke-virtual {v1, v6, v7}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 372
+    .line 374
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     const/16 v6, 0x258
@@ -1637,19 +1659,19 @@
 
     invoke-virtual {v1, v6}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 373
+    .line 375
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->setSingleLine(Z)V
 
-    .line 374
+    .line 376
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     sget-object v2, Landroid/text/TextUtils$TruncateAt;->END:Landroid/text/TextUtils$TruncateAt;
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->setEllipsize(Landroid/text/TextUtils$TruncateAt;)V
 
-    .line 375
+    .line 377
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getResources()Landroid/content/res/Resources;
@@ -1672,19 +1694,19 @@
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->setMaxWidth(I)V
 
-    .line 376
+    .line 378
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     const/4 v2, 0x0
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->setPivotX(F)V
 
-    .line 377
+    .line 379
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->setPivotY(F)V
 
-    .line 378
+    .line 380
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTop:Landroid/widget/FrameLayout;
 
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
@@ -1697,7 +1719,7 @@
 
     invoke-virtual {v1, v2, v6}, Landroid/widget/FrameLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 380
+    .line 382
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     new-instance v2, Lcom/masterrom/sdstorage/SdStorageModeActivity$8;
@@ -1706,7 +1728,7 @@
 
     invoke-virtual {v1, v2}, Landroid/widget/TextView;->addOnLayoutChangeListener(Landroid/view/View$OnLayoutChangeListener;)V
 
-    .line 385
+    .line 387
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mFrame:Landroid/widget/LinearLayout;
 
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTop:Landroid/widget/FrameLayout;
@@ -1717,22 +1739,22 @@
 
     invoke-virtual {v1, v2, v6}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 387
+    .line 389
     new-instance v1, Landroid/widget/LinearLayout;
 
     invoke-direct {v1, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
-    .line 388
+    .line 390
     invoke-virtual {v1, v0}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 389
+    .line 391
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0, v11}, Landroid/widget/LinearLayout;->setGravity(I)V
 
-    .line 390
+    .line 392
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-direct {p0, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
@@ -1757,7 +1779,7 @@
 
     invoke-virtual {v0, v1, v2, v3, v5}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 391
+    .line 393
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mFrame:Landroid/widget/LinearLayout;
 
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
@@ -1768,7 +1790,7 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 393
+    .line 395
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mRoot:Landroid/widget/FrameLayout;
 
     new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$9;
@@ -1777,7 +1799,7 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/FrameLayout;->setOnApplyWindowInsetsListener(Landroid/view/View$OnApplyWindowInsetsListener;)V
 
-    .line 400
+    .line 402
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mRoot:Landroid/widget/FrameLayout;
 
     invoke-virtual {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->setContentView(Landroid/view/View;)V
@@ -1788,30 +1810,30 @@
 .method private button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
     .locals 6
 
-    .line 600
+    .line 602
     new-instance v0, Landroid/widget/TextView;
 
     invoke-direct {v0, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 601
+    .line 603
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
     const/16 p2, 0x11
 
-    .line 602
+    .line 604
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setGravity(I)V
 
     const/4 p2, 0x2
 
     const/high16 v1, 0x41800000    # 16.0f
 
-    .line 603
+    .line 605
     invoke-virtual {v0, p2, v1}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 604
+    .line 606
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setMaxLines(I)V
 
-    .line 605
+    .line 607
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p2
@@ -1832,7 +1854,7 @@
 
     if-eqz p4, :cond_1
 
-    .line 608
+    .line 610
     iget p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mError:I
 
     iget-boolean p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
@@ -1855,7 +1877,7 @@
 
     move-result-object p3
 
-    .line 609
+    .line 611
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p4
@@ -1870,12 +1892,12 @@
 
     invoke-virtual {p3, p4, v3}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
 
-    .line 611
+    .line 613
     iget p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mError:I
 
     invoke-virtual {v0, p4}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 612
+    .line 614
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
@@ -1887,7 +1909,7 @@
     :cond_1
     if-eqz p3, :cond_2
 
-    .line 614
+    .line 616
     new-instance p3, Landroid/graphics/drawable/GradientDrawable;
 
     sget-object p2, Landroid/graphics/drawable/GradientDrawable$Orientation;->LEFT_RIGHT:Landroid/graphics/drawable/GradientDrawable$Orientation;
@@ -1904,7 +1926,7 @@
 
     invoke-direct {p3, p2, p4}, Landroid/graphics/drawable/GradientDrawable;-><init>(Landroid/graphics/drawable/GradientDrawable$Orientation;[I)V
 
-    .line 616
+    .line 618
     invoke-direct {p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p2
@@ -1913,14 +1935,14 @@
 
     invoke-virtual {p3, p2}, Landroid/graphics/drawable/GradientDrawable;->setCornerRadius(F)V
 
-    .line 618
+    .line 620
     iget p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnAccent:I
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTextColor(I)V
 
     const/16 p2, 0x2bc
 
-    .line 619
+    .line 621
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
@@ -1929,7 +1951,7 @@
 
     goto :goto_1
 
-    .line 621
+    .line 623
     :cond_2
     iget p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlass:I
 
@@ -1937,7 +1959,7 @@
 
     move-result-object p3
 
-    .line 622
+    .line 624
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p4
@@ -1952,37 +1974,37 @@
 
     invoke-virtual {p3, p4, v3}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
 
-    .line 624
+    .line 626
     iget p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipText:I
 
     invoke-virtual {v0, p4}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 625
+    .line 627
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 627
+    .line 629
     :goto_1
     invoke-virtual {v0, p3}, Landroid/widget/TextView;->setBackground(Landroid/graphics/drawable/Drawable;)V
 
     const/4 p2, 0x1
 
-    .line 628
+    .line 630
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setClickable(Z)V
 
-    .line 629
+    .line 631
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setFocusable(Z)V
 
-    .line 630
+    .line 632
     invoke-virtual {v0, p5}, Landroid/widget/TextView;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 631
+    .line 633
     invoke-direct {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->addPress(Landroid/view/View;)V
 
-    .line 632
+    .line 634
     new-instance p2, Landroid/widget/LinearLayout$LayoutParams;
 
     const/high16 p3, 0x42580000    # 54.0f
@@ -1993,7 +2015,7 @@
 
     invoke-direct {p2, v2, p3, v1}, Landroid/widget/LinearLayout$LayoutParams;-><init>(IIF)V
 
-    .line 633
+    .line 635
     invoke-virtual {p1}, Landroid/widget/LinearLayout;->getChildCount()I
 
     move-result p3
@@ -2008,11 +2030,11 @@
 
     iput p3, p2, Landroid/widget/LinearLayout$LayoutParams;->leftMargin:I
 
-    .line 634
+    .line 636
     :cond_3
     invoke-virtual {p1, v0, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 635
+    .line 637
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     if-ne p1, p0, :cond_4
@@ -2026,31 +2048,31 @@
 .method private cancelSheet()V
     .locals 2
 
-    .line 681
+    .line 683
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetShown:Z
 
     if-nez v0, :cond_0
 
     return-void
 
-    .line 682
+    .line 684
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetCancel:Ljava/lang/Runnable;
 
     const/4 v1, 0x0
 
-    .line 683
+    .line 685
     iput-boolean v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetShown:Z
 
     const/4 v1, 0x0
 
-    .line 684
+    .line 686
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetCancel:Ljava/lang/Runnable;
 
-    .line 685
+    .line 687
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->updateBackCallback()V
 
-    .line 686
+    .line 688
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->isFinishing()Z
 
     move-result v1
@@ -2068,7 +2090,7 @@
     :cond_1
     if-eqz v0, :cond_2
 
-    .line 687
+    .line 689
     invoke-interface {v0}, Ljava/lang/Runnable;->run()V
 
     goto :goto_0
@@ -2084,17 +2106,17 @@
 .method private card()Landroid/widget/LinearLayout;
     .locals 5
 
-    .line 483
+    .line 485
     new-instance v0, Landroid/widget/LinearLayout;
 
     invoke-direct {v0, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     const/4 v1, 0x1
 
-    .line 484
+    .line 486
     invoke-virtual {v0, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 485
+    .line 487
     iget v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlass:I
 
     const/high16 v2, 0x41e00000    # 28.0f
@@ -2107,7 +2129,7 @@
 
     const/high16 v1, 0x41b00000    # 22.0f
 
-    .line 486
+    .line 488
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
@@ -2128,21 +2150,21 @@
 
     invoke-virtual {v0, v2, v4, v1, v3}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 487
+    .line 489
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v1
 
     const/high16 v2, 0x41600000    # 14.0f
 
-    .line 488
+    .line 490
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
 
     iput v2, v1, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
-    .line 489
+    .line 491
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     invoke-virtual {p0, v0, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
@@ -2153,65 +2175,65 @@
 .method private varargs chips(Landroid/widget/LinearLayout;[Ljava/lang/String;)V
     .locals 9
 
-    .line 540
+    .line 542
     new-instance v0, Landroid/widget/HorizontalScrollView;
 
     invoke-direct {v0, p0}, Landroid/widget/HorizontalScrollView;-><init>(Landroid/content/Context;)V
 
     const/4 v1, 0x0
 
-    .line 541
+    .line 543
     invoke-virtual {v0, v1}, Landroid/widget/HorizontalScrollView;->setHorizontalScrollBarEnabled(Z)V
 
     const/4 v2, 0x2
 
-    .line 542
+    .line 544
     invoke-virtual {v0, v2}, Landroid/widget/HorizontalScrollView;->setOverScrollMode(I)V
 
-    .line 543
+    .line 545
     new-instance v3, Landroid/widget/LinearLayout;
 
     invoke-direct {v3, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 544
+    .line 546
     invoke-virtual {v3, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 545
+    .line 547
     :goto_0
     array-length v4, p2
 
     if-ge v1, v4, :cond_1
 
-    .line 546
+    .line 548
     new-instance v4, Landroid/widget/TextView;
 
     invoke-direct {v4, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 547
+    .line 549
     aget-object v5, p2, v1
 
     invoke-virtual {v4, v5}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 548
+    .line 550
     iget v5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipText:I
 
     invoke-virtual {v4, v5}, Landroid/widget/TextView;->setTextColor(I)V
 
     const/high16 v5, 0x41500000    # 13.0f
 
-    .line 549
+    .line 551
     invoke-virtual {v4, v2, v5}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/16 v5, 0x2bc
 
-    .line 550
+    .line 552
     invoke-direct {p0, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object v5
 
     invoke-virtual {v4, v5}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 551
+    .line 553
     iget v5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipBg:I
 
     const/high16 v6, 0x41800000    # 16.0f
@@ -2224,7 +2246,7 @@
 
     const/high16 v5, 0x41400000    # 12.0f
 
-    .line 552
+    .line 554
     invoke-direct {p0, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v6
@@ -2245,7 +2267,7 @@
 
     invoke-virtual {v4, v6, v8, v5, v7}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 553
+    .line 555
     new-instance v5, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v6, -0x2
@@ -2256,14 +2278,14 @@
 
     const/high16 v6, 0x41000000    # 8.0f
 
-    .line 554
+    .line 556
     invoke-direct {p0, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v6
 
     iput v6, v5, Landroid/widget/LinearLayout$LayoutParams;->leftMargin:I
 
-    .line 555
+    .line 557
     :cond_0
     invoke-virtual {v3, v4, v5}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
@@ -2271,25 +2293,25 @@
 
     goto :goto_0
 
-    .line 557
+    .line 559
     :cond_1
     invoke-virtual {v0, v3}, Landroid/widget/HorizontalScrollView;->addView(Landroid/view/View;)V
 
-    .line 558
+    .line 560
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object p2
 
     const/high16 v1, 0x41600000    # 14.0f
 
-    .line 559
+    .line 561
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p0
 
     iput p0, p2, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
-    .line 560
+    .line 562
     invoke-virtual {p1, v0, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     return-void
@@ -2298,14 +2320,14 @@
 .method private collapseNow()V
     .locals 3
 
-    .line 436
+    .line 438
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mStartCollapsed:Z
 
     if-nez v0, :cond_0
 
     return-void
 
-    .line 437
+    .line 439
     :cond_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
@@ -2329,7 +2351,7 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/widget/ScrollView;->scrollTo(II)V
 
-    .line 438
+    .line 440
     :cond_1
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
@@ -2347,12 +2369,12 @@
 
     xor-int/lit8 v0, p2, 0x1
 
-    .line 1111
+    .line 1113
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNextReverse:Z
 
     if-eqz p2, :cond_0
 
-    .line 1112
+    .line 1114
     const-string v0, "Dateien auf die SD-Karte verschieben?"
 
     const-string v1, "Move files to the SD card?"
@@ -2363,7 +2385,7 @@
 
     goto :goto_0
 
-    .line 1113
+    .line 1115
     :cond_0
     const-string v0, "Dateien in den internen Speicher verschieben?"
 
@@ -2380,7 +2402,7 @@
 
     const-string v1, "Photos, videos, downloads and other files are moved and stored there from now on. Depending on the amount of data this takes a few minutes."
 
-    .line 1114
+    .line 1116
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
@@ -2389,7 +2411,7 @@
 
     const-string v1, "Cancel"
 
-    .line 1118
+    .line 1120
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v5
@@ -2412,10 +2434,10 @@
 
     move-object v1, p0
 
-    .line 1112
+    .line 1114
     invoke-direct/range {v1 .. v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
-    .line 1126
+    .line 1128
     new-instance p1, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;
 
     invoke-direct {p1, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$28;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -2428,12 +2450,12 @@
 .method private confirmToInternal(Landroid/os/storage/DiskInfo;)V
     .locals 10
 
-    .line 1020
+    .line 1022
     invoke-virtual {p1}, Landroid/os/storage/DiskInfo;->getId()Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1021
+    .line 1023
     const-string v0, "Alle Daten auf der SD-Karte l\u00f6schen?"
 
     const-string v1, "Erase all data on the SD card?"
@@ -2446,7 +2468,7 @@
 
     const-string v1, "The card is formatted and encrypted. All data on it will be permanently erased."
 
-    .line 1022
+    .line 1024
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -2455,7 +2477,7 @@
 
     const-string v1, "Cancel"
 
-    .line 1024
+    .line 1026
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v6
@@ -2478,7 +2500,7 @@
 
     move-object v2, p0
 
-    .line 1021
+    .line 1023
     invoke-direct/range {v2 .. v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
     return-void
@@ -2487,7 +2509,7 @@
 .method private currentFileLocation(Landroid/os/storage/VolumeInfo;)Ljava/lang/String;
     .locals 1
 
-    .line 738
+    .line 740
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->filesOnSd(Landroid/os/storage/VolumeInfo;)Z
 
     move-result p1
@@ -2516,7 +2538,7 @@
 .method private dp(F)I
     .locals 1
 
-    .line 181
+    .line 183
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getResources()Landroid/content/res/Resources;
 
     move-result-object p0
@@ -2541,7 +2563,7 @@
 .method private expandRange()I
     .locals 4
 
-    .line 405
+    .line 407
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getResources()Landroid/content/res/Resources;
 
     move-result-object v0
@@ -2554,7 +2576,7 @@
 
     const/high16 v1, 0x42600000    # 56.0f
 
-    .line 406
+    .line 408
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
@@ -2585,14 +2607,14 @@
 .method private filesOnSd(Landroid/os/storage/VolumeInfo;)Z
     .locals 0
 
-    .line 733
+    .line 735
     invoke-virtual {p1}, Landroid/os/storage/VolumeInfo;->getFsUuid()Ljava/lang/String;
 
     move-result-object p1
 
     if-eqz p1, :cond_0
 
-    .line 734
+    .line 736
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {p0}, Landroid/os/storage/StorageManager;->getPrimaryStorageUuid()Ljava/lang/String;
@@ -2619,7 +2641,7 @@
 .method private findSdDisk()Landroid/os/storage/DiskInfo;
     .locals 3
 
-    .line 709
+    .line 711
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {p0}, Landroid/os/storage/StorageManager;->getDisks()Ljava/util/List;
@@ -2632,7 +2654,7 @@
 
     return-object v0
 
-    .line 711
+    .line 713
     :cond_0
     invoke-interface {p0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
@@ -2653,7 +2675,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 712
+    .line 714
     invoke-virtual {v1}, Landroid/os/storage/DiskInfo;->isSd()Z
 
     move-result v2
@@ -2669,7 +2691,7 @@
 .method private findVolume(Landroid/os/storage/DiskInfo;I)Landroid/os/storage/VolumeInfo;
     .locals 4
 
-    .line 718
+    .line 720
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {p0}, Landroid/os/storage/StorageManager;->getVolumes()Ljava/util/List;
@@ -2684,7 +2706,7 @@
 
     goto :goto_0
 
-    .line 720
+    .line 722
     :cond_0
     invoke-interface {p0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
@@ -2705,7 +2727,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 721
+    .line 723
     invoke-virtual {v1}, Landroid/os/storage/VolumeInfo;->getType()I
 
     move-result v2
@@ -2736,7 +2758,7 @@
 .method private font(I)Landroid/graphics/Typeface;
     .locals 1
 
-    .line 194
+    .line 196
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mFont:Landroid/graphics/Typeface;
 
     const/4 v0, 0x0
@@ -2751,15 +2773,15 @@
 .method private glass(IF)Landroid/graphics/drawable/Drawable;
     .locals 7
 
-    .line 233
+    .line 235
     new-instance v0, Landroid/graphics/drawable/GradientDrawable;
 
     invoke-direct {v0}, Landroid/graphics/drawable/GradientDrawable;-><init>()V
 
-    .line 234
+    .line 236
     invoke-virtual {v0, p1}, Landroid/graphics/drawable/GradientDrawable;->setColor(I)V
 
-    .line 235
+    .line 237
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p1
@@ -2770,7 +2792,7 @@
 
     const p1, 0x3f4ccccd    # 0.8f
 
-    .line 236
+    .line 238
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p1
@@ -2785,7 +2807,7 @@
 
     invoke-virtual {v0, p1, v2}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
 
-    .line 237
+    .line 239
     new-instance p1, Landroid/graphics/drawable/GradientDrawable;
 
     sget-object v2, Landroid/graphics/drawable/GradientDrawable$Orientation;->TOP_BOTTOM:Landroid/graphics/drawable/GradientDrawable$Orientation;
@@ -2794,7 +2816,7 @@
 
     const/4 v4, 0x0
 
-    .line 238
+    .line 240
     invoke-static {v3, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->withAlpha(II)I
 
     move-result v5
@@ -2805,7 +2827,7 @@
 
     invoke-direct {p1, v2, v3}, Landroid/graphics/drawable/GradientDrawable;-><init>(Landroid/graphics/drawable/GradientDrawable$Orientation;[I)V
 
-    .line 239
+    .line 241
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
@@ -2866,7 +2888,7 @@
 
     invoke-virtual {p1, v6}, Landroid/graphics/drawable/GradientDrawable;->setCornerRadii([F)V
 
-    .line 240
+    .line 242
     new-instance p2, Landroid/graphics/drawable/LayerDrawable;
 
     new-array v2, v2, [Landroid/graphics/drawable/Drawable;
@@ -2879,7 +2901,7 @@
 
     const/high16 p1, 0x42600000    # 56.0f
 
-    .line 241
+    .line 243
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p0
@@ -2888,7 +2910,7 @@
 
     const/16 p0, 0x37
 
-    .line 242
+    .line 244
     invoke-virtual {p2, v1, p0}, Landroid/graphics/drawable/LayerDrawable;->setLayerGravity(II)V
 
     return-object p2
@@ -2897,7 +2919,7 @@
 .method private handleBack()Z
     .locals 2
 
-    .line 166
+    .line 168
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBusy:Z
 
     const/4 v1, 0x1
@@ -2906,13 +2928,13 @@
 
     return v1
 
-    .line 167
+    .line 169
     :cond_0
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetShown:Z
 
     if-eqz v0, :cond_1
 
-    .line 168
+    .line 170
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->cancelSheet()V
 
     return v1
@@ -2926,15 +2948,15 @@
 .method private headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
     .locals 2
 
-    .line 505
+    .line 507
     new-instance v0, Landroid/widget/TextView;
 
     invoke-direct {v0, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 506
+    .line 508
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 507
+    .line 509
     iget p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTextColor(I)V
@@ -2943,33 +2965,33 @@
 
     const/high16 v1, 0x41a00000    # 20.0f
 
-    .line 508
+    .line 510
     invoke-virtual {v0, p2, v1}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/16 p2, 0x2bc
 
-    .line 509
+    .line 511
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
 
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 510
+    .line 512
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object p2
 
     const/high16 v1, 0x41000000    # 8.0f
 
-    .line 511
+    .line 513
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p0
 
     iput p0, p2, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
-    .line 512
+    .line 514
     invoke-virtual {p1, v0, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     return-object v0
@@ -2978,7 +3000,7 @@
 .method private loadColors()V
     .locals 2
 
-    .line 198
+    .line 200
     const-string v0, "sec"
 
     const/4 v1, 0x0
@@ -2991,75 +3013,75 @@
 
     const/4 v0, -0x1
 
-    .line 199
+    .line 201
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnAccent:I
 
-    .line 200
+    .line 202
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
 
     if-eqz v0, :cond_0
 
     const v0, -0xf8f7f4
 
-    .line 201
+    .line 203
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBase:I
 
     const v0, -0xb0a09
 
-    .line 202
+    .line 204
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     const v0, -0x4c4840
 
-    .line 203
+    .line 205
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     const v0, -0xc16e01
 
-    .line 204
+    .line 206
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     const v0, -0xd12c3a
 
-    .line 205
+    .line 207
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent2:I
 
     const v0, -0x849301
 
-    .line 206
+    .line 208
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mViolet:I
 
     const v0, 0x12ffffff
 
-    .line 207
+    .line 209
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlass:I
 
     const v0, 0x21ffffff
 
-    .line 208
+    .line 210
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlassStroke:I
 
     const v0, 0x14ffffff
 
-    .line 209
+    .line 211
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlassHi:I
 
-    .line 210
+    .line 212
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDivider:I
 
     const v0, 0x2e3e91ff
 
-    .line 211
+    .line 213
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipBg:I
 
     const v0, -0x633701
 
-    .line 212
+    .line 214
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipText:I
 
     const v0, -0x9491
 
-    .line 213
+    .line 215
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mError:I
 
     goto :goto_0
@@ -3067,67 +3089,67 @@
     :cond_0
     const v0, -0xd0b08
 
-    .line 215
+    .line 217
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBase:I
 
     const v0, -0xefeeec
 
-    .line 216
+    .line 218
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     const v0, -0xb5b1a9
 
-    .line 217
+    .line 219
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     const v0, -0xf58d1a
 
-    .line 218
+    .line 220
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     const v0, -0xeb4a37
 
-    .line 219
+    .line 221
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent2:I
 
     const v0, -0xa49301
 
-    .line 220
+    .line 222
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mViolet:I
 
     const v0, -0x57000001
 
-    .line 221
+    .line 223
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlass:I
 
     const v0, -0x14000001
 
-    .line 222
+    .line 224
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlassStroke:I
 
     const v0, -0x7f000001
 
-    .line 223
+    .line 225
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mGlassHi:I
 
     const/high16 v0, 0x12000000
 
-    .line 224
+    .line 226
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDivider:I
 
     const v0, 0x1c0a72e6
 
-    .line 225
+    .line 227
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipBg:I
 
     const v0, -0xf5992f
 
-    .line 226
+    .line 228
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mChipText:I
 
     const v0, -0x26c5c1
 
-    .line 227
+    .line 229
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mError:I
 
     :goto_0
@@ -3145,12 +3167,12 @@
         }
     .end annotation
 
-    .line 898
+    .line 900
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
 
-    .line 900
+    .line 902
     :try_start_0
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUm:Landroid/os/UserManager;
 
@@ -3162,7 +3184,7 @@
 
     return-object v0
 
-    .line 902
+    .line 904
     :cond_0
     invoke-interface {v1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
@@ -3184,7 +3206,7 @@
 
     if-eqz v2, :cond_1
 
-    .line 903
+    .line 905
     iget-object v3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUm:Landroid/os/UserManager;
 
     iget v4, v2, Landroid/content/pm/UserInfo;->id:I
@@ -3204,7 +3226,7 @@
     :catchall_0
     move-exception p0
 
-    .line 906
+    .line 908
     const-string v1, "MasterROMSdStorage"
 
     const-string v2, "lockedUsers"
@@ -3218,7 +3240,7 @@
 .method private matchWrap()Landroid/widget/LinearLayout$LayoutParams;
     .locals 2
 
-    .line 478
+    .line 480
     new-instance p0, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v0, -0x1
@@ -3261,7 +3283,7 @@
 
     if-eq p1, v0, :cond_0
 
-    .line 1266
+    .line 1269
     const-string v0, "Interner Fehler."
 
     const-string v1, "Internal error."
@@ -3272,7 +3294,7 @@
 
     goto :goto_0
 
-    .line 1255
+    .line 1258
     :cond_0
     const-string v0, "Nicht genug freier Speicher am Ziel."
 
@@ -3284,7 +3306,7 @@
 
     goto :goto_0
 
-    .line 1256
+    .line 1259
     :cond_1
     const-string v0, "Die App existiert nicht mehr."
 
@@ -3296,7 +3318,7 @@
 
     goto :goto_0
 
-    .line 1257
+    .line 1260
     :cond_2
     const-string v0, "System-Apps k\u00f6nnen nicht verschoben werden."
 
@@ -3308,7 +3330,7 @@
 
     goto :goto_0
 
-    .line 1259
+    .line 1262
     :cond_3
     const-string v0, "Es l\u00e4uft bereits ein anderer Verschiebevorgang. Bitte sp\u00e4ter erneut versuchen."
 
@@ -3320,7 +3342,7 @@
 
     goto :goto_0
 
-    .line 1261
+    .line 1264
     :cond_4
     const-string v0, "Diese App ist ein Ger\u00e4teadministrator und kann nicht verschoben werden."
 
@@ -3332,7 +3354,7 @@
 
     goto :goto_0
 
-    .line 1258
+    .line 1261
     :cond_5
     const-string v0, "Dieser Speicherort ist nicht m\u00f6glich."
 
@@ -3344,7 +3366,7 @@
 
     goto :goto_0
 
-    .line 1263
+    .line 1266
     :cond_6
     const-string v0, "Der Sichere Ordner oder ein anderer Benutzer ist gesperrt. Entsperre ihn und versuche es dann erneut."
 
@@ -3354,7 +3376,7 @@
 
     move-result-object v0
 
-    .line 1268
+    .line 1271
     :goto_0
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -3390,10 +3412,10 @@
 
     xor-int/lit8 v0, p2, 0x1
 
-    .line 1130
+    .line 1132
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNextReverse:Z
 
-    .line 1131
+    .line 1133
     const-string v0, "Verschieben"
 
     const-string v1, "Moving files"
@@ -3408,7 +3430,7 @@
 
     if-eqz p2, :cond_0
 
-    .line 1142
+    .line 1144
     const-string p1, "Fotos, Downloads und andere Dateien liegen jetzt auf der SD-Karte. Neue Dateien werden automatisch dort gespeichert."
 
     const-string p2, "Photos, downloads and other files are now on the SD card. New files are stored there automatically."
@@ -3419,7 +3441,7 @@
 
     goto :goto_0
 
-    .line 1144
+    .line 1146
     :cond_0
     const-string p1, "Fotos, Downloads und andere Dateien liegen jetzt im internen Speicher."
 
@@ -3432,7 +3454,7 @@
     :goto_0
     const/4 p2, 0x0
 
-    .line 1131
+    .line 1133
     invoke-direct {p0, v0, v1, p1, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->runWork(Ljava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
 
     return-void
@@ -3441,7 +3463,7 @@
 .method private newPage(Ljava/lang/String;)V
     .locals 3
 
-    .line 443
+    .line 445
     iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPageId:I
 
     const/4 v1, 0x1
@@ -3452,40 +3474,40 @@
 
     const/4 v0, 0x0
 
-    .line 444
+    .line 446
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetShown:Z
 
     const/4 v0, 0x0
 
-    .line 445
+    .line 447
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetCancel:Ljava/lang/Runnable;
 
-    .line 446
+    .line 448
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->updateBackCallback()V
 
-    .line 447
+    .line 449
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0}, Landroid/widget/LinearLayout;->removeAllViews()V
 
-    .line 448
+    .line 450
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-virtual {v0}, Landroid/widget/LinearLayout;->removeAllViews()V
 
-    .line 449
+    .line 451
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const/16 v2, 0x8
 
     invoke-virtual {v0, v2}, Landroid/widget/LinearLayout;->setVisibility(I)V
 
-    .line 450
+    .line 452
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {v0, p1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 451
+    .line 453
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
@@ -3496,13 +3518,13 @@
 
     invoke-virtual {p1, v0}, Landroid/widget/LinearLayout;->setMinimumHeight(I)V
 
-    .line 452
+    .line 454
     iput-boolean v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mStartCollapsed:Z
 
-    .line 453
+    .line 455
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->collapseNow()V
 
-    .line 454
+    .line 456
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$10;
@@ -3511,14 +3533,14 @@
 
     invoke-virtual {p1, v0}, Landroid/widget/ScrollView;->post(Ljava/lang/Runnable;)Z
 
-    .line 455
+    .line 457
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     const/4 v0, 0x0
 
     invoke-virtual {p1, v0}, Landroid/widget/TextView;->setAlpha(F)V
 
-    .line 456
+    .line 458
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTitle:Landroid/widget/TextView;
 
     invoke-virtual {p1}, Landroid/widget/TextView;->animate()Landroid/view/ViewPropertyAnimator;
@@ -3551,15 +3573,15 @@
 .method private pill(IF)Landroid/graphics/drawable/GradientDrawable;
     .locals 1
 
-    .line 247
+    .line 249
     new-instance v0, Landroid/graphics/drawable/GradientDrawable;
 
     invoke-direct {v0}, Landroid/graphics/drawable/GradientDrawable;-><init>()V
 
-    .line 248
+    .line 250
     invoke-virtual {v0, p1}, Landroid/graphics/drawable/GradientDrawable;->setColor(I)V
 
-    .line 249
+    .line 251
     invoke-direct {p0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p0
@@ -3574,7 +3596,7 @@
 .method private refreshMain()V
     .locals 2
 
-    .line 727
+    .line 729
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
 
     new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$14;
@@ -3589,19 +3611,19 @@
 .method private requireUnlocked(Ljava/lang/Runnable;)V
     .locals 10
 
-    .line 920
+    .line 922
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->lockedUsers()Ljava/util/List;
 
     move-result-object v0
 
-    .line 921
+    .line 923
     invoke-interface {v0}, Ljava/util/List;->isEmpty()Z
 
     move-result v1
 
     if-eqz v1, :cond_0
 
-    .line 922
+    .line 924
     invoke-interface {p1}, Ljava/lang/Runnable;->run()V
 
     return-void
@@ -3609,10 +3631,10 @@
     :cond_0
     const/4 v1, 0x0
 
-    .line 925
+    .line 927
     iput-boolean v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 926
+    .line 928
     invoke-interface {v0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v2
@@ -3621,7 +3643,7 @@
 
     check-cast v6, Landroid/content/pm/UserInfo;
 
-    .line 927
+    .line 929
     const-string v7, "Entsperren"
 
     const-string v8, "Unlock"
@@ -3632,7 +3654,7 @@
 
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 928
+    .line 930
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v2
@@ -3641,10 +3663,10 @@
 
     const/16 v4, 0xb4
 
-    .line 929
+    .line 931
     invoke-direct {p0, v2, v3, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 930
+    .line 932
     const-string v3, "Kurz entsperren, dann geht es weiter"
 
     const-string v4, "Unlock briefly, then we continue"
@@ -3655,12 +3677,12 @@
 
     invoke-direct {p0, v2, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 931
+    .line 933
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 932
+    .line 934
     const-string v4, "Damit Fotos, Downloads und andere Dateien verschoben werden k\u00f6nnen, m\u00fcssen alle Bereiche dieses Ger\u00e4ts entsperrt sein. Gesperrt ist zurzeit:\n"
 
     const-string v5, "To move photos, downloads and other files, every space on this device has to be unlocked. Currently locked:\n"
@@ -3671,7 +3693,7 @@
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 936
+    .line 938
     invoke-interface {v0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v0
@@ -3705,7 +3727,7 @@
 
     goto :goto_0
 
-    .line 937
+    .line 939
     :cond_1
     invoke-virtual {v3, v5}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
@@ -3719,37 +3741,37 @@
 
     invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 940
+    .line 942
     invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v0
 
     invoke-direct {p0, v2, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 942
+    .line 944
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 943
+    .line 945
     new-instance v2, Landroid/widget/LinearLayout;
 
     invoke-direct {v2, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
-    .line 944
+    .line 946
     invoke-virtual {v2, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     const/16 v3, 0x10
 
-    .line 945
+    .line 947
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->setGravity(I)V
 
-    .line 946
+    .line 948
     new-instance v3, Landroid/widget/ProgressBar;
 
     invoke-direct {v3, p0}, Landroid/widget/ProgressBar;-><init>(Landroid/content/Context;)V
 
-    .line 947
+    .line 949
     iget v4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     invoke-static {v4}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
@@ -3758,7 +3780,7 @@
 
     invoke-virtual {v3, v4}, Landroid/widget/ProgressBar;->setIndeterminateTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 948
+    .line 950
     new-instance v4, Landroid/widget/LinearLayout$LayoutParams;
 
     const/high16 v5, 0x41b00000    # 22.0f
@@ -3775,12 +3797,12 @@
 
     invoke-virtual {v2, v3, v4}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 949
+    .line 951
     new-instance v9, Landroid/widget/TextView;
 
     invoke-direct {v9, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 950
+    .line 952
     const-string v3, "Warte auf Entsperrung \u2026"
 
     const-string v4, "Waiting for unlock \u2026"
@@ -3791,7 +3813,7 @@
 
     invoke-virtual {v9, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 951
+    .line 953
     iget v3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     invoke-virtual {v9, v3}, Landroid/widget/TextView;->setTextColor(I)V
@@ -3800,33 +3822,33 @@
 
     const/high16 v4, 0x41700000    # 15.0f
 
-    .line 952
+    .line 954
     invoke-virtual {v9, v3, v4}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/high16 v3, 0x41600000    # 14.0f
 
-    .line 953
+    .line 955
     invoke-direct {p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v3
 
     invoke-virtual {v9, v3, v1, v1, v1}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 954
+    .line 956
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v1
 
     invoke-virtual {v2, v9, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 955
+    .line 957
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v1
 
     invoke-virtual {v0, v2, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 957
+    .line 959
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Abbrechen"
@@ -3849,7 +3871,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 960
+    .line 962
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-direct {p0, v7, v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
@@ -3864,13 +3886,13 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 963
+    .line 965
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
-    .line 965
+    .line 967
     iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPageId:I
 
-    .line 966
+    .line 968
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
 
     new-instance v2, Lcom/masterrom/sdstorage/SdStorageModeActivity$22;
@@ -3893,7 +3915,7 @@
 
     const/high16 p4, 0x41b00000    # 22.0f
 
-    .line 567
+    .line 569
     invoke-direct {p0, p4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v1
@@ -3916,18 +3938,18 @@
 
     goto :goto_0
 
-    .line 569
+    .line 571
     :cond_0
     new-instance p4, Landroid/view/View;
 
     invoke-direct {p4, p0}, Landroid/view/View;-><init>(Landroid/content/Context;)V
 
-    .line 570
+    .line 572
     iget v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDivider:I
 
     invoke-virtual {p4, v1}, Landroid/view/View;->setBackgroundColor(I)V
 
-    .line 571
+    .line 573
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v2, 0x1
@@ -3946,7 +3968,7 @@
 
     invoke-virtual {p1, p4, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 573
+    .line 575
     :goto_0
     new-instance p4, Landroid/widget/LinearLayout;
 
@@ -3954,17 +3976,17 @@
 
     const/4 v1, 0x0
 
-    .line 574
+    .line 576
     invoke-virtual {p4, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     const/16 v2, 0x10
 
-    .line 575
+    .line 577
     invoke-virtual {p4, v2}, Landroid/widget/LinearLayout;->setGravity(I)V
 
     const/high16 v2, 0x41600000    # 14.0f
 
-    .line 576
+    .line 578
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v3
@@ -3975,15 +3997,15 @@
 
     invoke-virtual {p4, v1, v3, v1, v2}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 577
+    .line 579
     new-instance v2, Landroid/widget/TextView;
 
     invoke-direct {v2, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 578
+    .line 580
     invoke-virtual {v2, p2}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 579
+    .line 581
     iget p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mText:I
 
     invoke-virtual {v2, p2}, Landroid/widget/TextView;->setTextColor(I)V
@@ -3992,19 +4014,19 @@
 
     const/high16 v3, 0x41800000    # 16.0f
 
-    .line 580
+    .line 582
     invoke-virtual {v2, p2, v3}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/16 v4, 0x190
 
-    .line 581
+    .line 583
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object v5
 
     invoke-virtual {v2, v5}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 582
+    .line 584
     new-instance v5, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v6, -0x2
@@ -4013,25 +4035,25 @@
 
     invoke-virtual {p4, v2, v5}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 583
+    .line 585
     new-instance v0, Landroid/widget/TextView;
 
     invoke-direct {v0, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 584
+    .line 586
     invoke-virtual {v0, p3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 585
+    .line 587
     iget p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     invoke-virtual {v0, p3}, Landroid/widget/TextView;->setTextColor(I)V
 
     const/high16 p3, 0x41700000    # 15.0f
 
-    .line 586
+    .line 588
     invoke-virtual {v0, p2, p3}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 587
+    .line 589
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p2
@@ -4040,27 +4062,27 @@
 
     const p2, 0x800005
 
-    .line 588
+    .line 590
     invoke-virtual {v0, p2}, Landroid/widget/TextView;->setGravity(I)V
 
-    .line 589
+    .line 591
     new-instance p2, Landroid/widget/LinearLayout$LayoutParams;
 
     const p3, 0x3f99999a    # 1.2f
 
     invoke-direct {p2, v1, v6, p3}, Landroid/widget/LinearLayout$LayoutParams;-><init>(IIF)V
 
-    .line 590
+    .line 592
     invoke-direct {p0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result p3
 
     iput p3, p2, Landroid/widget/LinearLayout$LayoutParams;->leftMargin:I
 
-    .line 591
+    .line 593
     invoke-virtual {p4, v0, p2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 592
+    .line 594
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object p0
@@ -4073,37 +4095,37 @@
 .method private runWork(Ljava/lang/String;Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;Ljava/lang/String;Ljava/lang/Runnable;)V
     .locals 4
 
-    .line 1295
+    .line 1298
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastTitle:Ljava/lang/String;
 
-    .line 1296
+    .line 1299
     iput-object p2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastWork:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
 
-    .line 1297
+    .line 1300
     iput-object p3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastOk:Ljava/lang/String;
 
-    .line 1298
+    .line 1301
     iput-object p4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastNext:Ljava/lang/Runnable;
 
-    .line 1299
+    .line 1302
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNextReverse:Z
 
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastReverse:Z
 
     const/4 v0, 0x0
 
-    .line 1300
+    .line 1303
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
     const/4 v0, 0x1
 
-    .line 1301
+    .line 1304
     invoke-direct {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->setBusy(Z)V
 
-    .line 1302
+    .line 1305
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 1303
+    .line 1306
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object p1
@@ -4112,10 +4134,10 @@
 
     const/16 v2, 0xbe
 
-    .line 1304
+    .line 1307
     invoke-direct {p0, p1, v1, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 1305
+    .line 1308
     const-string v1, "Bitte warten \u2026"
 
     const-string v2, "Please wait \u2026"
@@ -4130,7 +4152,62 @@
 
     iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkText:Landroid/widget/TextView;
 
-    .line 1306
+    .line 1310
+    new-instance v1, Landroid/widget/TextView;
+
+    invoke-direct {v1, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
+
+    iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    .line 1311
+    iget v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
+
+    invoke-virtual {v1, v2}, Landroid/widget/TextView;->setTextColor(I)V
+
+    .line 1312
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    const/4 v2, 0x2
+
+    const/high16 v3, 0x42080000    # 34.0f
+
+    invoke-virtual {v1, v2, v3}, Landroid/widget/TextView;->setTextSize(IF)V
+
+    .line 1313
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    const/16 v2, 0x2bc
+
+    invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
+
+    .line 1314
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    const-string v2, "tnum"
+
+    invoke-virtual {v1, v2}, Landroid/widget/TextView;->setFontFeatureSettings(Ljava/lang/String;)V
+
+    .line 1315
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    const/16 v2, 0x8
+
+    invoke-virtual {v1, v2}, Landroid/widget/TextView;->setVisibility(I)V
+
+    .line 1316
+    iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkPercent:Landroid/widget/TextView;
+
+    invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
+
+    move-result-object v2
+
+    invoke-virtual {p1, v1, v2}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
+
+    .line 1317
     new-instance v1, Landroid/widget/ProgressBar;
 
     const/4 v2, 0x0
@@ -4139,10 +4216,15 @@
 
     invoke-direct {v1, p0, v2, v3}, Landroid/widget/ProgressBar;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;I)V
 
-    .line 1307
+    .line 1318
     invoke-virtual {v1, v0}, Landroid/widget/ProgressBar;->setIndeterminate(Z)V
 
-    .line 1308
+    const/16 v0, 0x64
+
+    .line 1319
+    invoke-virtual {v1, v0}, Landroid/widget/ProgressBar;->setMax(I)V
+
+    .line 1320
     iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     invoke-static {v0}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
@@ -4151,14 +4233,35 @@
 
     invoke-virtual {v1, v0}, Landroid/widget/ProgressBar;->setIndeterminateTintList(Landroid/content/res/ColorStateList;)V
 
-    .line 1309
+    .line 1321
+    iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
+
+    invoke-static {v0}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
+
+    move-result-object v0
+
+    invoke-virtual {v1, v0}, Landroid/widget/ProgressBar;->setProgressTintList(Landroid/content/res/ColorStateList;)V
+
+    .line 1322
+    iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDivider:I
+
+    invoke-static {v0}, Landroid/content/res/ColorStateList;->valueOf(I)Landroid/content/res/ColorStateList;
+
+    move-result-object v0
+
+    invoke-virtual {v1, v0}, Landroid/widget/ProgressBar;->setProgressBackgroundTintList(Landroid/content/res/ColorStateList;)V
+
+    .line 1323
+    iput-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mWorkBar:Landroid/widget/ProgressBar;
+
+    .line 1324
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v0
 
     const/high16 v2, 0x40c00000    # 6.0f
 
-    .line 1310
+    .line 1325
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
@@ -4167,17 +4270,17 @@
 
     const/high16 v2, 0x41400000    # 12.0f
 
-    .line 1311
+    .line 1326
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
 
     iput v2, v0, Landroid/widget/LinearLayout$LayoutParams;->bottomMargin:I
 
-    .line 1312
+    .line 1327
     invoke-virtual {p1, v1, v0}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 1313
+    .line 1328
     const-string v0, "Entferne die SD-Karte nicht und schalte das Ger\u00e4t nicht aus. Das Display bleibt dabei an."
 
     const-string v1, "Do not remove the SD card or turn off the device. The screen stays on meanwhile."
@@ -4188,10 +4291,10 @@
 
     invoke-direct {p0, p1, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1315
+    .line 1330
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
-    .line 1317
+    .line 1332
     new-instance p1, Ljava/lang/Thread;
 
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$32;
@@ -4202,7 +4305,7 @@
 
     invoke-direct {p1, v0, p0}, Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;Ljava/lang/String;)V
 
-    .line 1335
+    .line 1350
     invoke-virtual {p1}, Ljava/lang/Thread;->start()V
 
     return-void
@@ -4211,15 +4314,15 @@
 .method private sectionLabel(Ljava/lang/String;)V
     .locals 4
 
-    .line 529
+    .line 531
     new-instance v0, Landroid/widget/TextView;
 
     invoke-direct {v0, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 530
+    .line 532
     invoke-virtual {v0, p1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 531
+    .line 533
     iget p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     invoke-virtual {v0, p1}, Landroid/widget/TextView;->setTextColor(I)V
@@ -4228,12 +4331,12 @@
 
     const/high16 v1, 0x41600000    # 14.0f
 
-    .line 532
+    .line 534
     invoke-virtual {v0, p1, v1}, Landroid/widget/TextView;->setTextSize(IF)V
 
     const/16 p1, 0x2bc
 
-    .line 533
+    .line 535
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object p1
@@ -4242,7 +4345,7 @@
 
     const/high16 p1, 0x41b00000    # 22.0f
 
-    .line 534
+    .line 536
     invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v1
@@ -4265,7 +4368,7 @@
 
     invoke-virtual {v0, v1, v2, p1, v3}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 535
+    .line 537
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mContent:Landroid/widget/LinearLayout;
 
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
@@ -4280,10 +4383,10 @@
 .method private setBusy(Z)V
     .locals 3
 
-    .line 1279
+    .line 1282
     iput-boolean p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBusy:Z
 
-    .line 1280
+    .line 1283
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBack:Landroid/view/View;
 
     invoke-virtual {v0}, Landroid/view/View;->animate()Landroid/view/ViewPropertyAnimator;
@@ -4312,7 +4415,7 @@
 
     invoke-virtual {v0}, Landroid/view/ViewPropertyAnimator;->start()V
 
-    .line 1281
+    .line 1284
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBack:Landroid/view/View;
 
     xor-int/lit8 v1, p1, 0x1
@@ -4323,7 +4426,7 @@
 
     if-eqz p1, :cond_1
 
-    .line 1283
+    .line 1286
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
     move-result-object p1
@@ -4332,7 +4435,7 @@
 
     goto :goto_1
 
-    .line 1285
+    .line 1288
     :cond_1
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getWindow()Landroid/view/Window;
 
@@ -4340,9 +4443,24 @@
 
     invoke-virtual {p1, v0}, Landroid/view/Window;->clearFlags(I)V
 
-    .line 1287
+    .line 1290
     :goto_1
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->updateBackCallback()V
+
+    return-void
+.end method
+
+.method private setProgressPercent(I)V
+    .locals 2
+
+    .line 1389
+    iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
+
+    new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;
+
+    invoke-direct {v1, p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;I)V
+
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
     return-void
 .end method
@@ -4350,12 +4468,17 @@
 .method private setProgressText(Ljava/lang/String;)V
     .locals 2
 
-    .line 1373
+    const/4 v0, -0x1
+
+    .line 1409
+    invoke-direct {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->setProgressPercent(I)V
+
+    .line 1410
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
 
-    new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;
+    new-instance v1, Lcom/masterrom/sdstorage/SdStorageModeActivity$38;
 
-    invoke-direct {v1, p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity$37;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
+    invoke-direct {v1, p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity$38;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;Ljava/lang/String;)V
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->post(Ljava/lang/Runnable;)Z
 
@@ -4367,18 +4490,18 @@
 
     const/4 v0, 0x0
 
-    .line 1060
+    .line 1062
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 1061
+    .line 1063
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNewPrivate:Landroid/os/storage/VolumeInfo;
 
-    .line 1062
+    .line 1064
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->findSdDisk()Landroid/os/storage/DiskInfo;
 
     move-result-object v2
 
-    .line 1063
+    .line 1065
     const-string v3, "Bereit"
 
     const-string v4, "Ready"
@@ -4389,7 +4512,7 @@
 
     invoke-direct {p0, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 1064
+    .line 1066
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v5
@@ -4398,10 +4521,10 @@
 
     const/16 v7, 0xaa
 
-    .line 1065
+    .line 1067
     invoke-direct {p0, v5, v6, v7}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 1066
+    .line 1068
     const-string v6, "Interner Speicher eingerichtet"
 
     const-string v7, "Internal storage set up"
@@ -4412,7 +4535,7 @@
 
     invoke-direct {p0, v5, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1067
+    .line 1069
     const-string v6, "Die SD-Karte ist jetzt verschl\u00fcsselt und Teil des internen Speichers. Sie ist nur noch in diesem Ger\u00e4t lesbar."
 
     const-string v7, "The SD card is now encrypted and part of internal storage. It can only be read on this device."
@@ -4423,7 +4546,7 @@
 
     invoke-direct {p0, v5, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1069
+    .line 1071
     const-string v6, "Verschl\u00fcsselt"
 
     const-string v7, "Encrypted"
@@ -4450,12 +4573,12 @@
 
     invoke-direct {p0, v5, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->chips(Landroid/widget/LinearLayout;[Ljava/lang/String;)V
 
-    .line 1071
+    .line 1073
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v3
 
-    .line 1072
+    .line 1074
     const-string v4, "Nutzung"
 
     const-string v5, "Usage"
@@ -4474,7 +4597,7 @@
 
     invoke-direct {p0, v3, v4, v5, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 1073
+    .line 1075
     const-string v0, "Verschl\u00fcsselung"
 
     const-string v4, "Encryption"
@@ -4497,7 +4620,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 1074
+    .line 1076
     iget-wide v6, v2, Landroid/os/storage/DiskInfo;->size:J
 
     const-wide/16 v8, 0x0
@@ -4525,7 +4648,7 @@
     :cond_0
     if-eqz v1, :cond_2
 
-    .line 1076
+    .line 1078
     invoke-virtual {v1}, Landroid/os/storage/VolumeInfo;->getFsUuid()Ljava/lang/String;
 
     move-result-object v0
@@ -4548,7 +4671,7 @@
 
     if-nez v0, :cond_2
 
-    .line 1078
+    .line 1080
     :cond_1
     const-string v0, "N\u00e4chster Schritt"
 
@@ -4560,7 +4683,7 @@
 
     invoke-direct {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->sectionLabel(Ljava/lang/String;)V
 
-    .line 1079
+    .line 1081
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
@@ -4569,10 +4692,10 @@
 
     const/16 v3, 0x82
 
-    .line 1080
+    .line 1082
     invoke-direct {p0, v0, v2, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 1081
+    .line 1083
     const-string v2, "Dateien auf die SD-Karte verschieben?"
 
     const-string v3, "Move files to the SD card?"
@@ -4583,7 +4706,7 @@
 
     invoke-direct {p0, v0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1082
+    .line 1084
     const-string v2, "Fotos, Videos, Downloads, Musik und andere Dateien kommen auf die Karte, neue Fotos und Downloads landen danach automatisch dort. System und Apps bleiben im internen Speicher. Je nach Datenmenge dauert das einige Minuten \u2013 du kannst es auch sp\u00e4ter auf dieser Seite \u00e4ndern."
 
     const-string v3, "Photos, videos, downloads, music and other files go to the card, and new photos and downloads are stored there automatically. System and apps stay on internal storage. Depending on the amount of data this takes a few minutes \u2013 you can also change it later on this page."
@@ -4594,7 +4717,7 @@
 
     invoke-direct {p0, v0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1088
+    .line 1090
     iget-object v4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Sp\u00e4ter"
@@ -4617,7 +4740,7 @@
 
     invoke-direct/range {v3 .. v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 1091
+    .line 1093
     iget-object v10, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Dateien verschieben"
@@ -4645,7 +4768,7 @@
     :cond_2
     if-nez v1, :cond_3
 
-    .line 1098
+    .line 1100
     new-instance v0, Ljava/lang/StringBuilder;
 
     const-string v1, "\n"
@@ -4668,7 +4791,7 @@
 
     invoke-direct {p0, v3, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1101
+    .line 1103
     :cond_3
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -4692,7 +4815,7 @@
 
     invoke-direct/range {v4 .. v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 1105
+    .line 1107
     :goto_0
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
@@ -4706,41 +4829,41 @@
 
     const/4 v0, 0x1
 
-    .line 744
+    .line 746
     iput-boolean v0, v7, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 745
+    .line 747
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->findSdDisk()Landroid/os/storage/DiskInfo;
 
     move-result-object v8
 
     const/16 v1, 0xb4
 
-    .line 746
+    .line 748
     const-string v9, "SD card"
 
     const-string v10, "SD-Karte"
 
     if-nez v8, :cond_0
 
-    .line 747
+    .line 749
     invoke-direct {v7, v10, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     invoke-direct {v7, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 748
+    .line 750
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
     const/4 v2, 0x4
 
-    .line 749
+    .line 751
     invoke-direct {v7, v0, v2, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 750
+    .line 752
     const-string v1, "Keine SD-Karte eingelegt"
 
     const-string v2, "No SD card inserted"
@@ -4751,7 +4874,7 @@
 
     invoke-direct {v7, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 751
+    .line 753
     const-string v1, "Lege eine microSD-Karte ein. Danach kannst du hier w\u00e4hlen, ob sie als tragbarer Speicher oder als interner, verschl\u00fcsselter Speicher genutzt wird. Die Seite aktualisiert sich automatisch."
 
     const-string v2, "Insert a microSD card. You can then choose here whether it is used as portable storage or as encrypted internal storage. This page updates automatically."
@@ -4762,18 +4885,18 @@
 
     invoke-direct {v7, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 755
+    .line 757
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
     return-void
 
-    .line 758
+    .line 760
     :cond_0
     invoke-direct {v7, v8, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->findVolume(Landroid/os/storage/DiskInfo;I)Landroid/os/storage/VolumeInfo;
 
     move-result-object v11
 
-    .line 759
+    .line 761
     iget-wide v2, v8, Landroid/os/storage/DiskInfo;->size:J
 
     const-wide/16 v4, 0x0
@@ -4793,7 +4916,7 @@
     :cond_1
     const-string v2, "\u2013"
 
-    .line 761
+    .line 763
     :goto_0
     const-string v3, "Capacity"
 
@@ -4827,14 +4950,14 @@
 
     if-eqz v11, :cond_2
 
-    .line 762
+    .line 764
     invoke-direct {v7, v10, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v8
 
     invoke-direct {v7, v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 763
+    .line 765
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v8
@@ -4847,17 +4970,17 @@
 
     const/4 v10, 0x1
 
-    .line 764
+    .line 766
     invoke-direct {v7, v8, v10, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 765
+    .line 767
     invoke-direct {v7, v13, v12}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v9
 
     invoke-direct {v7, v8, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 766
+    .line 768
     const-string v9, "Die Karte wird wieder ein normaler, austauschbarer Speicher \u2013 ohne Verschl\u00fcsselung und auch in anderen Ger\u00e4ten, Kameras oder am PC lesbar. Apps und Dateien auf der Karte werden vorher automatisch in den internen Speicher verschoben, danach wird die Karte formatiert."
 
     const-string v10, "The card becomes normal removable storage again \u2013 without encryption and readable in other devices, cameras or on a PC. Apps and files on the card are moved to internal storage automatically first, then the card is formatted."
@@ -4868,7 +4991,7 @@
 
     invoke-direct {v7, v8, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 772
+    .line 774
     const-string v9, "Austauschbar"
 
     const-string v10, "Removable"
@@ -4899,19 +5022,19 @@
 
     invoke-direct {v7, v8, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->chips(Landroid/widget/LinearLayout;[Ljava/lang/String;)V
 
-    .line 774
+    .line 776
     invoke-direct {v7, v1, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     invoke-direct {v7, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->sectionLabel(Ljava/lang/String;)V
 
-    .line 775
+    .line 777
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 776
+    .line 778
     invoke-direct {v7, v15, v14}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
@@ -4928,7 +5051,7 @@
 
     invoke-direct {v7, v0, v1, v8, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 777
+    .line 779
     invoke-direct {v7, v6, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
@@ -4945,7 +5068,7 @@
 
     invoke-direct {v7, v0, v1, v5, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 778
+    .line 780
     const-string v1, "Dateien gespeichert auf"
 
     const-string v5, "Files stored on"
@@ -4960,14 +5083,14 @@
 
     invoke-direct {v7, v0, v1, v5, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 779
+    .line 781
     invoke-direct {v7, v4, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
 
     invoke-direct {v7, v0, v1, v2, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 781
+    .line 783
     const-string v0, "Speicherort f\u00fcr Dateien"
 
     const-string v1, "Location for files"
@@ -4978,7 +5101,7 @@
 
     invoke-direct {v7, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->sectionLabel(Ljava/lang/String;)V
 
-    .line 782
+    .line 784
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
@@ -4987,10 +5110,10 @@
 
     const/16 v2, 0x82
 
-    .line 783
+    .line 785
     invoke-direct {v7, v0, v1, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 784
+    .line 786
     const-string v1, "W\u00e4hle, wo Fotos, Videos, Downloads, Musik und andere Dateien gespeichert werden. Vorhandene Dateien werden mit verschoben. System und Apps bleiben im internen Speicher."
 
     const-string v2, "Choose where photos, videos, downloads, music and other files are stored. Existing files are moved along. System and apps stay on internal storage."
@@ -5001,39 +5124,39 @@
 
     invoke-direct {v7, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 788
+    .line 790
     invoke-direct {v7, v11}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->filesOnSd(Landroid/os/storage/VolumeInfo;)Z
 
     move-result v8
 
-    .line 789
+    .line 791
     new-instance v9, Landroid/widget/LinearLayout;
 
     invoke-direct {v9, v7}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     const/4 v1, 0x0
 
-    .line 790
+    .line 792
     invoke-virtual {v9, v1}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
-    .line 791
+    .line 793
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v1
 
     const/high16 v2, 0x41800000    # 16.0f
 
-    .line 792
+    .line 794
     invoke-direct {v7, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v2
 
     iput v2, v1, Landroid/widget/LinearLayout$LayoutParams;->topMargin:I
 
-    .line 793
+    .line 795
     invoke-virtual {v0, v9, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 794
+    .line 796
     const-string v0, "Intern"
 
     const-string v1, "Internal"
@@ -5068,7 +5191,7 @@
 
     move-object/from16 v0, v21
 
-    .line 796
+    .line 798
     invoke-direct {v7, v0, v10}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
@@ -5095,7 +5218,7 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->tile(Landroid/widget/LinearLayout;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
-    .line 799
+    .line 801
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Tragbar machen"
@@ -5131,14 +5254,14 @@
 
     move-object/from16 v9, v18
 
-    .line 803
+    .line 805
     invoke-direct {v7, v8, v10}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v8
 
     invoke-direct {v7, v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 804
+    .line 806
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v8
@@ -5149,10 +5272,10 @@
 
     const/16 v10, 0xb4
 
-    .line 805
+    .line 807
     invoke-direct {v7, v8, v2, v10}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 806
+    .line 808
     const-string v2, "Interner, verschl\u00fcsselter Speicher"
 
     const-string v10, "Encrypted internal storage"
@@ -5163,7 +5286,7 @@
 
     invoke-direct {v7, v8, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 807
+    .line 809
     const-string v2, "Die Karte wird formatiert, verschl\u00fcsselt und als Erweiterung des internen Speichers genutzt. Danach kannst du Fotos, Downloads und andere Dateien \u2013 und unterst\u00fctzte Apps \u2013 auf der Karte speichern. Die Karte ist anschlie\u00dfend nur noch in diesem Ger\u00e4t lesbar."
 
     const-string v10, "The card is formatted, encrypted and used as an extension of internal storage. You can then store photos, downloads and other files \u2013 and supported apps \u2013 on the card. Afterwards the card can only be read on this device."
@@ -5174,7 +5297,7 @@
 
     invoke-direct {v7, v8, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 813
+    .line 815
     invoke-direct {v7, v11, v9}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -5201,19 +5324,19 @@
 
     invoke-direct {v7, v8, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->chips(Landroid/widget/LinearLayout;[Ljava/lang/String;)V
 
-    .line 815
+    .line 817
     invoke-direct {v7, v1, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
     invoke-direct {v7, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->sectionLabel(Ljava/lang/String;)V
 
-    .line 816
+    .line 818
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 817
+    .line 819
     invoke-direct {v7, v15, v14}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
@@ -5226,7 +5349,7 @@
 
     invoke-direct {v7, v0, v1, v2, v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 818
+    .line 820
     invoke-direct {v7, v6, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
@@ -5243,7 +5366,7 @@
 
     invoke-direct {v7, v0, v1, v2, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 819
+    .line 821
     invoke-direct {v7, v4, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v1
@@ -5252,12 +5375,12 @@
 
     invoke-direct {v7, v0, v1, v2, v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->row(Landroid/widget/LinearLayout;Ljava/lang/String;Ljava/lang/String;Z)V
 
-    .line 821
+    .line 823
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 822
+    .line 824
     const-string v1, "Gut zu wissen"
 
     const-string v2, "Good to know"
@@ -5268,7 +5391,7 @@
 
     invoke-direct {v7, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 823
+    .line 825
     const-string v1, "\u2022 Alle Daten, die jetzt auf der Karte sind, werden gel\u00f6scht \u2013 sichere sie vorher.\n\u2022 Nimm die Karte danach nicht mehr einfach heraus, sie ist Teil des Speichers.\n\u2022 Du kannst die Karte hier jederzeit wieder tragbar machen."
 
     const-string v2, "\u2022 All data currently on the card is erased \u2013 back it up first.\n\u2022 Do not simply remove the card afterwards, it is part of the storage.\n\u2022 You can make the card portable again here at any time."
@@ -5279,7 +5402,7 @@
 
     invoke-direct {v7, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 830
+    .line 832
     iget-object v1, v7, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Als intern einrichten"
@@ -5304,7 +5427,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 834
+    .line 836
     :goto_1
     invoke-direct/range {p0 .. p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
@@ -5316,10 +5439,10 @@
 
     const/4 v0, 0x0
 
-    .line 1339
+    .line 1354
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 1340
+    .line 1355
     const-string v6, "Done"
 
     const-string v7, "Fertig"
@@ -5344,7 +5467,7 @@
     :goto_0
     invoke-direct {p0, v0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 1341
+    .line 1356
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
@@ -5361,12 +5484,12 @@
     :goto_1
     const/16 v2, 0xaa
 
-    .line 1342
+    .line 1357
     invoke-direct {p0, v0, v1, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
     if-eqz p1, :cond_2
 
-    .line 1343
+    .line 1358
     const-string v1, "Alles erledigt"
 
     const-string v2, "All done"
@@ -5385,12 +5508,12 @@
 
     invoke-direct {p0, v0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 1344
+    .line 1359
     invoke-direct {p0, v0, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
     if-eqz p1, :cond_3
 
-    .line 1346
+    .line 1361
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Zur\u00fcck zur \u00dcbersicht"
@@ -5413,7 +5536,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 1349
+    .line 1364
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     invoke-direct {p0, v7, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
@@ -5430,7 +5553,7 @@
 
     goto :goto_3
 
-    .line 1353
+    .line 1368
     :cond_3
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -5454,24 +5577,24 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 1356
+    .line 1371
     iget-object v4, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastWork:Lcom/masterrom/sdstorage/SdStorageModeActivity$Work;
 
     if-eqz v4, :cond_4
 
-    .line 1357
+    .line 1372
     iget-object v3, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastTitle:Ljava/lang/String;
 
-    .line 1359
+    .line 1374
     iget-object v5, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastOk:Ljava/lang/String;
 
-    .line 1360
+    .line 1375
     iget-object v6, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastNext:Ljava/lang/Runnable;
 
-    .line 1361
+    .line 1376
     iget-boolean v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mLastReverse:Z
 
-    .line 1362
+    .line 1377
     iget-object v7, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     const-string v0, "Erneut versuchen"
@@ -5504,7 +5627,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 1369
+    .line 1384
     :cond_4
     :goto_3
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
@@ -5517,10 +5640,10 @@
 
     const/4 v0, 0x0
 
-    .line 649
+    .line 651
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnMain:Z
 
-    .line 650
+    .line 652
     const-string v1, "Best\u00e4tigen"
 
     const-string v2, "Confirm"
@@ -5531,7 +5654,7 @@
 
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->newPage(Ljava/lang/String;)V
 
-    .line 651
+    .line 653
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v1
@@ -5543,23 +5666,23 @@
     :cond_0
     const/16 v2, 0xaa
 
-    .line 652
+    .line 654
     invoke-direct {p0, v1, v0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->anim(Landroid/widget/LinearLayout;II)Lcom/masterrom/sdstorage/SdAnimView;
 
-    .line 653
+    .line 655
     invoke-direct {p0, v1, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->headline(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
-    .line 654
+    .line 656
     invoke-direct {p0, v1, p2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->body(Landroid/widget/LinearLayout;Ljava/lang/String;)Landroid/widget/TextView;
 
     if-eqz p6, :cond_1
 
-    .line 656
+    .line 658
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->card()Landroid/widget/LinearLayout;
 
     move-result-object v0
 
-    .line 657
+    .line 659
     const-string v1, "Dieser Schritt l\u00e4sst sich nicht r\u00fcckg\u00e4ngig machen."
 
     const-string v2, "This step cannot be undone."
@@ -5572,21 +5695,21 @@
 
     move-result-object v0
 
-    .line 659
+    .line 661
     iget v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mError:I
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTextColor(I)V
 
     const/16 v1, 0x258
 
-    .line 660
+    .line 662
     invoke-direct {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->font(I)Landroid/graphics/Typeface;
 
     move-result-object v1
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 662
+    .line 664
     :cond_1
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
@@ -5604,7 +5727,7 @@
 
     invoke-direct/range {v0 .. v5}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->button(Landroid/widget/LinearLayout;Ljava/lang/String;ZZLandroid/view/View$OnClickListener;)Landroid/widget/TextView;
 
-    .line 665
+    .line 667
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBottom:Landroid/widget/LinearLayout;
 
     new-instance v5, Lcom/masterrom/sdstorage/SdStorageModeActivity$12;
@@ -5621,18 +5744,18 @@
 
     const/4 v0, 0x1
 
-    .line 674
+    .line 676
     iput-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetShown:Z
 
     const/4 v0, 0x0
 
-    .line 675
+    .line 677
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSheetCancel:Ljava/lang/Runnable;
 
-    .line 676
+    .line 678
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->updateBackCallback()V
 
-    .line 677
+    .line 679
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->animatePage()V
 
     return-void
@@ -5641,20 +5764,20 @@
 .method private snapAppBar()V
     .locals 4
 
-    .line 429
+    .line 431
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mTouching:Z
 
     if-eqz v0, :cond_0
 
     return-void
 
-    .line 430
+    .line 432
     :cond_0
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->expandRange()I
 
     move-result v0
 
-    .line 431
+    .line 433
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     invoke-virtual {v1}, Landroid/widget/ScrollView;->getScrollY()I
@@ -5665,7 +5788,7 @@
 
     if-ge v1, v0, :cond_2
 
-    .line 432
+    .line 434
     iget-object p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mScroll:Landroid/widget/ScrollView;
 
     div-int/lit8 v2, v0, 0x2
@@ -5686,7 +5809,7 @@
 .method private t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
     .locals 0
 
-    .line 175
+    .line 177
     iget-boolean p0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDe:Z
 
     if-eqz p0, :cond_0
@@ -5707,19 +5830,19 @@
 
     move/from16 v1, p5
 
-    .line 839
+    .line 841
     new-instance v2, Landroid/widget/LinearLayout;
 
     invoke-direct {v2, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     const/4 v3, 0x1
 
-    .line 840
+    .line 842
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     const/high16 v4, 0x41800000    # 16.0f
 
-    .line 841
+    .line 843
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v5
@@ -5740,14 +5863,14 @@
 
     invoke-virtual {v2, v5, v7, v8, v6}, Landroid/widget/LinearLayout;->setPadding(IIII)V
 
-    .line 842
+    .line 844
     new-instance v5, Landroid/graphics/drawable/GradientDrawable;
 
     invoke-direct {v5}, Landroid/graphics/drawable/GradientDrawable;-><init>()V
 
     const/high16 v6, 0x41a00000    # 20.0f
 
-    .line 843
+    .line 845
     invoke-direct {p0, v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v6
@@ -5758,7 +5881,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 844
+    .line 846
     iget v6, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     iget-boolean v7, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
@@ -5808,7 +5931,7 @@
     :cond_3
     move v8, v7
 
-    .line 845
+    .line 847
     :goto_1
     invoke-direct {p0, v8}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
@@ -5826,7 +5949,7 @@
     :goto_2
     invoke-virtual {v5, v8, v9}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
 
-    .line 846
+    .line 848
     new-instance v8, Landroid/graphics/drawable/RippleDrawable;
 
     iget v9, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
@@ -5847,22 +5970,22 @@
 
     invoke-virtual {v2, v8}, Landroid/widget/LinearLayout;->setBackground(Landroid/graphics/drawable/Drawable;)V
 
-    .line 847
+    .line 849
     new-instance v8, Landroid/widget/LinearLayout;
 
     invoke-direct {v8, p0}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
 
     const/4 v9, 0x0
 
-    .line 848
+    .line 850
     invoke-virtual {v8, v9}, Landroid/widget/LinearLayout;->setOrientation(I)V
 
     const/16 v10, 0x10
 
-    .line 849
+    .line 851
     invoke-virtual {v8, v10}, Landroid/widget/LinearLayout;->setGravity(I)V
 
-    .line 850
+    .line 852
     new-instance v10, Lcom/masterrom/sdstorage/SdGlyphView;
 
     if-eqz v1, :cond_5
@@ -5879,7 +6002,7 @@
 
     invoke-direct {v10, p0, v12, v11}, Lcom/masterrom/sdstorage/SdGlyphView;-><init>(Landroid/content/Context;II)V
 
-    .line 851
+    .line 853
     new-instance v11, Landroid/widget/LinearLayout$LayoutParams;
 
     const/high16 v12, 0x41e00000    # 28.0f
@@ -5896,34 +6019,34 @@
 
     invoke-virtual {v8, v10, v11}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 852
+    .line 854
     new-instance v10, Landroid/view/View;
 
     invoke-direct {v10, p0}, Landroid/view/View;-><init>(Landroid/content/Context;)V
 
-    .line 853
+    .line 855
     new-instance v11, Landroid/widget/LinearLayout$LayoutParams;
 
     invoke-direct {v11, v9, v3, v7}, Landroid/widget/LinearLayout$LayoutParams;-><init>(IIF)V
 
     invoke-virtual {v8, v10, v11}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 854
+    .line 856
     new-instance v3, Landroid/widget/TextView;
 
     invoke-direct {v3, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
-    .line 855
+    .line 857
     const-string v10, "\u2713"
 
     invoke-virtual {v3, v10}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
     const/16 v10, 0x11
 
-    .line 856
+    .line 858
     invoke-virtual {v3, v10}, Landroid/widget/TextView;->setGravity(I)V
 
-    .line 857
+    .line 859
     iget v10, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mOnAccent:I
 
     invoke-virtual {v3, v10}, Landroid/widget/TextView;->setTextColor(I)V
@@ -5932,15 +6055,15 @@
 
     const/high16 v11, 0x41500000    # 13.0f
 
-    .line 858
+    .line 860
     invoke-virtual {v3, v10, v11}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 859
+    .line 861
     sget-object v12, Landroid/graphics/Typeface;->DEFAULT_BOLD:Landroid/graphics/Typeface;
 
     invoke-virtual {v3, v12}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
-    .line 860
+    .line 862
     iget v12, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     const/high16 v13, 0x41300000    # 11.0f
@@ -5960,11 +6083,11 @@
     :cond_6
     const/4 v12, 0x4
 
-    .line 861
+    .line 863
     :goto_4
     invoke-virtual {v3, v12}, Landroid/widget/TextView;->setVisibility(I)V
 
-    .line 862
+    .line 864
     new-instance v12, Landroid/widget/LinearLayout$LayoutParams;
 
     const/high16 v13, 0x41b00000    # 22.0f
@@ -5981,26 +6104,26 @@
 
     invoke-virtual {v8, v3, v12}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 863
+    .line 865
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v3
 
     invoke-virtual {v2, v8, v3}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 864
+    .line 866
     new-instance v3, Landroid/widget/TextView;
 
     invoke-direct {v3, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
     move-object/from16 v8, p3
 
-    .line 865
+    .line 867
     invoke-virtual {v3, v8}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
     if-eqz v1, :cond_7
 
-    .line 866
+    .line 868
     iget v8, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mAccent:I
 
     goto :goto_5
@@ -6011,10 +6134,10 @@
     :goto_5
     invoke-virtual {v3, v8}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 867
+    .line 869
     invoke-virtual {v3, v10, v4}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 868
+    .line 870
     sget-object v4, Landroid/graphics/Typeface;->DEFAULT:Landroid/graphics/Typeface;
 
     const/16 v8, 0x258
@@ -6027,7 +6150,7 @@
 
     const/high16 v4, 0x41400000    # 12.0f
 
-    .line 869
+    .line 871
     invoke-direct {p0, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->dp(F)I
 
     move-result v4
@@ -6038,39 +6161,39 @@
 
     invoke-virtual {v3, v9, v4, v9, v6}, Landroid/widget/TextView;->setPadding(IIII)V
 
-    .line 870
+    .line 872
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v4
 
     invoke-virtual {v2, v3, v4}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 871
+    .line 873
     new-instance v3, Landroid/widget/TextView;
 
     invoke-direct {v3, p0}, Landroid/widget/TextView;-><init>(Landroid/content/Context;)V
 
     move-object/from16 v4, p4
 
-    .line 872
+    .line 874
     invoke-virtual {v3, v4}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 873
+    .line 875
     iget v4, v0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSubText:I
 
     invoke-virtual {v3, v4}, Landroid/widget/TextView;->setTextColor(I)V
 
-    .line 874
+    .line 876
     invoke-virtual {v3, v10, v11}, Landroid/widget/TextView;->setTextSize(IF)V
 
-    .line 875
+    .line 877
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->matchWrap()Landroid/widget/LinearLayout$LayoutParams;
 
     move-result-object v4
 
     invoke-virtual {v2, v3, v4}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
-    .line 876
+    .line 878
     new-instance v3, Lcom/masterrom/sdstorage/SdStorageModeActivity$19;
 
     move-object/from16 v4, p6
@@ -6079,17 +6202,17 @@
 
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 889
+    .line 891
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->addPress(Landroid/view/View;)V
 
-    .line 890
+    .line 892
     new-instance v1, Landroid/widget/LinearLayout$LayoutParams;
 
     const/4 v3, -0x2
 
     invoke-direct {v1, v9, v3, v7}, Landroid/widget/LinearLayout$LayoutParams;-><init>(IIF)V
 
-    .line 891
+    .line 893
     invoke-virtual/range {p1 .. p1}, Landroid/widget/LinearLayout;->getChildCount()I
 
     move-result v3
@@ -6107,7 +6230,7 @@
     :cond_8
     move-object/from16 v0, p1
 
-    .line 892
+    .line 894
     invoke-virtual {v0, v2, v1}, Landroid/widget/LinearLayout;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 
     return-void
@@ -6116,22 +6239,22 @@
 .method private toPortable(Landroid/os/storage/DiskInfo;Landroid/os/storage/VolumeInfo;)V
     .locals 11
 
-    .line 1152
+    .line 1154
     invoke-virtual {p2}, Landroid/os/storage/VolumeInfo;->getFsUuid()Ljava/lang/String;
 
     move-result-object v6
 
-    .line 1153
+    .line 1155
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
-    .line 1154
+    .line 1156
     new-instance v4, Ljava/util/ArrayList;
 
     invoke-direct {v4}, Ljava/util/ArrayList;-><init>()V
 
-    .line 1155
+    .line 1157
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     const/high16 v1, 0x400000
@@ -6160,7 +6283,7 @@
 
     if-eqz v6, :cond_0
 
-    .line 1156
+    .line 1158
     iget-object v2, v1, Landroid/content/pm/ApplicationInfo;->volumeUuid:Ljava/lang/String;
 
     invoke-virtual {v6, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -6177,12 +6300,12 @@
 
     if-nez v2, :cond_0
 
-    .line 1157
+    .line 1159
     iget-object v2, v1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
     invoke-interface {v3, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 1158
+    .line 1160
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     invoke-virtual {v1, v2}, Landroid/content/pm/ApplicationInfo;->loadLabel(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;
@@ -6202,7 +6325,7 @@
 
     if-eqz v6, :cond_2
 
-    .line 1161
+    .line 1163
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {v1}, Landroid/os/storage/StorageManager;->getPrimaryStorageUuid()Ljava/lang/String;
@@ -6224,7 +6347,7 @@
     :cond_2
     move v8, v0
 
-    .line 1163
+    .line 1165
     :goto_1
     new-instance v9, Ljava/lang/StringBuilder;
 
@@ -6232,7 +6355,7 @@
 
     if-eqz v8, :cond_3
 
-    .line 1165
+    .line 1167
     const-string v1, "\u2022 Fotos, Downloads und andere Dateien werden zur\u00fcck in den internen Speicher verschoben.\n"
 
     const-string v2, "\u2022 Photos, downloads and other files are moved back to internal storage.\n"
@@ -6243,7 +6366,7 @@
 
     invoke-virtual {v9, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1168
+    .line 1170
     :cond_3
     invoke-interface {v3}, Ljava/util/List;->isEmpty()Z
 
@@ -6253,7 +6376,7 @@
 
     if-nez v1, :cond_6
 
-    .line 1169
+    .line 1171
     const-string v1, "\u2022 Diese Apps werden zur\u00fcck in den internen Speicher verschoben: "
 
     const-string v5, "\u2022 These apps are moved back to internal storage: "
@@ -6264,7 +6387,7 @@
 
     invoke-virtual {v9, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1171
+    .line 1173
     :goto_2
     invoke-interface {v4}, Ljava/util/List;->size()I
 
@@ -6296,11 +6419,11 @@
 
     goto :goto_2
 
-    .line 1172
+    .line 1174
     :cond_5
     invoke-virtual {v9, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 1174
+    .line 1176
     :cond_6
     invoke-virtual {v9}, Ljava/lang/StringBuilder;->length()I
 
@@ -6310,7 +6433,7 @@
 
     invoke-virtual {v9, v2}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
 
-    .line 1175
+    .line 1177
     :cond_7
     const-string v0, "Danach wird die SD-Karte formatiert und alle restlichen Daten darauf gel\u00f6scht. Sie ist dann nicht mehr verschl\u00fcsselt und auch in anderen Ger\u00e4ten lesbar."
 
@@ -6322,7 +6445,7 @@
 
     invoke-virtual {v9, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 1180
+    .line 1182
     new-instance v10, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;
 
     move-object v0, v10
@@ -6335,7 +6458,7 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/masterrom/sdstorage/SdStorageModeActivity$30;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;ZLjava/util/List;Ljava/util/List;Landroid/os/storage/DiskInfo;Ljava/lang/String;)V
 
-    .line 1212
+    .line 1214
     const-string v0, "SD-Karte wieder tragbar machen?"
 
     const-string v1, "Make SD card portable again?"
@@ -6352,7 +6475,7 @@
 
     const-string v3, "Cancel"
 
-    .line 1213
+    .line 1215
     invoke-direct {p0, v0, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v4
@@ -6377,7 +6500,7 @@
 
     move-object v7, v9
 
-    .line 1212
+    .line 1214
     invoke-direct/range {v0 .. v7}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->showSheet(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ZLjava/lang/Runnable;)V
 
     return-void
@@ -6386,7 +6509,7 @@
 .method private unlockUser(I)V
     .locals 5
 
-    .line 986
+    .line 988
     const-string v0, "MasterROMSdStorage"
 
     :try_start_0
@@ -6398,7 +6521,7 @@
 
     check-cast v1, Landroid/app/ActivityManager;
 
-    .line 987
+    .line 989
     invoke-virtual {v1, p1}, Landroid/app/ActivityManager;->isUserRunning(I)Z
 
     move-result v2
@@ -6418,7 +6541,7 @@
     :catchall_0
     move-exception v1
 
-    .line 989
+    .line 991
     new-instance v2, Ljava/lang/StringBuilder;
 
     const-string v3, "startProfile "
@@ -6433,7 +6556,7 @@
 
     invoke-static {v0, v2, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 992
+    .line 994
     :cond_0
     :goto_0
     :try_start_1
@@ -6445,12 +6568,12 @@
 
     check-cast v1, Landroid/app/KeyguardManager;
 
-    .line 993
+    .line 995
     const-string v2, "Sicheren Ordner entsperren"
 
     const-string v3, "Unlock Secure Folder"
 
-    .line 994
+    .line 996
     invoke-direct {p0, v2, v3}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v2
@@ -6459,19 +6582,19 @@
 
     const-string v4, "To move your files"
 
-    .line 995
+    .line 997
     invoke-direct {p0, v3, v4}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->t(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v3
 
-    .line 993
+    .line 995
     invoke-virtual {v1, v2, v3, p1}, Landroid/app/KeyguardManager;->createConfirmDeviceCredentialIntent(Ljava/lang/CharSequence;Ljava/lang/CharSequence;I)Landroid/content/Intent;
 
     move-result-object v1
 
     if-eqz v1, :cond_1
 
-    .line 997
+    .line 999
     invoke-virtual {p0, v1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->startActivity(Landroid/content/Intent;)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
@@ -6481,7 +6604,7 @@
     :catchall_1
     move-exception v1
 
-    .line 1001
+    .line 1003
     new-instance v2, Ljava/lang/StringBuilder;
 
     const-string v3, "confirm credential "
@@ -6496,7 +6619,7 @@
 
     invoke-static {v0, p1, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 1004
+    .line 1006
     :cond_1
     :try_start_2
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
@@ -6511,10 +6634,10 @@
 
     const/high16 v1, 0x10000000
 
-    .line 1006
+    .line 1008
     invoke-virtual {p1, v1}, Landroid/content/Intent;->addFlags(I)Landroid/content/Intent;
 
-    .line 1007
+    .line 1009
     invoke-virtual {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->startActivity(Landroid/content/Intent;)V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_2
@@ -6524,12 +6647,12 @@
     :catchall_2
     move-exception p1
 
-    .line 1011
+    .line 1013
     const-string v1, "open Secure Folder"
 
     invoke-static {v0, v1, p1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 1013
+    .line 1015
     :cond_2
     const-string p1, "Bitte \u00f6ffne den Sicheren Ordner und entsperre ihn."
 
@@ -6545,7 +6668,7 @@
 
     move-result-object p0
 
-    .line 1014
+    .line 1016
     invoke-virtual {p0}, Landroid/widget/Toast;->show()V
 
     return-void
@@ -6556,7 +6679,7 @@
 
     if-eqz p1, :cond_3
 
-    .line 1224
+    .line 1226
     invoke-virtual {p1}, Landroid/os/storage/VolumeInfo;->getState()I
 
     move-result v0
@@ -6567,13 +6690,13 @@
 
     goto :goto_2
 
-    .line 1225
+    .line 1227
     :cond_0
     invoke-virtual {p1}, Landroid/os/storage/VolumeInfo;->getId()Ljava/lang/String;
 
     move-result-object p1
 
-    .line 1227
+    .line 1229
     :try_start_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
@@ -6588,7 +6711,7 @@
 
     if-ge v0, v1, :cond_2
 
-    .line 1233
+    .line 1235
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {v1, p1}, Landroid/os/storage/StorageManager;->findVolumeById(Ljava/lang/String;)Landroid/os/storage/VolumeInfo;
@@ -6597,7 +6720,7 @@
 
     if-eqz v1, :cond_2
 
-    .line 1234
+    .line 1236
     invoke-virtual {v1}, Landroid/os/storage/VolumeInfo;->getState()I
 
     move-result v1
@@ -6609,7 +6732,7 @@
     :cond_1
     const-wide/16 v1, 0xfa
 
-    .line 1235
+    .line 1237
     :try_start_1
     invoke-static {v1, v2}, Ljava/lang/Thread;->sleep(J)V
     :try_end_1
@@ -6627,7 +6750,7 @@
     :catchall_0
     move-exception p0
 
-    .line 1229
+    .line 1231
     new-instance v0, Ljava/lang/StringBuilder;
 
     const-string v1, "unmount "
@@ -6652,7 +6775,7 @@
 .method private updateBackCallback()V
     .locals 3
 
-    .line 691
+    .line 693
     iget-boolean v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBusy:Z
 
     if-nez v0, :cond_1
@@ -6672,7 +6795,7 @@
     :goto_0
     const/4 v0, 0x1
 
-    .line 693
+    .line 695
     :goto_1
     :try_start_0
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getOnBackInvokedDispatcher()Landroid/window/OnBackInvokedDispatcher;
@@ -6681,12 +6804,12 @@
 
     if-eqz v0, :cond_2
 
-    .line 694
+    .line 696
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBackCb:Landroid/window/OnBackInvokedCallback;
 
     if-nez v2, :cond_2
 
-    .line 695
+    .line 697
     new-instance v0, Lcom/masterrom/sdstorage/SdStorageModeActivity$13;
 
     invoke-direct {v0, p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity$13;-><init>(Lcom/masterrom/sdstorage/SdStorageModeActivity;)V
@@ -6695,7 +6818,7 @@
 
     const p0, 0xf4240
 
-    .line 696
+    .line 698
     invoke-interface {v1, p0, v0}, Landroid/window/OnBackInvokedDispatcher;->registerOnBackInvokedCallback(ILandroid/window/OnBackInvokedCallback;)V
 
     goto :goto_2
@@ -6703,17 +6826,17 @@
     :cond_2
     if-nez v0, :cond_3
 
-    .line 697
+    .line 699
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBackCb:Landroid/window/OnBackInvokedCallback;
 
     if-eqz v0, :cond_3
 
-    .line 698
+    .line 700
     invoke-interface {v1, v0}, Landroid/window/OnBackInvokedDispatcher;->unregisterOnBackInvokedCallback(Landroid/window/OnBackInvokedCallback;)V
 
     const/4 v0, 0x0
 
-    .line 699
+    .line 701
     iput-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mBackCb:Landroid/window/OnBackInvokedCallback;
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -6723,7 +6846,7 @@
     :catchall_0
     move-exception p0
 
-    .line 702
+    .line 704
     const-string v0, "MasterROMSdStorage"
 
     const-string v1, "back dispatcher"
@@ -6738,7 +6861,7 @@
 .method private userLabel(Landroid/content/pm/UserInfo;)Ljava/lang/String;
     .locals 3
 
-    .line 913
+    .line 915
     :try_start_0
     invoke-virtual {p1}, Landroid/content/pm/UserInfo;->isSecureFolder()Z
 
@@ -6754,7 +6877,7 @@
     :goto_0
     if-nez v0, :cond_2
 
-    .line 914
+    .line 916
     iget v0, p1, Landroid/content/pm/UserInfo;->id:I
 
     const/16 v1, 0x96
@@ -6769,7 +6892,7 @@
 
     goto :goto_2
 
-    .line 915
+    .line 917
     :cond_0
     iget-object v0, p1, Landroid/content/pm/UserInfo;->name:Ljava/lang/String;
 
@@ -6805,7 +6928,7 @@
     :goto_1
     return-object p0
 
-    .line 914
+    .line 916
     :cond_2
     :goto_2
     const-string p1, "Sicherer Ordner"
@@ -6827,7 +6950,7 @@
         }
     .end annotation
 
-    .line 1241
+    .line 1243
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
     move-result-wide v0
@@ -6836,7 +6959,7 @@
 
     add-long/2addr v0, v2
 
-    .line 1242
+    .line 1244
     :goto_0
     invoke-static {}, Ljava/lang/System;->currentTimeMillis()J
 
@@ -6846,7 +6969,7 @@
 
     if-gez v2, :cond_2
 
-    .line 1243
+    .line 1245
     iget-object v2, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
     invoke-virtual {v2, p1}, Landroid/content/pm/PackageManager;->getMoveStatus(I)I
@@ -6857,6 +6980,11 @@
 
     if-ne v2, v3, :cond_0
 
+    const/16 p1, 0x64
+
+    .line 1246
+    invoke-direct {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->setProgressPercent(I)V
+
     const/4 p0, 0x0
 
     return-object p0
@@ -6864,22 +6992,25 @@
     :cond_0
     if-gez v2, :cond_1
 
-    .line 1245
+    .line 1247
     invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->moveError(I)Ljava/lang/String;
 
     move-result-object p0
 
     return-object p0
 
+    .line 1248
     :cond_1
+    invoke-direct {p0, v2}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->setProgressPercent(I)V
+
     const-wide/16 v2, 0x1f4
 
-    .line 1246
+    .line 1249
     invoke-static {v2, v3}, Ljava/lang/Thread;->sleep(J)V
 
     goto :goto_0
 
-    .line 1248
+    .line 1251
     :cond_2
     const-string p1, "Zeit\u00fcberschreitung beim Verschieben."
 
@@ -6907,7 +7038,7 @@
 
     if-ge v0, v1, :cond_2
 
-    .line 1044
+    .line 1046
     iget-object v1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
     invoke-virtual {v1}, Landroid/os/storage/StorageManager;->getVolumes()Ljava/util/List;
@@ -6916,7 +7047,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 1046
+    .line 1048
     invoke-interface {v1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
     move-result-object v1
@@ -6936,7 +7067,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 1047
+    .line 1049
     invoke-virtual {v2}, Landroid/os/storage/VolumeInfo;->getType()I
 
     move-result v3
@@ -6955,7 +7086,7 @@
 
     if-eqz v3, :cond_0
 
-    .line 1048
+    .line 1050
     invoke-virtual {v2}, Landroid/os/storage/VolumeInfo;->getState()I
 
     move-result v3
@@ -6969,7 +7100,7 @@
     :cond_1
     const-wide/16 v1, 0x1f4
 
-    .line 1053
+    .line 1055
     invoke-static {v1, v2}, Ljava/lang/Thread;->sleep(J)V
 
     add-int/lit8 v0, v0, 0x1
@@ -6991,7 +7122,7 @@
 
     const/16 v0, 0xff
 
-    .line 185
+    .line 187
     invoke-static {v0, p1}, Ljava/lang/Math;->min(II)I
 
     move-result p1
@@ -7014,7 +7145,7 @@
 .method public onBackPressed()V
     .locals 1
 
-    .line 160
+    .line 162
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->handleBack()Z
 
     move-result v0
@@ -7023,7 +7154,7 @@
 
     return-void
 
-    .line 161
+    .line 163
     :cond_0
     invoke-super {p0}, Landroid/app/Activity;->onBackPressed()V
 
@@ -7033,10 +7164,10 @@
 .method protected onCreate(Landroid/os/Bundle;)V
     .locals 1
 
-    .line 137
+    .line 139
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
-    .line 138
+    .line 140
     const-class p1, Landroid/os/storage/StorageManager;
 
     invoke-virtual {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getSystemService(Ljava/lang/Class;)Ljava/lang/Object;
@@ -7047,14 +7178,14 @@
 
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
-    .line 139
+    .line 141
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getPackageManager()Landroid/content/pm/PackageManager;
 
     move-result-object p1
 
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPm:Landroid/content/pm/PackageManager;
 
-    .line 140
+    .line 142
     const-class p1, Landroid/os/UserManager;
 
     invoke-virtual {p0, p1}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getSystemService(Ljava/lang/Class;)Ljava/lang/Object;
@@ -7065,7 +7196,7 @@
 
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUm:Landroid/os/UserManager;
 
-    .line 141
+    .line 143
     new-instance p1, Landroid/os/Handler;
 
     invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
@@ -7076,7 +7207,7 @@
 
     iput-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mUi:Landroid/os/Handler;
 
-    .line 142
+    .line 144
     invoke-static {}, Ljava/util/Locale;->getDefault()Ljava/util/Locale;
 
     move-result-object p1
@@ -7093,7 +7224,7 @@
 
     iput-boolean p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mDe:Z
 
-    .line 143
+    .line 145
     invoke-virtual {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->getResources()Landroid/content/res/Resources;
 
     move-result-object p1
@@ -7120,16 +7251,16 @@
     :goto_0
     iput-boolean p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mNight:Z
 
-    .line 145
+    .line 147
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->loadColors()V
 
-    .line 146
+    .line 148
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->buildFrame()V
 
-    .line 147
+    .line 149
     invoke-direct {p0}, Lcom/masterrom/sdstorage/SdStorageModeActivity;->showMain()V
 
-    .line 148
+    .line 150
     :try_start_0
     iget-object p1, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
@@ -7157,7 +7288,7 @@
 .method protected onDestroy()V
     .locals 2
 
-    .line 153
+    .line 155
     :try_start_0
     iget-object v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mSm:Landroid/os/storage/StorageManager;
 
@@ -7167,7 +7298,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 154
+    .line 156
     :catchall_0
     iget v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPageId:I
 
@@ -7175,7 +7306,7 @@
 
     iput v0, p0, Lcom/masterrom/sdstorage/SdStorageModeActivity;->mPageId:I
 
-    .line 155
+    .line 157
     invoke-super {p0}, Landroid/app/Activity;->onDestroy()V
 
     return-void
