@@ -241,9 +241,10 @@ public class SdAnimView extends View {
         float open = segOver(0.08f, 0.24f);
         float gone = seg(0.24f, 0.36f);
         float burst = lin(mT, 0.24f, 0.46f);
-        float bars = 1f - seg(0.30f, 0.52f);
-        float glow = 1f - seg(0.30f, 0.52f);
         float move = segIO(0.42f, 0.74f);
+        // the storage shrinks while the card leaves the phone, not before
+        float bars = 1f - move;
+        float glow = 1f - move;
         float bob = (float) Math.sin(mT * Math.PI * 6) * 2.5f * move;
         float cx = 75f + (172f - 75f) * move;
         float cy = 84f + bob;
