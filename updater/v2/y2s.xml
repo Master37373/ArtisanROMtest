@@ -10,18 +10,20 @@
   </rom>
   <kernel channel="stable">
     <version>ArtisanKRNL-v4.0.1-mr0.1</version>
-    <date>2026-10-16</date>
+    <date>2026-10-17</date>
     <filename>MasterROM-Kernel_ArtisanKRNL-v4.0.1-mr0.1_y2s.zip</filename>
     <link>https://sourceforge.net/projects/masterrom/files/y2s/kernel/MasterROM-Kernel_ArtisanKRNL-v4.0.1-mr0.1_y2s.zip/download</link>
-    <md5>6d5402db490eb7093cd3dc5b0d111b3b</md5>
-    <size>22063549</size>
-    <change>configs: bump</change>
+    <md5>243daf89af3db267a95a34dbf294bdb2</md5>
+    <size>22067358</size>
+    <commit>e09780863f024ad1d0953ac096facacd620c0111</commit>
+    <patch_rev>1</patch_rev>
     <change>selinux: allow atomic allocation while the policy rwlock is held</change>
     <change>KSUN: update drivers</change>
-    <change>configs: bump</change>
     <change>KernelSU-Next: update driver to v3.4.0</change>
     <change>Patch CVE-2026-43499 vulnerability</change>
     <change>devpts: provide ksu_handle_devpts stub locally, use official KernelSU-Next submodule</change>
-    <change>i give up</change>
+    <change>setup.sh: use ln -sfn to avoid recreating circular kernel/kernel symlink</change>
+    <change>SUSFS: spoof version to v2.2.0</change>
+    <change>Switch KernelSU-Next to Android-Artisan fork (legacy branch)</change>
   </kernel>
 </roms>
