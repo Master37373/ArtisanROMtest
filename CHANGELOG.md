@@ -4,7 +4,7 @@
 - MasterROM settings in the glass look of the updater, with new icons
 - SD card page with the One UI title bar
 - Preinstalled again: Gaming Hub, Samsung Kids, Samsung Language Core, Smart Touch Call
-- Play Integrity: a freshly set up phone is certified right away
+- Play Integrity Fix: the current fingerprint is built in
 - Battery protection in the battery settings
 - Removed: unlimited Google Photos storage
 
