@@ -63,6 +63,8 @@ public class SdAnimView extends View {
     private final int mFg, mAccent, mAccent2, mOnAccent;
     private ValueAnimator mAnimator;
     private int mMode = MODE_TO_INTERNAL;
+    /** MODE_FILES / MODE_WORKING: data travels from the card into the phone instead of onto the card */
+    private boolean mReverse;
     private float mT;
     private float mA = 1f; // master alpha of the current frame
 
@@ -104,6 +106,11 @@ public class SdAnimView extends View {
         int c = color & 0x00FFFFFF;
         return new RadialGradient(0f, 0f, 1f, new int[] { c | 0xFF000000, c | 0x55000000, c },
                 new float[] { 0f, 0.45f, 1f }, Shader.TileMode.CLAMP);
+    }
+
+    public void setReverse(boolean reverse) {
+        mReverse = reverse;
+        invalidate();
     }
 
     public void setMode(int mode) {
@@ -257,7 +264,7 @@ public class SdAnimView extends View {
         float pulse = 0f;
         for (int i = 0; i < 3; i++) {
             float start = 0.08f + i * 0.2f;
-            float land = lin(mT, start + 0.36f, start + 0.50f);
+            float land = mReverse ? lin(mT, start - 0.04f, start + 0.10f) : lin(mT, start + 0.36f, start + 0.50f);
             if (land > 0f && land < 1f) pulse = Math.max(pulse, (float) Math.sin(land * Math.PI));
         }
         float sc = 1f + 0.06f * pulse;
@@ -268,10 +275,11 @@ public class SdAnimView extends View {
             float start = 0.08f + i * 0.2f;
             float p = seg(start, start + 0.42f);
             if (p <= 0f || p >= 1f) continue;
-            float x = 75f + (172f - 75f) * p;
-            float y = 74f - (float) Math.sin(p * Math.PI) * 46f + 10f * p;
+            float q = mReverse ? 1f - p : p;   // position along phone -> card
+            float x = 75f + (172f - 75f) * q;
+            float y = 74f - (float) Math.sin(q * Math.PI) * 46f + 10f * q;
             float a = Math.min(lin(p, 0f, 0.12f), 1f - lin(p, 0.82f, 1f));
-            drawDoc(c, x, y, -18f + 36f * p, 1f - 0.35f * p, a, i % 2);
+            drawDoc(c, x, y, -18f + 36f * q, 1f - 0.35f * q, a, i % 2);
         }
     }
 
@@ -283,6 +291,7 @@ public class SdAnimView extends View {
         mFill.setShader(null);
         for (int i = 0; i < 6; i++) {
             float p = (mT + i / 6f) % 1f;
+            if (mReverse) p = 1f - p;   // card -> phone
             float x = 92f + (150f - 92f) * p;
             float y = 80f - (float) Math.sin(p * Math.PI) * 18f;
             float a = (float) Math.sin(p * Math.PI);

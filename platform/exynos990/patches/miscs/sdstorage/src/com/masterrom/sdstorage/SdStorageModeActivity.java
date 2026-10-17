@@ -118,6 +118,9 @@ public class SdStorageModeActivity extends Activity {
     private Work mLastWork;
     private String mLastOk;
     private Runnable mLastNext;
+    /** consumed by the next anim(): FILES/WORKING animation runs card -> phone */
+    private boolean mNextReverse;
+    private boolean mLastReverse;
 
     private final PathInterpolator mEase = new PathInterpolator(0.2f, 0f, 0f, 1f);
     private final PathInterpolator mEmph = new PathInterpolator(0.05f, 0.7f, 0.1f, 1f);
@@ -490,6 +493,8 @@ public class SdStorageModeActivity extends Activity {
     private SdAnimView anim(LinearLayout parent, int mode, int heightDp) {
         SdAnimView v = new SdAnimView(this, mText, mAccent, mOnAccent);
         v.setMode(mode);
+        v.setReverse(mNextReverse);
+        mNextReverse = false;
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp));
         lp.bottomMargin = dp(12);
         parent.addView(v, lp);
@@ -1103,6 +1108,7 @@ public class SdStorageModeActivity extends Activity {
     // ---- default location for files (primary shared storage) ---------------
 
     private void confirmFileLocation(final VolumeInfo priv, final boolean wantSd) {
+        mNextReverse = !wantSd;
         showSheet(wantSd ? t("Dateien auf die SD-Karte verschieben?", "Move files to the SD card?")
                          : t("Dateien in den internen Speicher verschieben?", "Move files to internal storage?"),
                 t("Fotos, Videos, Downloads und andere Dateien werden verschoben und künftig dort gespeichert. "
@@ -1121,6 +1127,7 @@ public class SdStorageModeActivity extends Activity {
     }
 
     private void moveFiles(final VolumeInfo target, final boolean toSd) {
+        mNextReverse = !toSd;
         runWork(t("Verschieben", "Moving files"),
                 new Work() {
                     @Override public String run() throws Exception {
@@ -1171,6 +1178,7 @@ public class SdStorageModeActivity extends Activity {
                 + "It is no longer encrypted and can be read on other devices."));
 
         final Runnable doIt = new Runnable() { @Override public void run() {
+            mNextReverse = primaryOnSd || !pkgs.isEmpty();   // files/apps come back to the phone
             runWork(t("Tragbar machen", "Make portable"), new Work() { @Override public String run() throws Exception {
                 VolumeInfo internal = mSm.findVolumeById(VolumeInfo.ID_PRIVATE_INTERNAL);
                 if (internal == null) return t("Interner Speicher nicht gefunden.", "Internal storage not found.");
@@ -1288,6 +1296,7 @@ public class SdStorageModeActivity extends Activity {
         mLastWork = work;
         mLastOk = okMessage;
         mLastNext = next;
+        mLastReverse = mNextReverse;
         mOnMain = false;
         setBusy(true);
         newPage(title);
@@ -1349,9 +1358,10 @@ public class SdStorageModeActivity extends Activity {
                 final Work work = mLastWork;
                 final String okMsg = mLastOk;
                 final Runnable next = mLastNext;
+                final boolean rev = mLastReverse;
                 button(mBottom, t("Erneut versuchen", "Try again"), true, false, new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        requireUnlocked(new Runnable() { @Override public void run() { runWork(title, work, okMsg, next); } });
+                        requireUnlocked(new Runnable() { @Override public void run() { mNextReverse = rev; runWork(title, work, okMsg, next); } });
                     }
                 });
             }
